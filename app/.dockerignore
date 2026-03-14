@@ -3,3 +3,12 @@ playwright-report
 coverage
 dist
 test-results
+
+.git
+.gitignore
+Dockerfile.upstream
+README.md
+docs
+.vscode
+.idea
+*.log
