@@ -101,7 +101,10 @@ docker build -t ecs-it-tools ./app
 
 Run the container locally:
 
-docker run -p 8080:80 ecs-it-tools
+docker run --rm -p 8080:8080 ecs-it-tools
+curl http://localhost:8080/health
+
+{"status":"ok"}
 
 Access the application at:
 
