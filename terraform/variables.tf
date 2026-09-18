@@ -50,3 +50,17 @@ variable "certificate_arn" {
   description = "ACM certificate ARN for the ALB"
   type        = string
 }
+
+variable "image_tag" {
+  description = "Application version or commit SHA tag to deploy from ECR"
+  type        = string
+  nullable    = false
+
+  validation {
+    condition = (
+      can(regex("^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$", var.image_tag)) &&
+      lower(var.image_tag) != "latest"
+    )
+    error_message = "Provide a valid explicit version or commit SHA tag; latest is not allowed."
+  }
+}

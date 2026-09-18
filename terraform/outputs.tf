@@ -32,3 +32,34 @@ output "target_group_arn" {
   description = "ALB target group ARN for ECS integration"
   value       = module.alb.target_group_arn
 }
+
+output "ecs_cluster_name" {
+  description = "ECS cluster name"
+  value       = module.ecs.cluster_name
+}
+
+output "ecs_cluster_arn" {
+  description = "ECS cluster ARN"
+  value       = module.ecs.cluster_arn
+}
+
+output "ecs_task_definition_arn" {
+  description = "ECS task definition ARN including revision"
+  value       = module.ecs.task_definition_arn
+}
+
+output "ecs_task_security_group_id" {
+  description = "Security group ID for ECS tasks"
+  value       = module.ecs.task_security_group_id
+}
+
+output "ecs_execution_role_arn" {
+  description = "IAM execution role ARN used by ECS"
+  value       = module.ecs.execution_role_arn
+}
+
+output "ecs_log_group_name" {
+  description = "CloudWatch log group for container logs"
+  value       = module.ecs.log_group_name
+}
+
