@@ -1,0 +1,41 @@
+PS C:\Users\Feras_F\Desktop\Dev Ops ECS\ecs-v1-it-tools> terraform "-chdir=terraform" plan "-input=false" "-var-file=environments/dev/terraform.tfvars" "-var-file=environments/dev/image.tfvars"
+data.aws_route53_zone.existing: Reading...
+module.ecr.aws_ecr_repository.this: Refreshing state... [id=ecs-it-tools]
+module.vpc.aws_vpc.this: Refreshing state... [id=vpc-09f14318823166b3e]
+module.vpc.aws_eip.nat: Refreshing state... [id=eipalloc-05fd8e5c41b29e7ae]
+aws_acm_certificate.this: Refreshing state... [id=arn:aws:acm:eu-west-2:670941257756:certificate/4ff66c88-7b41-483f-a709-23d7bfbe167c]
+data.aws_route53_zone.existing: Read complete after 1s [id=Z01014153ETFBQT2QXXK2]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Refreshing state... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME]
+module.vpc.aws_internet_gateway.this: Refreshing state... [id=igw-042ac28007b6b49dd]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-04e0e0ec300bf9bde]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-06b30086b5c6f15ca]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-088caca75c9c4d184]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-000149c71fe8c0eeb]
+module.alb.aws_lb_target_group.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/77643ce8d52228a2]
+module.alb.aws_security_group.alb: Refreshing state... [id=sg-0c10e0adfc6c3e1be]
+module.vpc.aws_route_table.public: Refreshing state... [id=rtb-0d24659d131ec2b12]
+module.vpc.aws_nat_gateway.this: Refreshing state... [id=nat-020898f79508576b6]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0b4790b5d395a0075]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-06bdb8e6a0cee5aa2]
+module.alb.aws_lb.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/77b1f854f36f98c9]
+module.vpc.aws_route_table.private: Refreshing state... [id=rtb-052edddc7aa67a472]
+aws_acm_certificate_validation.this: Refreshing state... [id=2026-09-21 17:24:56.793 +0000 UTC]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-08e5e66d528a8a12e]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0a96c17eb01306d68]
+aws_route53_record.app: Refreshing state... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A]
+module.alb.aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/77b1f854f36f98c9/65e259b6dde12592]
+module.alb.aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/77b1f854f36f98c9/15d773d9807ae174]
+module.ecs.aws_cloudwatch_log_group.this: Refreshing state... [id=/ecs/ecs-it-tools]
+module.ecs.aws_iam_role.execution: Refreshing state... [id=ecs-it-tools-ecs-execution]
+module.ecs.aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster]
+module.ecs.aws_security_group.task: Refreshing state... [id=sg-0555a356a5bd1262d]
+module.ecs.aws_vpc_security_group_egress_rule.task_outbound: Refreshing state... [id=sgr-0796c48d03be132fe]
+module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task: Refreshing state... [id=sgr-0eb97536cbe1dd761]
+module.ecs.aws_iam_role_policy_attachment.execution: Refreshing state... [id=ecs-it-tools-ecs-execution/arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy]
+module.ecs.aws_ecs_task_definition.this: Refreshing state... [id=ecs-it-tools]
+module.ecs.aws_ecs_service.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+PS C:\Users\Feras_F\Desktop\Dev Ops ECS\ecs-v1-it-tools>

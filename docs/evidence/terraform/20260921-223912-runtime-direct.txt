@@ -1,0 +1,686 @@
+Fresh evidence capture: 2026-09-21T22:39:12.6773255+01:00
+COMMAND: git rev-parse HEAD
+ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+COMMAND: aws sts get-caller-identity --region eu-west-2 --no-cli-pager
+{
+    "UserId": "AIDAZYNZXEAOEM7W4NG5O",
+    "Account": "670941257756",
+    "Arn": "arn:aws:iam::670941257756:user/feras-dev"
+}
+
+CHECK: 2026-09-21T22:40:50.5445973+01:00
+COMMAND: aws ecs describe-services --cluster ecs-it-tools-cluster --services ecs-it-tools-service --region eu-west-2 --no-cli-pager
+{
+    "services": [
+        {
+            "serviceArn": "arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service",
+            "serviceName": "ecs-it-tools-service",
+            "clusterArn": "arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster",
+            "loadBalancers": [
+                {
+                    "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/77643ce8d52228a2",
+                    "containerName": "ecs-it-tools",
+                    "containerPort": 8080
+                }
+            ],
+            "serviceRegistries": [],
+            "status": "ACTIVE",
+            "desiredCount": 1,
+            "runningCount": 1,
+            "pendingCount": 0,
+            "launchType": "FARGATE",
+            "platformVersion": "LATEST",
+            "platformFamily": "Linux",
+            "taskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:1",
+            "deploymentConfiguration": {
+                "deploymentCircuitBreaker": {
+                    "enable": true,
+                    "rollback": true,
+                    "resetOnHealthyTask": true,
+                    "thresholdConfiguration": {
+                        "type": "BOUNDED_PERCENT",
+                        "value": 50
+                    }
+                },
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100,
+                "strategy": "ROLLING",
+                "bakeTimeInMinutes": 0
+            },
+            "deployments": [
+                {
+                    "id": "ecs-svc/4231251802616472716",
+                    "status": "PRIMARY",
+                    "taskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:1",
+                    "desiredCount": 1,
+                    "pendingCount": 0,
+                    "runningCount": 1,
+                    "failedTasks": 0,
+                    "createdAt": "2026-09-21T18:30:41.818000+01:00",
+                    "updatedAt": "2026-09-21T18:32:20.035000+01:00",
+                    "launchType": "FARGATE",
+                    "platformVersion": "1.4.0",
+                    "platformFamily": "Linux",
+                    "networkConfiguration": {
+                        "awsvpcConfiguration": {
+                            "subnets": [
+                                "subnet-000149c71fe8c0eeb",
+                                "subnet-088caca75c9c4d184"
+                            ],
+                            "securityGroups": [
+                                "sg-0555a356a5bd1262d"
+                            ],
+                            "assignPublicIp": "DISABLED"
+                        }
+                    },
+                    "rolloutState": "COMPLETED",
+                    "rolloutStateReason": "ECS deployment ecs-svc/4231251802616472716 completed."
+                }
+            ],
+            "roleArn": "arn:aws:iam::670941257756:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+            "events": [
+                {
+                    "id": "3e8322a1-aa9f-4ea0-975e-b1390a9465ea",
+                    "createdAt": "2026-09-21T18:31:33.032000+01:00",
+                    "message": "(service ecs-it-tools-service) has reached a steady state."
+                },
+                {
+                    "id": "80f758fb-6e44-473f-9f49-cf859b5099a7",
+                    "createdAt": "2026-09-21T18:31:33.031000+01:00",
+                    "message": "(service ecs-it-tools-service) (deployment ecs-svc/4231251802616472716) deployment completed."
+                },
+                {
+                    "id": "d44869ad-dad3-4a93-9bed-cf164cf93d4a",
+                    "createdAt": "2026-09-21T18:31:22.777000+01:00",
+                    "message": "(service ecs-it-tools-service) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/77643ce8d52228a2)"
+                },
+                {
+                    "id": "8c362a39-2061-463d-a434-5a221f2657ee",
+                    "createdAt": "2026-09-21T18:30:53.917000+01:00",
+                    "message": "(service ecs-it-tools-service) has started 1 tasks: (task 391967153ee54b1cb81077860a9d5b4d)."
+                }
+            ],
+            "createdAt": "2026-09-21T18:30:41.818000+01:00",
+            "currentServiceRevisions": [
+                {
+                    "arn": "arn:aws:ecs:eu-west-2:670941257756:service-revision/ecs-it-tools-cluster/ecs-it-tools-service/4231251802616472716",
+                    "requestedTaskCount": 1,
+                    "runningTaskCount": 1,
+                    "pendingTaskCount": 0
+                }
+            ],
+            "placementConstraints": [],
+            "placementStrategy": [],
+            "networkConfiguration": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "subnet-000149c71fe8c0eeb",
+                        "subnet-088caca75c9c4d184"
+                    ],
+                    "securityGroups": [
+                        "sg-0555a356a5bd1262d"
+                    ],
+                    "assignPublicIp": "DISABLED"
+                }
+            },
+            "healthCheckGracePeriodSeconds": 60,
+            "schedulingStrategy": "REPLICA",
+            "deploymentController": {
+                "type": "ECS"
+            },
+            "createdBy": "arn:aws:iam::670941257756:user/feras-dev",
+            "enableECSManagedTags": false,
+            "propagateTags": "NONE",
+            "enableExecuteCommand": false,
+            "availabilityZoneRebalancing": "ENABLED",
+            "resourceManagementType": "CUSTOMER"
+        }
+    ],
+    "failures": []
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:51.3960399+01:00
+COMMAND: aws ecs describe-tasks --cluster ecs-it-tools-cluster --tasks 391967153ee54b1cb81077860a9d5b4d --region eu-west-2 --no-cli-pager
+{
+    "tasks": [
+        {
+            "attachments": [
+                {
+                    "id": "ab124ba6-30c5-4e4f-a4b6-b09f60666648",
+                    "type": "ElasticNetworkInterface",
+                    "status": "ATTACHED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-000149c71fe8c0eeb"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-0cadf2f0489561130"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "06:ff:fc:da:ed:b9"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-10-0-11-19.eu-west-2.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "10.0.11.19"
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "ecs.cpu-architecture",
+                    "value": "x86_64"
+                }
+            ],
+            "availabilityZone": "eu-west-2a",
+            "clusterArn": "arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster",
+            "connectivity": "CONNECTED",
+            "connectivityAt": "2026-09-21T18:30:57.669000+01:00",
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:eu-west-2:670941257756:container/ecs-it-tools-cluster/391967153ee54b1cb81077860a9d5b4d/086f23af-9547-4313-a7fb-7dc7dd385790",
+                    "taskArn": "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/391967153ee54b1cb81077860a9d5b4d",
+                    "name": "ecs-it-tools",
+                    "image": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e",
+                    "imageDigest": "sha256:ba352e08804184b05387b6c81eefe2fb8eb529986fc2b60b3bd618a8d2da6de3",
+                    "runtimeId": "391967153ee54b1cb81077860a9d5b4d-3991535994",
+                    "lastStatus": "RUNNING",
+                    "networkBindings": [],
+                    "networkInterfaces": [
+                        {
+                            "attachmentId": "ab124ba6-30c5-4e4f-a4b6-b09f60666648",
+                            "privateIpv4Address": "10.0.11.19"
+                        }
+                    ],
+                    "healthStatus": "UNKNOWN",
+                    "cpu": "0"
+                }
+            ],
+            "cpu": "256",
+            "createdAt": "2026-09-21T18:30:53.867000+01:00",
+            "desiredStatus": "RUNNING",
+            "enableExecuteCommand": false,
+            "group": "service:ecs-it-tools-service",
+            "healthStatus": "UNKNOWN",
+            "lastStatus": "RUNNING",
+            "launchType": "FARGATE",
+            "memory": "512",
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "ecs-it-tools"
+                    }
+                ],
+                "inferenceAcceleratorOverrides": []
+            },
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "pullStartedAt": "2026-09-21T18:31:05.333000+01:00",
+            "pullStoppedAt": "2026-09-21T18:31:12.854000+01:00",
+            "startedAt": "2026-09-21T18:31:27.941000+01:00",
+            "startedBy": "ecs-svc/4231251802616472716",
+            "tags": [],
+            "taskArn": "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/391967153ee54b1cb81077860a9d5b4d",
+            "taskDefinitionArn": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:1",
+            "version": 5,
+            "ephemeralStorage": {
+                "sizeInGiB": 20
+            },
+            "fargateEphemeralStorage": {
+                "sizeInGiB": 20
+            }
+        }
+    ],
+    "failures": []
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:52.0740748+01:00
+COMMAND: docker buildx imagetools inspect 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+Name:      670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:ba352e08804184b05387b6c81eefe2fb8eb529986fc2b60b3bd618a8d2da6de3
+
+Manifests:
+  Name:        670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e@sha256:bd9d853dcb6bc04a766a73c1782aa0559eecf8af2f65f023dc744e13570cbbb1
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+
+  Name:        670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e@sha256:3537c950986279c4b6cf16ce629d5c71975d4b0505b36bfc8b07cfe0bdcd438a
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations:
+    vnd.docker.reference.digest: sha256:bd9d853dcb6bc04a766a73c1782aa0559eecf8af2f65f023dc744e13570cbbb1
+    vnd.docker.reference.type:   attestation-manifest
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:52.4616996+01:00
+COMMAND: aws ecr describe-images --repository-name ecs-it-tools --image-ids imageTag=ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e --region eu-west-2 --no-cli-pager
+{
+    "imageDetails": [
+        {
+            "registryId": "670941257756",
+            "repositoryName": "ecs-it-tools",
+            "imageDigest": "sha256:ba352e08804184b05387b6c81eefe2fb8eb529986fc2b60b3bd618a8d2da6de3",
+            "imageTags": [
+                "ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e"
+            ],
+            "imageSizeInBytes": 34021376,
+            "imagePushedAt": "2026-09-21T18:22:56.007000+01:00",
+            "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+            "lastRecordedPullTime": "2026-09-21T18:23:02.848000+01:00",
+            "imageStatus": "ACTIVE"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:53.1911216+01:00
+COMMAND: aws ecr describe-repositories --repository-names ecs-it-tools --region eu-west-2 --no-cli-pager
+{
+    "repositories": [
+        {
+            "repositoryArn": "arn:aws:ecr:eu-west-2:670941257756:repository/ecs-it-tools",
+            "registryId": "670941257756",
+            "repositoryName": "ecs-it-tools",
+            "repositoryUri": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools",
+            "createdAt": "2026-09-21T18:18:43.384000+01:00",
+            "imageTagMutability": "IMMUTABLE",
+            "imageScanningConfiguration": {
+                "scanOnPush": true
+            },
+            "encryptionConfiguration": {
+                "encryptionType": "AES256"
+            }
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:53.8400284+01:00
+COMMAND: aws elbv2 describe-target-health --target-group-arn arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/77643ce8d52228a2 --region eu-west-2 --no-cli-pager
+{
+    "TargetHealthDescriptions": [
+        {
+            "Target": {
+                "Id": "10.0.11.19",
+                "Port": 8080,
+                "AvailabilityZone": "eu-west-2a"
+            },
+            "HealthCheckPort": "8080",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:54.5390790+01:00
+COMMAND: curl.exe -sS -i --max-time 30 https://tm.feras-dev.co.uk/health
+HTTP/1.1 200 OK
+Date: Mon, 21 Sep 2026 21:40:54 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: keep-alive
+Server: nginx/1.28.3
+
+{"status":"ok"}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:54.6516537+01:00
+COMMAND: curl.exe -sS -I --max-time 30 http://tm.feras-dev.co.uk/health
+HTTP/1.1 301 Moved Permanently
+Server: awselb/2.0
+Date: Mon, 21 Sep 2026 21:40:54 GMT
+Content-Type: text/html
+Content-Length: 134
+Connection: keep-alive
+Location: https://tm.feras-dev.co.uk:443/health
+
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:54.7032194+01:00
+COMMAND: aws acm describe-certificate --certificate-arn arn:aws:acm:eu-west-2:670941257756:certificate/4ff66c88-7b41-483f-a709-23d7bfbe167c --region eu-west-2 --no-cli-pager
+{
+    "Certificate": {
+        "CertificateArn": "arn:aws:acm:eu-west-2:670941257756:certificate/4ff66c88-7b41-483f-a709-23d7bfbe167c",
+        "DomainName": "tm.feras-dev.co.uk",
+        "SubjectAlternativeNames": [
+            "tm.feras-dev.co.uk"
+        ],
+        "DomainValidationOptions": [
+            {
+                "DomainName": "tm.feras-dev.co.uk",
+                "ValidationDomain": "tm.feras-dev.co.uk",
+                "ValidationStatus": "SUCCESS",
+                "ResourceRecord": {
+                    "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+                    "Type": "CNAME",
+                    "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+                },
+                "ValidationMethod": "DNS"
+            }
+        ],
+        "Serial": "0e:44:fe:10:78:cf:e9:56:d2:7d:b3:48:7d:f2:b1:d8",
+        "Subject": "CN=tm.feras-dev.co.uk",
+        "Issuer": "Amazon",
+        "CreatedAt": "2026-09-21T18:24:39.807000+01:00",
+        "IssuedAt": "2026-09-21T18:24:56.793000+01:00",
+        "Status": "ISSUED",
+        "NotBefore": "2026-09-21T01:00:00+01:00",
+        "NotAfter": "2027-04-07T00:59:59+01:00",
+        "KeyAlgorithm": "RSA-2048",
+        "SignatureAlgorithm": "SHA256WITHRSA",
+        "InUseBy": [
+            "arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/77b1f854f36f98c9"
+        ],
+        "Type": "AMAZON_ISSUED",
+        "KeyUsages": [
+            {
+                "Name": "DIGITAL_SIGNATURE"
+            },
+            {
+                "Name": "KEY_ENCIPHERMENT"
+            }
+        ],
+        "ExtendedKeyUsages": [
+            {
+                "Name": "TLS_WEB_SERVER_AUTHENTICATION",
+                "OID": "1.3.6.1.5.5.7.3.1"
+            }
+        ],
+        "RenewalEligibility": "ELIGIBLE",
+        "Options": {
+            "CertificateTransparencyLoggingPreference": "ENABLED",
+            "Export": "DISABLED"
+        },
+        "CertificateKeyPairOrigin": "AWS_MANAGED"
+    }
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:55.4421584+01:00
+COMMAND: aws route53 list-resource-record-sets --hosted-zone-id Z01014153ETFBQT2QXXK2 --no-cli-pager
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "NS",
+            "TTL": 172800,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk."
+                },
+                {
+                    "Value": "ns-1137.awsdns-14.org."
+                },
+                {
+                    "Value": "ns-878.awsdns-45.net."
+                },
+                {
+                    "Value": "ns-403.awsdns-50.com."
+                }
+            ]
+        },
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        },
+        {
+            "Name": "tm.feras-dev.co.uk.",
+            "Type": "A",
+            "AliasTarget": {
+                "HostedZoneId": "ZHURV8PSTC4K8",
+                "DNSName": "ecs-it-tools-alb-48911893.eu-west-2.elb.amazonaws.com.",
+                "EvaluateTargetHealth": true
+            }
+        },
+        {
+            "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:56.4327199+01:00
+COMMAND: aws s3api head-object --bucket feras-ecs-it-tools-tfstate-670941257756 --key ecs-v1/dev/terraform.tfstate --query {LastModified:LastModified,Bytes:ContentLength,VersionId:VersionId,Encryption:ServerSideEncryption} --region eu-west-2 --no-cli-pager
+{
+    "LastModified": "2026-09-21T17:31:48+00:00",
+    "Bytes": 78420,
+    "VersionId": "4tzP4eJk_2dbCYnLb5Z0soZebQDj1lqp",
+    "Encryption": "AES256"
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T22:40:57.1515000+01:00
+COMMAND: aws logs get-log-events --log-group-name /ecs/ecs-it-tools --log-stream-name ecs/ecs-it-tools/391967153ee54b1cb81077860a9d5b4d --start-from-head --limit 50 --query events[].{Timestamp:timestamp,Message:message} --region eu-west-2 --no-cli-pager
+[
+    {
+        "Timestamp": 1790011872338,
+        "Message": "/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration"
+    },
+    {
+        "Timestamp": 1790011872338,
+        "Message": "/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/"
+    },
+    {
+        "Timestamp": 1790011872340,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh"
+    },
+    {
+        "Timestamp": 1790011872346,
+        "Message": "10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf"
+    },
+    {
+        "Timestamp": 1790011872400,
+        "Message": "10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version"
+    },
+    {
+        "Timestamp": 1790011872400,
+        "Message": "/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh"
+    },
+    {
+        "Timestamp": 1790011872400,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh"
+    },
+    {
+        "Timestamp": 1790011872426,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh"
+    },
+    {
+        "Timestamp": 1790011872427,
+        "Message": "/docker-entrypoint.sh: Configuration complete; ready for start up"
+    },
+    {
+        "Timestamp": 1790011872435,
+        "Message": "2026/09/21 17:31:12 [warn] 1#1: the \"user\" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2"
+    },
+    {
+        "Timestamp": 1790011872435,
+        "Message": "nginx: [warn] the \"user\" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: using the \"epoll\" event method"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: nginx/1.28.3"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) "
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: OS: Linux 6.1.182"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 65535:65535"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: start worker processes"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: start worker process 29"
+    },
+    {
+        "Timestamp": 1790011872439,
+        "Message": "2026/09/21 17:31:12 [notice] 1#1: start worker process 30"
+    },
+    {
+        "Timestamp": 1790012252855,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:37:32 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012420716,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:40:20 +0000] \"GET /favicon.ico HTTP/1.1\" 200 15086 \"-\" \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012754808,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:45:54 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012754838,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:45:54 +0000] \"GET /assets/index-2235100b.js HTTP/1.1\" 200 1056559 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012756377,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:45:56 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012756407,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:45:56 +0000] \"GET /assets/index-2235100b.js HTTP/1.1\" 200 1056559 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804243,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:46:44 +0000] \"GET /js/env.js HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804263,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:46:44 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804271,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:46:44 +0000] \"GET /.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804292,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:46:44 +0000] \"GET /config.json HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804296,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:46:44 +0000] \"GET /api/config HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804300,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:46:44 +0000] \"GET /config.js HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790012804314,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:46:44 +0000] \"GET /assets/index-2235100b.js HTTP/1.1\" 200 1056559 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013040447,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:50:40 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013040527,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:50:40 +0000] \"GET /assets/index-2235100b.js HTTP/1.1\" 200 1056559 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013228172,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:53:48 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (compatible; CT-WP-Scanner/1.0; +https://example.com/bot)\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013228185,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:53:48 +0000] \"GET /wp-json/ HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (compatible; CT-WP-Scanner/1.0; +https://example.com/bot)\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013228199,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:53:48 +0000] \"GET /xmlrpc.php?rsd HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (compatible; CT-WP-Scanner/1.0; +https://example.com/bot)\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013338518,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:55:38 +0000] \"GET / HTTP/1.1\" 200 2839 \"http://tm.feras-dev.co.uk/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013339141,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:55:39 +0000] \"GET / HTTP/1.1\" 200 2839 \"http://tm.feras-dev.co.uk/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013339544,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:55:39 +0000] \"GET /favicon.ico HTTP/1.1\" 200 15086 \"http://tm.feras-dev.co.uk/favicon.ico\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013340291,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:55:40 +0000] \"GET / HTTP/1.1\" 200 2839 \"http://tm.feras-dev.co.uk/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013340533,
+        "Message": "10.0.1.227 - - [21/Sep/2026:17:55:40 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013340932,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:55:40 +0000] \"GET / HTTP/1.1\" 200 2839 \"http://tm.feras-dev.co.uk/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013378657,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:18 +0000] \"GET /.git/config HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013378689,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:18 +0000] \"GET /api/.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013378717,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:18 +0000] \"GET /laravel/.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013379116,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:19 +0000] \"GET /.env.save HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013379163,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:19 +0000] \"GET /.aws/config.json HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013379334,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:19 +0000] \"GET /home/*/.aws/config HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790013379410,
+        "Message": "10.0.2.246 - - [21/Sep/2026:17:56:19 +0000] \"GET /home/*/.aws/credentials HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    }
+]
+EXIT CODE: 0
