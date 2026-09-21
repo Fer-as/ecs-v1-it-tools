@@ -1,0 +1,42 @@
+Test started: 2026-09-21T23:26:13.7182697+01:00
+S3 lock observed: 2026-09-21T23:26:34.7067114+01:00
+{
+    "Key":  "ecs-v1/dev/terraform.tfstate.tflock",
+    "LastModified":  "2026-09-21T22:26:34+00:00",
+    "ETag":  "\"bb40248fc6638aad2ea8a4475b1e6817\"",
+    "ChecksumAlgorithm":  [
+                              "SHA256"
+                          ],
+    "ChecksumType":  "FULL_OBJECT",
+    "Size":  254,
+    "StorageClass":  "STANDARD"
+}
+terraform :
+At line:41 char:5
++     terraform "-chdir=terraform" plan "-input=false" "-no-color" "-lo ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: Error acquiring the state lock
+
+Error message: operation error S3: PutObject, https response error
+StatusCode: 412, RequestID: JY71XWCVZCRXNRZX, HostID:
+B/Cc0Q3nqCy2W5pJK2axkF4UZYCWqtN/wz+jekxQvulcQG+08UruG1yIQZB70kfkVbuGhNK4rFqWhu6VOtYewjRrbAlE/lKj,
+api error PreconditionFailed: At least one of the pre-conditions you
+specified did not hold
+Lock Info:
+  ID:        01b97ce2-64fe-7b3a-123d-cc592e4bf223
+  Path:      feras-ecs-it-tools-tfstate-670941257756/ecs-v1/dev/terraform.tfstate
+  Operation: OperationTypePlan
+  Who:       FERAS\Feras_F@Feras
+  Version:   1.16.2
+  Created:   2026-09-21 22:26:34.0701598 +0000 UTC
+  Info:
+
+
+Terraform acquires a state lock to protect the state from being written
+by multiple users at the same time. Please resolve the issue above and try
+again. For most commands, you can disable locking with the "-lock=false"
+flag, but this is not recommended.
+EXIT CODE: 1

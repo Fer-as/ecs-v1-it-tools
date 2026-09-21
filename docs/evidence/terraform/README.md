@@ -14,19 +14,19 @@ Application: https://tm.feras-dev.co.uk
 
 ## Evidence files and provenance
 
-- [Initial apply](2026-09-21-initial-apply.txt):
+* [Initial apply](2026-09-21-initial-apply.txt):
 
   original terminal output preserved from the deployment session.
 
   Result: 1 imported, 30 added, 0 changed, 0 destroyed.
 
-- [Post-deployment plan](2026-09-21-post-deployment-plan.txt):
+* [Post-deployment plan](2026-09-21-post-deployment-plan.txt):
 
   original subsequent terminal output. Result: no changes.
 
   These historical files do not contain an explicit command-start timestamp.
 
-- [Runtime capture](20260921-223912-runtime-direct.txt):
+* [Runtime capture](20260921-223912-runtime-direct.txt):
 
   fresh checks, not reconstructed historical outputs.
 
@@ -34,7 +34,7 @@ Application: https://tm.feras-dev.co.uk
 
   at 22:40:50–22:40:57 +01:00. All 12 recorded exit codes are zero.
 
-- [Browser screenshot](../../screenshots/2026-09-21-terraform-it-tools-browser.png):
+* [Browser screenshot](../../screenshots/2026-09-21-terraform-it-tools-browser.png):
 
   application rendered at the expected hostname.
 
@@ -54,41 +54,24 @@ An original copy was backed up outside the repository. Trailing whitespace in th
 
 ## Verified results
 
-- ECS service: ecs-it-tools-service.
-
-- Cluster: ecs-it-tools-cluster.
-
-- Deployment: ecs-svc/4231251802616472716, COMPLETED.
-
-- Counts: 1 desired, 1 running, 0 pending, 0 failed tasks.
-
-- Task definition: ecs-it-tools:1.
-
-- Task: 391967153ee54b1cb81077860a9d5b4d.
-
-- Task subnet: subnet-000149c71fe8c0eeb.
-
-- Task security group: sg-0555a356a5bd1262d.
-
-- Service public IP assignment: DISABLED.
-
-- Task private IP matches healthy ALB target: 10.0.11.19:8080.
-
-- ECR repository: ecs-it-tools, IMMUTABLE tags.
-
-- Remote image supports linux/amd64; task reports x86_64.
-
-- CloudWatch startup and request logs retrieved for the running task.
-
-- HTTPS /health returned 200 with {"status":"ok"}.
-
-- HTTP /health returned 301 to https://tm.feras-dev.co.uk:443/health.
-
-- ACM certificate is ISSUED, DNS validation SUCCESS, and in use by the ALB.
-
-- Validation CNAME imported successfully; application alias points to the ALB.
-
-- Retained hosted zone: Z01014153ETFBQT2QXXK2, with NS/SOA present.
+* ECS service: ecs-it-tools-service.
+* Cluster: ecs-it-tools-cluster.
+* Deployment: ecs-svc/4231251802616472716, COMPLETED.
+* Counts: 1 desired, 1 running, 0 pending, 0 failed tasks.
+* Task definition: ecs-it-tools:1.
+* Task: 391967153ee54b1cb81077860a9d5b4d.
+* Task subnet: subnet-000149c71fe8c0eeb.
+* Task security group: sg-0555a356a5bd1262d.
+* Service public IP assignment: DISABLED.
+* Task private IP matches healthy ALB target: 10.0.11.19:8080.
+* ECR repository: ecs-it-tools, IMMUTABLE tags.
+* Remote image supports linux/amd64; task reports x86_64.
+* CloudWatch startup and request logs retrieved for the running task.
+* HTTPS /health returned 200 with {"status":"ok"}.
+* HTTP /health returned 301 to https://tm.feras-dev.co.uk:443/health.
+* ACM certificate is ISSUED, DNS validation SUCCESS, and in use by the ALB.
+* Validation CNAME imported successfully; application alias points to the ALB.
+* Retained hosted zone: Z01014153ETFBQT2QXXK2, with NS/SOA present.
 
 Image index digest, matching the running task:
 
@@ -120,14 +103,46 @@ Only object metadata is included; state contents are excluded.
 
 ## Pending acceptance
 
-- Native S3 lock contention and normal release.
-
-- Terraform force_delete with images present in ECR.
-
-- Destroy, retained-resource survival, and recreation.
-
-- OIDC and the three mandatory pipelines.
+* Terraform force_delete with images present in ECR.
+* Destroy, retained-resource survival, and recreation.
+* OIDC and the three mandatory pipelines.
 
 This evidence package does not claim these pending checks passed.
 
 No teardown is recorded here.
+
+## Native S3 locking verification
+
+Verified on 21 September 2026 using Terraform 1.16.2,
+
+the default workspace, and the existing S3 backend with use_lockfile=true.
+
+- [Lock-holding plan](2026-09-21-lock-plan-holder-02.txt):
+
+  started at 23:26:33 +01:00; completed with no changes and exit code 0.
+
+- [Competing plan](2026-09-21-lock-plan-contention-02.txt):
+
+  observed the S3 lock at 23:26:34 +01:00, then failed to acquire it
+
+  with S3 412 PreconditionFailed and exit code 1.
+
+- Lock ID: 01b97ce2-64fe-7b3a-123d-cc592e4bf223.
+
+- [Normal release and retry](2026-09-21-lock-release.txt):
+
+  no current lock object at 23:27:56 +01:00; subsequent plan
+
+  completed with no changes and exit code 0.
+
+Both operations were plans. No apply, manual lock deletion, or
+
+force-unlock was used.
+
+An earlier console-based attempt did not demonstrate contention.
+
+A subsequent polling attempt failed because of a query error before
+
+running the competing plan. Neither attempt is counted as a pass.
+
+Destroy/recreation and ECR force_delete verification remain pending.
