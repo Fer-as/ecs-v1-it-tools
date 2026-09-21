@@ -63,3 +63,17 @@ output "ecs_log_group_name" {
   value       = module.ecs.log_group_name
 }
 
+output "ecs_service_name" {
+  description = "ECS service name"
+  value       = module.ecs.service_name
+}
+
+output "application_url" {
+  description = "Application HTTPS URL"
+  value       = "https://${aws_route53_record.app.fqdn}"
+}
+
+output "acm_certificate_arn" {
+  description = "Validated ACM certificate ARN"
+  value       = aws_acm_certificate_validation.this.certificate_arn
+}

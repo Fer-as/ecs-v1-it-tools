@@ -36,3 +36,13 @@ variable "image_tag" {
     error_message = "Provide a valid explicit version or commit SHA tag; latest is not allowed."
   }
 }
+
+variable "private_subnet_ids" {
+  description = "Private subnet IDs for ECS service tasks"
+  type        = list(string)
+}
+
+variable "target_group_arn" {
+  description = "ALB target group ARN for the application on port 8080"
+  type        = string
+}

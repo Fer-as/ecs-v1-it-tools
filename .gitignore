@@ -7,3 +7,11 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+# Saved Terraform plans
+*.tfplan
+
+# Local deployment image selection; retain this file through destroy
+/terraform/environments/dev/image.tfvars
+
+# Temporary adoption of the retained validation record
+/terraform/validation-import.tf

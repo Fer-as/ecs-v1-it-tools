@@ -24,7 +24,7 @@ module "alb" {
   project_name      = var.project_name
   vpc_id            = module.vpc.vpc_id
   public_subnet_ids = module.vpc.public_subnet_ids
-  certificate_arn   = var.certificate_arn
+  certificate_arn   = aws_acm_certificate_validation.this.certificate_arn
 }
 
 module "ecs" {
@@ -33,7 +33,14 @@ module "ecs" {
   project_name          = var.project_name
   aws_region            = var.aws_region
   vpc_id                = module.vpc.vpc_id
+  private_subnet_ids    = module.vpc.private_subnet_ids
   alb_security_group_id = module.alb.security_group_id
+  target_group_arn      = module.alb.target_group_arn
   ecr_repository_url    = module.ecr.repository_url
   image_tag             = var.image_tag
+
+  depends_on = [
+    module.vpc,
+    module.alb
+  ]
 }

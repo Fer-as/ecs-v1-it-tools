@@ -19,7 +19,7 @@ variable "domain_name" {
 variable "subdomain_name" {
   description = "Subdomain for the application"
   type        = string
-  default     = "it-tools"
+  default     = "tm"
 }
 
 variable "vpc_cidr" {
@@ -46,11 +46,6 @@ variable "availability_zones" {
   default     = ["eu-west-2a", "eu-west-2b"]
 }
 
-variable "certificate_arn" {
-  description = "ACM certificate ARN for the ALB"
-  type        = string
-}
-
 variable "image_tag" {
   description = "Application version or commit SHA tag to deploy from ECR"
   type        = string
@@ -63,4 +58,10 @@ variable "image_tag" {
     )
     error_message = "Provide a valid explicit version or commit SHA tag; latest is not allowed."
   }
+}
+
+variable "hosted_zone_id" {
+  description = "Existing public Route 53 hosted zone ID"
+  type        = string
+  nullable    = false
 }
