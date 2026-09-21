@@ -1,0 +1,19 @@
+﻿Pre-destroy image check: 2026-09-21T23:37:28.5984000+01:00
+{
+    "imageDetails": [
+        {
+            "registryId": "670941257756",
+            "repositoryName": "ecs-it-tools",
+            "imageDigest": "sha256:ba352e08804184b05387b6c81eefe2fb8eb529986fc2b60b3bd618a8d2da6de3",
+            "imageTags": [
+                "ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e"
+            ],
+            "imageSizeInBytes": 34021376,
+            "imagePushedAt": "2026-09-21T18:22:56.007000+01:00",
+            "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+            "lastRecordedPullTime": "2026-09-21T18:23:02.848000+01:00",
+            "imageStatus": "ACTIVE"
+        }
+    ]
+}
+EXIT CODE: 0
