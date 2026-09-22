@@ -1,0 +1,42 @@
+Post-recreation plan: 2026-09-22T10:46:58.9750511+01:00
+data.aws_route53_zone.existing: Reading...
+module.ecr.aws_ecr_repository.this: Refreshing state... [id=ecs-it-tools]
+module.vpc.aws_vpc.this: Refreshing state... [id=vpc-05506e4d646de3807]
+module.vpc.aws_eip.nat: Refreshing state... [id=eipalloc-0219456e4a1310175]
+aws_acm_certificate.this: Refreshing state... [id=arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf]
+module.vpc.aws_internet_gateway.this: Refreshing state... [id=igw-0de74bad587cd926f]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0f6852154698b8906]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0bdc93ae056a8a633]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-01a5f3b8fbae059f2]
+module.alb.aws_security_group.alb: Refreshing state... [id=sg-0d311346e03444dc2]
+module.alb.aws_lb_target_group.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/23b86d820a08800f]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-075ac29670a72c2bd]
+module.vpc.aws_route_table.public: Refreshing state... [id=rtb-0aaf2ef58bb81f8a5]
+data.aws_route53_zone.existing: Read complete after 1s [id=Z01014153ETFBQT2QXXK2]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Refreshing state... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk._CNAME]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0426bb5765e835ca3]
+module.vpc.aws_nat_gateway.this: Refreshing state... [id=nat-0e3ca6f025f2f3958]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0664abae3e7fad34d]
+module.alb.aws_lb.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/7296261e706d90a1]
+module.vpc.aws_route_table.private: Refreshing state... [id=rtb-04b30fe11e8bbcaeb]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0c1f685550979bf8a]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0640cc3613c2b1109]
+aws_acm_certificate_validation.this: Refreshing state... [id=0001-01-01 00:00:00 +0000 UTC]
+aws_route53_record.app: Refreshing state... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A]
+module.alb.aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/7296261e706d90a1/62d946fc2df1c220]
+module.alb.aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/7296261e706d90a1/6acf2ae643c177bb]
+module.ecs.aws_cloudwatch_log_group.this: Refreshing state... [id=/ecs/ecs-it-tools]
+module.ecs.aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster]
+module.ecs.aws_iam_role.execution: Refreshing state... [id=ecs-it-tools-ecs-execution]
+module.ecs.aws_security_group.task: Refreshing state... [id=sg-0cd73f63b3e3d9ede]
+module.ecs.aws_vpc_security_group_egress_rule.task_outbound: Refreshing state... [id=sgr-05a86006f085070a5]
+module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task: Refreshing state... [id=sgr-0ccbe394334371de8]
+module.ecs.aws_iam_role_policy_attachment.execution: Refreshing state... [id=ecs-it-tools-ecs-execution/arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy]
+module.ecs.aws_ecs_task_definition.this: Refreshing state... [id=ecs-it-tools]
+module.ecs.aws_ecs_service.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+EXIT CODE: 0

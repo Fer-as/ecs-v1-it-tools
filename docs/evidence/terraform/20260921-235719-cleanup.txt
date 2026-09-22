@@ -1,0 +1,171 @@
+
+CHECK: 2026-09-21T23:57:23.0971799+01:00
+COMMAND: terraform -chdir=terraform state list
+EXIT CODE: 0
+
+CHECK: 2026-09-21T23:57:23.9668724+01:00
+COMMAND: aws ecr describe-repositories --query repositories[?repositoryName=='ecs-it-tools'].repositoryName --region eu-west-2 --no-cli-pager
+[]
+EXIT CODE: 0
+
+CHECK: 2026-09-21T23:57:24.6498773+01:00
+COMMAND: aws route53 get-hosted-zone --id Z01014153ETFBQT2QXXK2 --no-cli-pager
+{
+    "HostedZone": {
+        "Id": "/hostedzone/Z01014153ETFBQT2QXXK2",
+        "Name": "feras-dev.co.uk.",
+        "CallerReference": "b4656423-c1ac-4111-82cb-09e28c5a6b81",
+        "Config": {
+            "Comment": "",
+            "PrivateZone": false
+        },
+        "ResourceRecordSetCount": 2
+    },
+    "DelegationSet": {
+        "NameServers": [
+            "ns-1865.awsdns-41.co.uk",
+            "ns-1137.awsdns-14.org",
+            "ns-878.awsdns-45.net",
+            "ns-403.awsdns-50.com"
+        ]
+    }
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T23:57:25.6761713+01:00
+COMMAND: aws route53 list-resource-record-sets --hosted-zone-id Z01014153ETFBQT2QXXK2 --no-cli-pager
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "NS",
+            "TTL": 172800,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk."
+                },
+                {
+                    "Value": "ns-1137.awsdns-14.org."
+                },
+                {
+                    "Value": "ns-878.awsdns-45.net."
+                },
+                {
+                    "Value": "ns-403.awsdns-50.com."
+                }
+            ]
+        },
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T23:57:26.6386250+01:00
+COMMAND: aws s3api head-object --bucket feras-ecs-it-tools-tfstate-670941257756 --key ecs-v1/dev/terraform.tfstate --query {Modified:LastModified,Bytes:ContentLength,Version:VersionId,Encryption:ServerSideEncryption} --region eu-west-2 --no-cli-pager
+{
+    "Modified": "2026-09-21T22:56:03+00:00",
+    "Bytes": 449,
+    "Version": "jLprvvNQl3f7WrQJn0xm0BbuavirSV2j",
+    "Encryption": "AES256"
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-21T23:57:27.3692365+01:00
+COMMAND: aws s3api list-object-versions --bucket feras-ecs-it-tools-tfstate-670941257756 --prefix ecs-v1/dev/terraform.tfstate --query Versions[?Key=='ecs-v1/dev/terraform.tfstate'].{Version:VersionId,Latest:IsLatest,Modified:LastModified} --region eu-west-2 --no-cli-pager
+[
+    {
+        "Version": "jLprvvNQl3f7WrQJn0xm0BbuavirSV2j",
+        "Latest": true,
+        "Modified": "2026-09-21T22:56:03+00:00"
+    },
+    {
+        "Version": "IWxLGK6ZidFmAlARtL4uHxsv.0upOQIT",
+        "Latest": false,
+        "Modified": "2026-09-21T22:56:02+00:00"
+    },
+    {
+        "Version": "XCGJGjrLJHdNVfUoMcssbVznlM9ESDsP",
+        "Latest": false,
+        "Modified": "2026-09-21T22:55:31+00:00"
+    },
+    {
+        "Version": "zuOCw77hE0SbmRbMsGbnpTPoZBLkoNxW",
+        "Latest": false,
+        "Modified": "2026-09-21T22:54:59+00:00"
+    },
+    {
+        "Version": "4tzP4eJk_2dbCYnLb5Z0soZebQDj1lqp",
+        "Latest": false,
+        "Modified": "2026-09-21T17:31:48+00:00"
+    },
+    {
+        "Version": "cQ3UBHJiYAWQUFyZo8ohG1IHSn0N0xEJ",
+        "Latest": false,
+        "Modified": "2026-09-21T17:31:48+00:00"
+    },
+    {
+        "Version": "UGR7vfo5hcvQ253HR5wTPWecXa7A2Qdd",
+        "Latest": false,
+        "Modified": "2026-09-21T17:31:02+00:00"
+    },
+    {
+        "Version": "_fN_13gI6W8.DSMuhW9qpZAvkVn4gdUN",
+        "Latest": false,
+        "Modified": "2026-09-21T17:30:31+00:00"
+    },
+    {
+        "Version": "qRL3q6.xMAz64twAINaQiDh_fyB5N.EJ",
+        "Latest": false,
+        "Modified": "2026-09-21T17:29:53+00:00"
+    },
+    {
+        "Version": "liU4mWD6nsr5Zs.Qjv4HQMEgc0Evbk94",
+        "Latest": false,
+        "Modified": "2026-09-21T17:24:47+00:00"
+    },
+    {
+        "Version": "S3m36YCCDaQQ9rmVAArzZXjwCMTVqATV",
+        "Latest": false,
+        "Modified": "2026-09-21T17:18:44+00:00"
+    }
+]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:01:02.3986851+01:00
+COMMAND: aws ec2 describe-vpcs --filters Name=vpc-id,Values=vpc-09f14318823166b3e --query Vpcs[].VpcId --region eu-west-2 --no-cli-pager
+[]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:01:03.3113702+01:00
+COMMAND: aws ec2 describe-nat-gateways --filter Name=vpc-id,Values=vpc-09f14318823166b3e --query NatGateways[].{Id:NatGatewayId,State:State} --region eu-west-2 --no-cli-pager
+[
+    {
+        "Id": "nat-020898f79508576b6",
+        "State": "deleted"
+    }
+]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:01:04.0791454+01:00
+COMMAND: aws ec2 describe-addresses --filters Name=allocation-id,Values=eipalloc-05fd8e5c41b29e7ae --query Addresses[].AllocationId --region eu-west-2 --no-cli-pager
+[]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:01:04.8982960+01:00
+COMMAND: aws elbv2 describe-load-balancers --query LoadBalancers[?LoadBalancerName=='ecs-it-tools-alb'].LoadBalancerArn --region eu-west-2 --no-cli-pager
+[]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:01:05.6116832+01:00
+COMMAND: aws elbv2 describe-target-groups --query TargetGroups[?TargetGroupName=='ecs-it-tools-tg'].TargetGroupArn --region eu-west-2 --no-cli-pager
+[]
+EXIT CODE: 0

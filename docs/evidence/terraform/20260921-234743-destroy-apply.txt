@@ -1,0 +1,130 @@
+Authorization: CT-2026-09-21-03
+Started: 2026-09-21T23:47:43.6760684+01:00
+Plan SHA256: 37F54FA43F6CE435755296DE9224D4CA7AB85F0FE6FF63DB27C7B061FB155910
+COMMAND: terraform "-chdir=terraform" apply "-no-color" "destroy.tfplan"
+aws_route53_record.app: Destroying... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A]
+module.ecs.aws_ecs_service.this: Destroying... [id=arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service]
+aws_route53_record.app: Still destroying... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A, 00m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 00m10s elapsed]
+aws_route53_record.app: Still destroying... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A, 00m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 00m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 00m30s elapsed]
+aws_route53_record.app: Still destroying... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A, 00m30s elapsed]
+aws_route53_record.app: Destruction complete after 31s
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 00m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 00m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 01m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 02m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 03m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 04m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 05m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m10s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m20s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m30s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m40s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 06m50s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 07m00s elapsed]
+module.ecs.aws_ecs_service.this: Still destroying... [id=arn:aws:ecs:eu-west-2:670941257756:serv...-it-tools-cluster/ecs-it-tools-service, 07m10s elapsed]
+module.ecs.aws_ecs_service.this: Destruction complete after 7m13s
+module.ecs.aws_ecs_cluster.this: Destroying... [id=arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster]
+module.ecs.aws_vpc_security_group_egress_rule.task_outbound: Destroying... [id=sgr-0796c48d03be132fe]
+module.ecs.aws_ecs_task_definition.this: Destroying... [id=ecs-it-tools]
+module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task: Destroying... [id=sgr-0eb97536cbe1dd761]
+module.ecs.aws_ecs_task_definition.this: Destruction complete after 0s
+module.ecs.aws_iam_role_policy_attachment.execution: Destroying... [id=ecs-it-tools-ecs-execution/arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy]
+module.ecs.aws_cloudwatch_log_group.this: Destroying... [id=/ecs/ecs-it-tools]
+module.ecr.aws_ecr_repository.this: Destroying... [id=ecs-it-tools]
+module.ecs.aws_ecs_cluster.this: Destruction complete after 0s
+module.ecr.aws_ecr_repository.this: Destruction complete after 0s
+module.ecs.aws_cloudwatch_log_group.this: Destruction complete after 0s
+module.ecs.aws_vpc_security_group_egress_rule.task_outbound: Destruction complete after 0s
+module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task: Destruction complete after 0s
+module.ecs.aws_security_group.task: Destroying... [id=sg-0555a356a5bd1262d]
+module.ecs.aws_iam_role_policy_attachment.execution: Destruction complete after 0s
+module.ecs.aws_iam_role.execution: Destroying... [id=ecs-it-tools-ecs-execution]
+module.ecs.aws_security_group.task: Destruction complete after 1s
+module.ecs.aws_iam_role.execution: Destruction complete after 1s
+module.vpc.aws_route_table_association.public[0]: Destroying... [id=rtbassoc-0b4790b5d395a0075]
+module.vpc.aws_route_table_association.private[0]: Destroying... [id=rtbassoc-0a96c17eb01306d68]
+module.vpc.aws_route_table_association.public[1]: Destroying... [id=rtbassoc-06bdb8e6a0cee5aa2]
+module.vpc.aws_route_table_association.private[1]: Destroying... [id=rtbassoc-08e5e66d528a8a12e]
+module.alb.aws_lb_listener.https: Destroying... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/77b1f854f36f98c9/15d773d9807ae174]
+module.alb.aws_lb_listener.http: Destroying... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/77b1f854f36f98c9/65e259b6dde12592]
+module.alb.aws_lb_listener.http: Destruction complete after 0s
+module.alb.aws_lb_listener.https: Destruction complete after 0s
+aws_acm_certificate_validation.this: Destroying... [id=2026-09-21 17:24:56.793 +0000 UTC]
+aws_acm_certificate_validation.this: Destruction complete after 0s
+module.alb.aws_lb_target_group.this: Destroying... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/77643ce8d52228a2]
+module.alb.aws_lb.this: Destroying... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/77b1f854f36f98c9]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Destroying... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME]
+module.alb.aws_lb_target_group.this: Destruction complete after 0s
+module.vpc.aws_route_table_association.public[1]: Destruction complete after 0s
+module.vpc.aws_route_table_association.public[0]: Destruction complete after 0s
+module.vpc.aws_route_table.public: Destroying... [id=rtb-0d24659d131ec2b12]
+module.vpc.aws_route_table_association.private[0]: Destruction complete after 0s
+module.vpc.aws_route_table_association.private[1]: Destruction complete after 0s
+module.vpc.aws_route_table.private: Destroying... [id=rtb-052edddc7aa67a472]
+module.vpc.aws_subnet.private[0]: Destroying... [id=subnet-000149c71fe8c0eeb]
+module.vpc.aws_subnet.private[1]: Destroying... [id=subnet-088caca75c9c4d184]
+module.vpc.aws_subnet.private[0]: Destruction complete after 1s
+module.vpc.aws_subnet.private[1]: Destruction complete after 1s
+module.vpc.aws_route_table.private: Destruction complete after 1s
+module.vpc.aws_nat_gateway.this: Destroying... [id=nat-020898f79508576b6]
+module.vpc.aws_route_table.public: Destruction complete after 1s
+module.alb.aws_lb.this: Still destroying... [id=arn:aws:elasticloadbalancing:eu-west-2:.../app/ecs-it-tools-alb/77b1f854f36f98c9, 00m10s elapsed]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Still destroying... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME, 00m10s elapsed]
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 00m10s elapsed]
+module.alb.aws_lb.this: Destruction complete after 16s
+module.alb.aws_security_group.alb: Destroying... [id=sg-0c10e0adfc6c3e1be]
+module.alb.aws_security_group.alb: Destruction complete after 1s
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Still destroying... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME, 00m20s elapsed]
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 00m20s elapsed]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Still destroying... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME, 00m30s elapsed]
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 00m30s elapsed]
+aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Destruction complete after 31s
+aws_acm_certificate.this: Destroying... [id=arn:aws:acm:eu-west-2:670941257756:certificate/4ff66c88-7b41-483f-a709-23d7bfbe167c]
+aws_acm_certificate.this: Destruction complete after 0s
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 00m40s elapsed]
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 00m50s elapsed]
+module.vpc.aws_nat_gateway.this: Still destroying... [id=nat-020898f79508576b6, 01m00s elapsed]
+module.vpc.aws_nat_gateway.this: Destruction complete after 1m0s
+module.vpc.aws_internet_gateway.this: Destroying... [id=igw-042ac28007b6b49dd]
+module.vpc.aws_eip.nat: Destroying... [id=eipalloc-05fd8e5c41b29e7ae]
+module.vpc.aws_subnet.public[0]: Destroying... [id=subnet-06b30086b5c6f15ca]
+module.vpc.aws_subnet.public[1]: Destroying... [id=subnet-04e0e0ec300bf9bde]
+module.vpc.aws_internet_gateway.this: Destruction complete after 1s
+module.vpc.aws_subnet.public[0]: Destruction complete after 1s
+module.vpc.aws_subnet.public[1]: Destruction complete after 1s
+module.vpc.aws_vpc.this: Destroying... [id=vpc-09f14318823166b3e]
+module.vpc.aws_eip.nat: Destruction complete after 1s
+module.vpc.aws_vpc.this: Destruction complete after 1s
+
+Apply complete! Resources: 0 added, 0 changed, 33 destroyed.
+Finished: 2026-09-21T23:56:02.8037209+01:00
+EXIT CODE: 0

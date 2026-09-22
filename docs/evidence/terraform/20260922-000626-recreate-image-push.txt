@@ -1,0 +1,42 @@
+Push started: 2026-09-22T00:06:26.1269300+01:00
+COMMAND: docker push 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+The push refers to repository [670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools]
+44136fa355b3: Waiting
+1d9cbdb003be: Waiting
+589002ba0eae: Waiting
+eea05242bb15: Waiting
+589002ba0eae: Waiting
+44136fa355b3: Waiting
+44136fa355b3: Pushed
+e914c6e98e37: Waiting
+d631a49fb4f7: Waiting
+8f7c784e2471: Waiting
+eea05242bb15: Pushed
+8f7c784e2471: Waiting
+44fa0a5a779f: Waiting
+1d9cbdb003be: Pushed
+98104829f3fe: Waiting
+0151c82f84a9: Waiting
+e914c6e98e37: Pushed
+d631a49fb4f7: Pushed
+d08a05a57197: Waiting
+8f7c784e2471: Pushed
+4bd279382785: Waiting
+44fa0a5a779f: Pushed
+8c6ae3f741bc: Waiting
+98104829f3fe: Pushed
+4bd279382785: Waiting
+8c6ae3f741bc: Waiting
+b099960a9a3d: Waiting
+589002ba0eae: Pushed
+d08a05a57197: Pushed
+b17f37bc9cce: Waiting
+8c6ae3f741bc: Waiting
+b17f37bc9cce: Waiting
+b17f37bc9cce: Pushed
+8c6ae3f741bc: Pushed
+4bd279382785: Pushed
+b099960a9a3d: Pushed
+0151c82f84a9: Pushed
+ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e: digest: sha256:2d9524ed872f2c5bf9311d887188d46fa23df0ec6cd60fb51d9b9a6d5e270ac5 size: 856
+EXIT CODE: 0

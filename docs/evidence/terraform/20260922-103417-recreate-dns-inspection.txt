@@ -1,0 +1,66 @@
+
+CHECK: 2026-09-22T10:34:17.3560556+01:00
+COMMAND: terraform -chdir=terraform state list
+aws_acm_certificate.this
+module.ecr.aws_ecr_repository.this
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:34:18.2829949+01:00
+COMMAND: aws acm describe-certificate --certificate-arn arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf --query Certificate.{ARN:CertificateArn,Domain:DomainName,Status:Status,Validation:DomainValidationOptions} --region eu-west-2 --no-cli-pager
+{
+    "ARN": "arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf",
+    "Domain": "tm.feras-dev.co.uk",
+    "Status": "PENDING_VALIDATION",
+    "Validation": [
+        {
+            "DomainName": "tm.feras-dev.co.uk",
+            "ValidationDomain": "tm.feras-dev.co.uk",
+            "ValidationStatus": "PENDING_VALIDATION",
+            "ResourceRecord": {
+                "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+                "Type": "CNAME",
+                "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+            },
+            "ValidationMethod": "DNS"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:34:19.0975077+01:00
+COMMAND: aws route53 list-resource-record-sets --hosted-zone-id Z01014153ETFBQT2QXXK2 --no-cli-pager
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "NS",
+            "TTL": 172800,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk."
+                },
+                {
+                    "Value": "ns-1137.awsdns-14.org."
+                },
+                {
+                    "Value": "ns-878.awsdns-45.net."
+                },
+                {
+                    "Value": "ns-403.awsdns-50.com."
+                }
+            ]
+        },
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+Temporary import file present: False

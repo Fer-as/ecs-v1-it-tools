@@ -1,0 +1,508 @@
+
+CHECK: 2026-09-22T10:41:55.7778282+01:00
+COMMAND: git rev-parse HEAD
+0906d8ba5532746e46840fde61e2d0e8a30773b4
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:41:55.8196344+01:00
+COMMAND: aws sts get-caller-identity --region eu-west-2 --no-cli-pager
+{
+    "UserId": "AIDAZYNZXEAOEM7W4NG5O",
+    "Account": "670941257756",
+    "Arn": "arn:aws:iam::670941257756:user/feras-dev"
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:41:56.7374138+01:00
+COMMAND: aws ecs describe-services --cluster ecs-it-tools-cluster --services ecs-it-tools-service --query {Services:services[].{Name:serviceName,Status:status,Desired:desiredCount,Running:runningCount,Pending:pendingCount,TaskDefinition:taskDefinition,Deployments:deployments,Network:networkConfiguration,Events:events[:5]},Failures:failures} --region eu-west-2 --no-cli-pager
+{
+    "Services": [
+        {
+            "Name": "ecs-it-tools-service",
+            "Status": "ACTIVE",
+            "Desired": 1,
+            "Running": 1,
+            "Pending": 0,
+            "TaskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:2",
+            "Deployments": [
+                {
+                    "id": "ecs-svc/7567740141603028810",
+                    "status": "PRIMARY",
+                    "taskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:2",
+                    "desiredCount": 1,
+                    "pendingCount": 0,
+                    "runningCount": 1,
+                    "failedTasks": 0,
+                    "createdAt": "2026-09-22T10:39:49.615000+01:00",
+                    "updatedAt": "2026-09-22T10:41:22.323000+01:00",
+                    "launchType": "FARGATE",
+                    "platformVersion": "1.4.0",
+                    "platformFamily": "Linux",
+                    "networkConfiguration": {
+                        "awsvpcConfiguration": {
+                            "subnets": [
+                                "subnet-01a5f3b8fbae059f2",
+                                "subnet-0f6852154698b8906"
+                            ],
+                            "securityGroups": [
+                                "sg-0cd73f63b3e3d9ede"
+                            ],
+                            "assignPublicIp": "DISABLED"
+                        }
+                    },
+                    "rolloutState": "COMPLETED",
+                    "rolloutStateReason": "ECS deployment ecs-svc/7567740141603028810 completed."
+                }
+            ],
+            "Network": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "subnet-01a5f3b8fbae059f2",
+                        "subnet-0f6852154698b8906"
+                    ],
+                    "securityGroups": [
+                        "sg-0cd73f63b3e3d9ede"
+                    ],
+                    "assignPublicIp": "DISABLED"
+                }
+            },
+            "Events": [
+                {
+                    "id": "bf415925-9b51-411a-9a0b-193cf6cfb36f",
+                    "createdAt": "2026-09-22T10:40:36.695000+01:00",
+                    "message": "(service ecs-it-tools-service) has reached a steady state."
+                },
+                {
+                    "id": "c5bd9d59-f41a-4bfb-a6da-84e6564a1c15",
+                    "createdAt": "2026-09-22T10:40:36.694000+01:00",
+                    "message": "(service ecs-it-tools-service) (deployment ecs-svc/7567740141603028810) deployment completed."
+                },
+                {
+                    "id": "bfa4c045-425b-4301-9572-0125116776d4",
+                    "createdAt": "2026-09-22T10:40:27.314000+01:00",
+                    "message": "(service ecs-it-tools-service) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/23b86d820a08800f)"
+                },
+                {
+                    "id": "38602d75-38af-4c91-b7a3-555718b30821",
+                    "createdAt": "2026-09-22T10:40:06.939000+01:00",
+                    "message": "(service ecs-it-tools-service) has started 1 tasks: (task 341c4251f63842809af0081b2d3af31b)."
+                }
+            ]
+        }
+    ],
+    "Failures": []
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:41:57.6559614+01:00
+COMMAND: aws ecs list-tasks --cluster ecs-it-tools-cluster --service-name ecs-it-tools-service --desired-status RUNNING --region eu-west-2 --no-cli-pager
+{
+    "taskArns": [
+        "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/341c4251f63842809af0081b2d3af31b"
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:44:16.0112398+01:00
+COMMAND: aws ecs describe-tasks --cluster ecs-it-tools-cluster --tasks 341c4251f63842809af0081b2d3af31b --query {Tasks:tasks[].{TaskArn:taskArn,Status:lastStatus,TaskDefinition:taskDefinitionArn,StartedAt:startedAt,Attachments:attachments,Containers:containers[].{Name:name,Status:lastStatus,Image:image,ImageDigest:imageDigest,Network:networkInterfaces}},Failures:failures} --region eu-west-2 --no-cli-pager
+{
+    "Tasks": [
+        {
+            "TaskArn": "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/341c4251f63842809af0081b2d3af31b",
+            "Status": "RUNNING",
+            "TaskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:2",
+            "StartedAt": "2026-09-22T10:40:29.788000+01:00",
+            "Attachments": [
+                {
+                    "id": "e4409577-eaf9-409b-9565-b248fada6f0d",
+                    "type": "ElasticNetworkInterface",
+                    "status": "ATTACHED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-01a5f3b8fbae059f2"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-04a33ee538e147004"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "06:ff:cb:6b:e9:71"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-10-0-11-81.eu-west-2.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "10.0.11.81"
+                        }
+                    ]
+                }
+            ],
+            "Containers": [
+                {
+                    "Name": "ecs-it-tools",
+                    "Status": "RUNNING",
+                    "Image": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e",
+                    "ImageDigest": "sha256:2d9524ed872f2c5bf9311d887188d46fa23df0ec6cd60fb51d9b9a6d5e270ac5",
+                    "Network": [
+                        {
+                            "attachmentId": "e4409577-eaf9-409b-9565-b248fada6f0d",
+                            "privateIpv4Address": "10.0.11.81"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "Failures": []
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:44:16.8265720+01:00
+COMMAND: aws elbv2 describe-target-health --target-group-arn arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/23b86d820a08800f --region eu-west-2 --no-cli-pager
+{
+    "TargetHealthDescriptions": [
+        {
+            "Target": {
+                "Id": "10.0.11.81",
+                "Port": 8080,
+                "AvailabilityZone": "eu-west-2a"
+            },
+            "HealthCheckPort": "8080",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:44:52.5081115+01:00
+COMMAND: curl.exe -sS -i --max-time 30 https://tm.feras-dev.co.uk/health
+HTTP/1.1 200 OK
+Date: Tue, 22 Sep 2026 09:44:52 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: keep-alive
+Server: nginx/1.28.3
+
+{"status":"ok"}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:44:52.9050378+01:00
+COMMAND: curl.exe -sS -I --max-time 30 http://tm.feras-dev.co.uk/health
+HTTP/1.1 301 Moved Permanently
+Server: awselb/2.0
+Date: Tue, 22 Sep 2026 09:44:52 GMT
+Content-Type: text/html
+Content-Length: 134
+Connection: keep-alive
+Location: https://tm.feras-dev.co.uk:443/health
+
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:44:52.9761467+01:00
+COMMAND: aws logs get-log-events --log-group-name /ecs/ecs-it-tools --log-stream-name ecs/ecs-it-tools/341c4251f63842809af0081b2d3af31b --start-from-head --limit 50 --query events[].{Timestamp:timestamp,Message:message} --region eu-west-2 --no-cli-pager
+[
+    {
+        "Timestamp": 1790070021260,
+        "Message": "/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration"
+    },
+    {
+        "Timestamp": 1790070021261,
+        "Message": "/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/"
+    },
+    {
+        "Timestamp": 1790070021265,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh"
+    },
+    {
+        "Timestamp": 1790070021310,
+        "Message": "10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf"
+    },
+    {
+        "Timestamp": 1790070021365,
+        "Message": "10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version"
+    },
+    {
+        "Timestamp": 1790070021365,
+        "Message": "/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh"
+    },
+    {
+        "Timestamp": 1790070021366,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh"
+    },
+    {
+        "Timestamp": 1790070021413,
+        "Message": "/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh"
+    },
+    {
+        "Timestamp": 1790070021416,
+        "Message": "/docker-entrypoint.sh: Configuration complete; ready for start up"
+    },
+    {
+        "Timestamp": 1790070021421,
+        "Message": "2026/09/22 09:40:21 [warn] 1#1: the \"user\" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2"
+    },
+    {
+        "Timestamp": 1790070021421,
+        "Message": "nginx: [warn] the \"user\" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2"
+    },
+    {
+        "Timestamp": 1790070021427,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: using the \"epoll\" event method"
+    },
+    {
+        "Timestamp": 1790070021427,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: nginx/1.28.3"
+    },
+    {
+        "Timestamp": 1790070021427,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) "
+    },
+    {
+        "Timestamp": 1790070021427,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: OS: Linux 6.1.182"
+    },
+    {
+        "Timestamp": 1790070021427,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 65535:65535"
+    },
+    {
+        "Timestamp": 1790070021428,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: start worker processes"
+    },
+    {
+        "Timestamp": 1790070021428,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: start worker process 29"
+    },
+    {
+        "Timestamp": 1790070021428,
+        "Message": "2026/09/22 09:40:21 [notice] 1#1: start worker process 30"
+    },
+    {
+        "Timestamp": 1790070039556,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET / HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039575,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /config HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039592,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039609,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.local HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039626,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.production HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039643,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.development HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039659,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.dev HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039676,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.prod HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039692,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.test HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039709,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.staging HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039725,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.backup HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039742,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.save HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039759,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.old HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039775,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.bak HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039792,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.tmp HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039808,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.swp HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039825,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env~ HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039842,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.example HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039859,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.sample HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039876,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.dist HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039892,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.template HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039909,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.production.local HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039926,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.development.local HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039943,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.env.test.local HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039960,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.envrc HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039977,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /.flaskenv HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070039993,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:39 +0000] \"GET /env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070040010,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:40 +0000] \"GET /env.js HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070040026,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:40 +0000] \"GET /env.json HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070040043,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:40 +0000] \"GET /app/.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    },
+    {
+        "Timestamp": 1790070040060,
+        "Message": "10.0.1.45 - - [22/Sep/2026:09:40:40 +0000] \"GET /src/.env HTTP/1.1\" 200 2839 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36\" \"REDACTED_CLIENT_IP\""
+    }
+]
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:46:17.2222149+01:00
+COMMAND: aws acm describe-certificate --certificate-arn arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf --query Certificate.{ARN:CertificateArn,Domain:DomainName,Status:Status,Validation:DomainValidationOptions,InUseBy:InUseBy} --region eu-west-2 --no-cli-pager
+{
+    "ARN": "arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf",
+    "Domain": "tm.feras-dev.co.uk",
+    "Status": "ISSUED",
+    "Validation": [
+        {
+            "DomainName": "tm.feras-dev.co.uk",
+            "ValidationDomain": "tm.feras-dev.co.uk",
+            "ValidationStatus": "SUCCESS",
+            "ResourceRecord": {
+                "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+                "Type": "CNAME",
+                "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+            },
+            "ValidationMethod": "DNS"
+        }
+    ],
+    "InUseBy": [
+        "arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/7296261e706d90a1"
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:46:17.9747586+01:00
+COMMAND: aws route53 list-resource-record-sets --hosted-zone-id Z01014153ETFBQT2QXXK2 --no-cli-pager
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "NS",
+            "TTL": 172800,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk."
+                },
+                {
+                    "Value": "ns-1137.awsdns-14.org."
+                },
+                {
+                    "Value": "ns-878.awsdns-45.net."
+                },
+                {
+                    "Value": "ns-403.awsdns-50.com."
+                }
+            ]
+        },
+        {
+            "Name": "feras-dev.co.uk.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1865.awsdns-41.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        },
+        {
+            "Name": "tm.feras-dev.co.uk.",
+            "Type": "A",
+            "AliasTarget": {
+                "HostedZoneId": "ZHURV8PSTC4K8",
+                "DNSName": "ecs-it-tools-alb-249009895.eu-west-2.elb.amazonaws.com.",
+                "EvaluateTargetHealth": true
+            }
+        },
+        {
+            "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T10:46:19.0098399+01:00
+COMMAND: aws s3api head-object --bucket feras-ecs-it-tools-tfstate-670941257756 --key ecs-v1/dev/terraform.tfstate --query {Modified:LastModified,Bytes:ContentLength,Version:VersionId,Encryption:ServerSideEncryption} --region eu-west-2 --no-cli-pager
+{
+    "Modified": "2026-09-22T09:40:55+00:00",
+    "Bytes": 78397,
+    "Version": "HUQLSYQM1bKOtyp.3iA6nxyOsHm_CgUQ",
+    "Encryption": "AES256"
+}
+EXIT CODE: 0
+Browser screenshot time marker (recorded after capture): 2026-09-22T10:48:35.3444102+01:00

@@ -1,0 +1,24 @@
+Recreation ECR bootstrap: 2026-09-22T00:04:12.0189240+01:00
+module.ecr.aws_ecr_repository.this: Creating...
+module.ecr.aws_ecr_repository.this: Creation complete after 1s [id=ecs-it-tools]
+
+Warning: Applied changes may be incomplete
+
+The plan was created with the -target option in effect, so some changes
+requested in the configuration may have been ignored and the output values
+may not be fully updated. Run the following command to verify that no other
+changes are pending:
+    terraform plan
+
+Note that the -target option is not suitable for routine use, and is provided
+only for exceptional situations such as recovering from errors or mistakes,
+or when Terraform specifically suggests to use it as part of an error
+message.
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+ecr_repository_name = "ecs-it-tools"
+ecr_repository_url = "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools"
+EXIT CODE: 0

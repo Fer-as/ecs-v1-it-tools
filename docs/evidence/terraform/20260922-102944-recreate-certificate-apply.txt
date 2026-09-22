@@ -1,0 +1,17 @@
+Certificate bootstrap: 2026-09-22T10:29:44.7298388+01:00
+terraform :
+At line:7 char:5
++     terraform "-chdir=terraform" apply "-input=false" "-no-color" "re ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: No valid credential sources found
+
+Please see https://developer.hashicorp.com/terraform/language/backend/s3
+for more information about providing credentials.
+
+Error: failed to refresh cached credentials, create oauth2 token: login
+session has expired, please reauthenticate
+
+EXIT CODE: 1

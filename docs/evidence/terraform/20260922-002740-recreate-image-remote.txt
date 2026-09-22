@@ -1,0 +1,61 @@
+
+CHECK: 2026-09-22T00:27:40.6048153+01:00
+COMMAND: docker buildx imagetools inspect 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+Name:      670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:2d9524ed872f2c5bf9311d887188d46fa23df0ec6cd60fb51d9b9a6d5e270ac5
+
+Manifests:
+  Name:        670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e@sha256:bd9d853dcb6bc04a766a73c1782aa0559eecf8af2f65f023dc744e13570cbbb1
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+
+  Name:        670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e@sha256:8823943978a66b248b53bfec5fa2b4c0272b701fc202561f91ffad0488631d75
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations:
+    vnd.docker.reference.digest: sha256:bd9d853dcb6bc04a766a73c1782aa0559eecf8af2f65f023dc744e13570cbbb1
+    vnd.docker.reference.type:   attestation-manifest
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:27:41.0474137+01:00
+COMMAND: aws ecr describe-images --repository-name ecs-it-tools --image-ids imageTag=ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e --region eu-west-2 --no-cli-pager
+{
+    "imageDetails": [
+        {
+            "registryId": "670941257756",
+            "repositoryName": "ecs-it-tools",
+            "imageDigest": "sha256:2d9524ed872f2c5bf9311d887188d46fa23df0ec6cd60fb51d9b9a6d5e270ac5",
+            "imageTags": [
+                "ac30dd5d6c92f0acb5f7db4e0e20312c5bd7819e"
+            ],
+            "imageSizeInBytes": 34021376,
+            "imagePushedAt": "2026-09-22T00:06:30.132000+01:00",
+            "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+            "imageStatus": "ACTIVE"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-22T00:27:42.0274628+01:00
+COMMAND: aws ecr describe-repositories --repository-names ecs-it-tools --region eu-west-2 --no-cli-pager
+{
+    "repositories": [
+        {
+            "repositoryArn": "arn:aws:ecr:eu-west-2:670941257756:repository/ecs-it-tools",
+            "registryId": "670941257756",
+            "repositoryName": "ecs-it-tools",
+            "repositoryUri": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools",
+            "createdAt": "2026-09-22T00:04:14.296000+01:00",
+            "imageTagMutability": "IMMUTABLE",
+            "imageScanningConfiguration": {
+                "scanOnPush": true
+            },
+            "encryptionConfiguration": {
+                "encryptionType": "AES256"
+            }
+        }
+    ]
+}
+EXIT CODE: 0
