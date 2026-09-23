@@ -1,0 +1,21 @@
+﻿Application role apply: 2026-09-23T10:36:07.8443586+01:00
+1c7747cb376d54351f98073e39ef0f72c8ff813c
+{
+    "UserId": "AIDAZYNZXEAOEM7W4NG5O",
+    "Account": "670941257756",
+    "Arn": "arn:aws:iam::670941257756:user/feras-dev"
+}
+aws_iam_role.github_application: Creating...
+aws_iam_role.github_application: Creation complete after 1s [id=ecs-it-tools-github-application]
+aws_iam_role_policy.github_application: Creating...
+aws_iam_role_policy.github_application: Creation complete after 0s [id=ecs-it-tools-github-application:ecs-it-tools-image-publishing]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+github_application_role_arn = "arn:aws:iam::670941257756:role/ecs-it-tools-github-application"
+github_auth_role_arn = "arn:aws:iam::670941257756:role/ecs-it-tools-github-auth"
+github_oidc_provider_arn = "arn:aws:iam::670941257756:oidc-provider/token.actions.githubusercontent.com"
+Finished: 2026-09-23T10:36:11.5852942+01:00
+EXIT CODE: 0
