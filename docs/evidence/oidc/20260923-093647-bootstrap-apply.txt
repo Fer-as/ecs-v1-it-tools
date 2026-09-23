@@ -1,0 +1,17 @@
+﻿OIDC bootstrap apply: 2026-09-23T09:36:47.9488217+01:00
+44a0964868e383dba1d3d89fb6a182b883405b03
+aws_iam_openid_connect_provider.github: Creating...
+aws_iam_openid_connect_provider.github: Creation complete after 0s [id=arn:aws:iam::670941257756:oidc-provider/token.actions.githubusercontent.com]
+data.aws_iam_policy_document.github_dev_trust: Reading...
+data.aws_iam_policy_document.github_dev_trust: Read complete after 0s [id=589200951]
+aws_iam_role.github_auth: Creating...
+aws_iam_role.github_auth: Creation complete after 1s [id=ecs-it-tools-github-auth]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+github_auth_role_arn = "arn:aws:iam::670941257756:role/ecs-it-tools-github-auth"
+github_oidc_provider_arn = "arn:aws:iam::670941257756:oidc-provider/token.actions.githubusercontent.com"
+Finished: 2026-09-23T09:36:53.0436512+01:00
+EXIT CODE: 0

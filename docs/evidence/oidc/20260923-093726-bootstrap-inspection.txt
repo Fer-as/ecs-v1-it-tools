@@ -1,0 +1,66 @@
+﻿
+CHECK: 2026-09-23T09:37:26.4722402+01:00
+COMMAND: aws iam get-open-id-connect-provider --open-id-connect-provider-arn arn:aws:iam::670941257756:oidc-provider/token.actions.githubusercontent.com --no-cli-pager
+{
+    "Url": "token.actions.githubusercontent.com",
+    "ClientIDList": [
+        "sts.amazonaws.com"
+    ],
+    "ThumbprintList": [
+        "ab9d0263244dd0326eb67015705a667e79cfe998"
+    ],
+    "CreateDate": "2026-09-23T08:36:51.911000+00:00",
+    "Tags": [
+        {
+            "Key": "Project",
+            "Value": "ecs-it-tools"
+        },
+        {
+            "Key": "Purpose",
+            "Value": "GitHub Actions authentication"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-23T09:37:27.4528030+01:00
+COMMAND: aws iam get-role --role-name ecs-it-tools-github-auth --query Role.{ARN:Arn,Trust:AssumeRolePolicyDocument,MaxSessionDuration:MaxSessionDuration,PermissionsBoundary:PermissionsBoundary} --no-cli-pager
+{
+    "ARN": "arn:aws:iam::670941257756:role/ecs-it-tools-github-auth",
+    "Trust": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "GitHubDevEnvironment",
+                "Effect": "Allow",
+                "Principal": {
+                    "Federated": "arn:aws:iam::670941257756:oidc-provider/token.actions.githubusercontent.com"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                    "StringEquals": {
+                        "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                        "token.actions.githubusercontent.com:sub": "repo:Fer-as/ecs-v1-it-tools:environment:dev"
+                    }
+                }
+            }
+        ]
+    },
+    "MaxSessionDuration": 3600,
+    "PermissionsBoundary": null
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-23T09:37:28.4324216+01:00
+COMMAND: aws iam list-attached-role-policies --role-name ecs-it-tools-github-auth --no-cli-pager
+{
+    "AttachedPolicies": []
+}
+EXIT CODE: 0
+
+CHECK: 2026-09-23T09:37:29.3564604+01:00
+COMMAND: aws iam list-role-policies --role-name ecs-it-tools-github-auth --no-cli-pager
+{
+    "PolicyNames": []
+}
+EXIT CODE: 0
