@@ -1,0 +1,1079 @@
+2026-09-23T09:37:07.1289111Z Current runner version: '2.337.0'
+2026-09-23T09:37:07.1316176Z ##[group]Runner Image Provisioner
+2026-09-23T09:37:07.1317598Z Hosted Compute Agent
+2026-09-23T09:37:07.1318777Z Version: 20260828.587
+2026-09-23T09:37:07.1320260Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-23T09:37:07.1321613Z Build Date: 2026-08-28T16:44:25Z
+2026-09-23T09:37:07.1322953Z Worker ID: {4f203db0-ca9b-489e-a283-3bcad2dd5d99}
+2026-09-23T09:37:07.1324403Z Azure Region: eastus
+2026-09-23T09:37:07.1325580Z ##[endgroup]
+2026-09-23T09:37:07.1327945Z ##[group]Operating System
+2026-09-23T09:37:07.1329086Z Ubuntu
+2026-09-23T09:37:07.1330451Z 24.04.5
+2026-09-23T09:37:07.1331377Z LTS
+2026-09-23T09:37:07.1332751Z ##[endgroup]
+2026-09-23T09:37:07.1333913Z ##[group]Runner Image
+2026-09-23T09:37:07.1335004Z Image: ubuntu-24.04
+2026-09-23T09:37:07.1336109Z Version: 20260907.300.1
+2026-09-23T09:37:07.1338100Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-23T09:37:07.1341112Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+2026-09-23T09:37:07.1342904Z ##[endgroup]
+2026-09-23T09:37:07.1345028Z ##[group]GITHUB_TOKEN Permissions
+2026-09-23T09:37:07.1348087Z Contents: read
+2026-09-23T09:37:07.1349213Z Metadata: read
+2026-09-23T09:37:07.1350796Z ##[endgroup]
+2026-09-23T09:37:07.1353795Z Secret source: Actions
+2026-09-23T09:37:07.1355688Z Cache mode: write
+2026-09-23T09:37:07.1357601Z Prepare workflow directory
+2026-09-23T09:37:07.2135637Z Prepare all required actions
+2026-09-23T09:37:07.2208560Z Getting action download info
+2026-09-23T09:37:07.4117793Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-09-23T09:37:07.5395508Z Download action repository 'aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502' (SHA:e3dd6a429d7300a6a4c196c26e071d42e0343502)
+2026-09-23T09:37:07.7780340Z Complete job name: publish
+2026-09-23T09:37:07.8504546Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-23T09:37:07.8513843Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-09-23T09:37:07.8514814Z with:
+2026-09-23T09:37:07.8515289Z   ref: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:07.8515892Z   persist-credentials: false
+2026-09-23T09:37:07.8516419Z   repository: Fer-as/ecs-v1-it-tools
+2026-09-23T09:37:07.8520977Z   token: ***
+2026-09-23T09:37:07.8521427Z   ssh-strict: true
+2026-09-23T09:37:07.8521866Z   ssh-user: git
+2026-09-23T09:37:07.8522287Z   clean: true
+2026-09-23T09:37:07.8522734Z   sparse-checkout-cone-mode: true
+2026-09-23T09:37:07.8523266Z   fetch-depth: 1
+2026-09-23T09:37:07.8523695Z   fetch-tags: false
+2026-09-23T09:37:07.8524192Z   show-progress: true
+2026-09-23T09:37:07.8524635Z   lfs: false
+2026-09-23T09:37:07.8525041Z   submodules: false
+2026-09-23T09:37:07.8525482Z   set-safe-directory: true
+2026-09-23T09:37:07.8526266Z env:
+2026-09-23T09:37:07.8526685Z   AWS_REGION: eu-west-2
+2026-09-23T09:37:07.8527148Z   AWS_PAGER:
+2026-09-23T09:37:07.8527658Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:37:07.8528288Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:37:07.8528837Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:07.8529592Z ##[endgroup]
+2026-09-23T09:37:07.9541136Z Syncing repository: Fer-as/ecs-v1-it-tools
+2026-09-23T09:37:07.9543263Z ##[group]Getting Git version info
+2026-09-23T09:37:07.9544211Z Working directory is '/home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools'
+2026-09-23T09:37:07.9546112Z [command]/usr/bin/git version
+2026-09-23T09:37:07.9636374Z git version 2.55.0
+2026-09-23T09:37:07.9664500Z ##[endgroup]
+2026-09-23T09:37:07.9682752Z Temporarily overriding HOME='/home/runner/work/_temp/b706139e-ec5c-47a1-8f2a-b97d1aa36e02' before making global git config changes
+2026-09-23T09:37:07.9684617Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-23T09:37:07.9689841Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-23T09:37:07.9746489Z Deleting the contents of '/home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools'
+2026-09-23T09:37:07.9752282Z ##[group]Initializing the repository
+2026-09-23T09:37:07.9757538Z [command]/usr/bin/git init /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-23T09:37:07.9895630Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-23T09:37:07.9897720Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-23T09:37:07.9899927Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-23T09:37:07.9901593Z hint: call:
+2026-09-23T09:37:07.9902689Z hint:
+2026-09-23T09:37:07.9903798Z hint: 	git config --global init.defaultBranch <name>
+2026-09-23T09:37:07.9905203Z hint:
+2026-09-23T09:37:07.9906079Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-23T09:37:07.9907447Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-23T09:37:07.9908354Z hint:
+2026-09-23T09:37:07.9909134Z hint: 	git branch -m <name>
+2026-09-23T09:37:07.9910218Z hint:
+2026-09-23T09:37:07.9911271Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-23T09:37:07.9912980Z Initialized empty Git repository in /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools/.git/
+2026-09-23T09:37:07.9915322Z [command]/usr/bin/git remote add origin https://github.com/Fer-as/ecs-v1-it-tools
+2026-09-23T09:37:07.9969983Z ##[endgroup]
+2026-09-23T09:37:07.9971306Z ##[group]Disabling automatic garbage collection
+2026-09-23T09:37:07.9974600Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-23T09:37:08.0010854Z ##[endgroup]
+2026-09-23T09:37:08.0012277Z ##[group]Setting up auth
+2026-09-23T09:37:08.0019251Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-23T09:37:08.0055103Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-23T09:37:08.0475823Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-23T09:37:08.0514254Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-23T09:37:08.0744619Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-23T09:37:08.0786601Z ##[endgroup]
+2026-09-23T09:37:08.0788039Z ##[group]Fetching the repository
+2026-09-23T09:37:08.0797947Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.3918708Z From https://github.com/Fer-as/ecs-v1-it-tools
+2026-09-23T09:37:08.3920945Z  * branch            1c7747cb376d54351f98073e39ef0f72c8ff813c -> FETCH_HEAD
+2026-09-23T09:37:08.3925500Z ##[endgroup]
+2026-09-23T09:37:08.3926993Z ##[group]Determining the checkout info
+2026-09-23T09:37:08.3928983Z ##[endgroup]
+2026-09-23T09:37:08.3936070Z [command]/usr/bin/git sparse-checkout disable
+2026-09-23T09:37:08.3994410Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-23T09:37:08.4028437Z ##[group]Checking out the ref
+2026-09-23T09:37:08.4034196Z [command]/usr/bin/git checkout --progress --force 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.4450089Z Note: switching to '1c7747cb376d54351f98073e39ef0f72c8ff813c'.
+2026-09-23T09:37:08.4450989Z
+2026-09-23T09:37:08.4451633Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-09-23T09:37:08.4453382Z changes and commit them, and you can discard any commits you make in this
+2026-09-23T09:37:08.4454762Z state without impacting any branches by switching back to a branch.
+2026-09-23T09:37:08.4455417Z
+2026-09-23T09:37:08.4456064Z If you want to create a new branch to retain commits you create, you may
+2026-09-23T09:37:08.4458040Z do so (now or later) by using -c with the switch command. Example:
+2026-09-23T09:37:08.4459109Z
+2026-09-23T09:37:08.4459803Z   git switch -c <new-branch-name>
+2026-09-23T09:37:08.4460476Z
+2026-09-23T09:37:08.4460854Z Or undo this operation with:
+2026-09-23T09:37:08.4461469Z
+2026-09-23T09:37:08.4461888Z   git switch -
+2026-09-23T09:37:08.4462485Z
+2026-09-23T09:37:08.4463524Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-09-23T09:37:08.4464875Z
+2026-09-23T09:37:08.4465748Z HEAD is now at 1c7747c Merge pull request #1 from Fer-as/feat/application-pipeline
+2026-09-23T09:37:08.4469001Z ##[endgroup]
+2026-09-23T09:37:08.4518444Z [command]/usr/bin/git log -1 --format=%H
+2026-09-23T09:37:08.4544715Z 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.4554704Z ##[group]Removing auth
+2026-09-23T09:37:08.4559588Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-23T09:37:08.4595399Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-23T09:37:08.4832854Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-23T09:37:08.4865656Z http.https://github.com/.extraheader
+2026-09-23T09:37:08.4875679Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-23T09:37:08.4918108Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-23T09:37:08.5165172Z ##[endgroup]
+2026-09-23T09:37:08.5395207Z ##[group]Run set -euo pipefail
+2026-09-23T09:37:08.5396625Z [36;1mset -euo pipefail[0m
+2026-09-23T09:37:08.5397978Z [36;1mtest "$(git rev-parse HEAD)" = "$IMAGE_TAG"[0m
+2026-09-23T09:37:08.5399713Z [36;1m[[ "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]][0m
+2026-09-23T09:37:08.5401165Z [36;1mecho "Source commit: $IMAGE_TAG"[0m
+2026-09-23T09:37:08.5402959Z [36;1mecho "IMAGE_URI=$REGISTRY/$REPOSITORY:$IMAGE_TAG" >> "$GITHUB_ENV"[0m
+2026-09-23T09:37:08.5447143Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:37:08.5448717Z env:
+2026-09-23T09:37:08.5449913Z   AWS_REGION: eu-west-2
+2026-09-23T09:37:08.5450972Z   AWS_PAGER:
+2026-09-23T09:37:08.5452123Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:37:08.5453623Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:37:08.5454823Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.5456203Z ##[endgroup]
+2026-09-23T09:37:08.5572804Z Source commit: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.5655318Z ##[group]Run set -euo pipefail
+2026-09-23T09:37:08.5656540Z [36;1mset -euo pipefail[0m
+2026-09-23T09:37:08.5657576Z [36;1mdocker build \[0m
+2026-09-23T09:37:08.5658582Z [36;1m  --platform linux/amd64 \[0m
+2026-09-23T09:37:08.5660271Z [36;1m  --label "org.opencontainers.image.revision=$IMAGE_TAG" \[0m
+2026-09-23T09:37:08.5731816Z [36;1m  --label "org.opencontainers.image.source=https://github.com/Fer-as/ecs-v1-it-tools" \[0m
+2026-09-23T09:37:08.5734016Z [36;1m  --tag "$IMAGE_URI" \[0m
+2026-09-23T09:37:08.5735061Z [36;1m  ./app[0m
+2026-09-23T09:37:08.5735900Z [36;1m[0m
+2026-09-23T09:37:08.5737258Z [36;1mdocker image inspect "$IMAGE_URI" > "$RUNNER_TEMP/local-image.json"[0m
+2026-09-23T09:37:08.5738974Z [36;1mpython3 - <<'PY'[0m
+2026-09-23T09:37:08.5740147Z [36;1mimport json[0m
+2026-09-23T09:37:08.5741056Z [36;1mimport os[0m
+2026-09-23T09:37:08.5742332Z [36;1m[0m
+2026-09-23T09:37:08.5743705Z [36;1mwith open(os.environ["RUNNER_TEMP"] + "/local-image.json") as stream:[0m
+2026-09-23T09:37:08.5745538Z [36;1m    image = json.load(stream)[0][0m
+2026-09-23T09:37:08.5746696Z [36;1m[0m
+2026-09-23T09:37:08.5747833Z [36;1mif (image["Os"], image["Architecture"]) != ("linux", "amd64"):[0m
+2026-09-23T09:37:08.5749793Z [36;1m    raise SystemExit("Unexpected image platform.")[0m
+2026-09-23T09:37:08.5751330Z [36;1mif image["Config"]["User"] != "appuser":[0m
+2026-09-23T09:37:08.5752751Z [36;1m    raise SystemExit("Expected appuser.")[0m
+2026-09-23T09:37:08.5754122Z [36;1mif image["Config"]["Labels"].get([0m
+2026-09-23T09:37:08.5755471Z [36;1m    "org.opencontainers.image.revision"[0m
+2026-09-23T09:37:08.5756807Z [36;1m) != os.environ["IMAGE_TAG"]:[0m
+2026-09-23T09:37:08.5758246Z [36;1m    raise SystemExit("Source revision label mismatch.")[0m
+2026-09-23T09:37:08.5759900Z [36;1m[0m
+2026-09-23T09:37:08.5760908Z [36;1mprint("Platform: linux/amd64; user: appuser")[0m
+2026-09-23T09:37:08.5762403Z [36;1mprint("Local image ID:", image["Id"])[0m
+2026-09-23T09:37:08.5763631Z [36;1mPY[0m
+2026-09-23T09:37:08.5802556Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:37:08.5803978Z env:
+2026-09-23T09:37:08.5804761Z   AWS_REGION: eu-west-2
+2026-09-23T09:37:08.5805670Z   AWS_PAGER:
+2026-09-23T09:37:08.5806728Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:37:08.5808118Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:37:08.5809261Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.5811900Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:37:08.5814006Z ##[endgroup]
+2026-09-23T09:37:09.2145366Z #0 building with "default" instance using docker driver
+2026-09-23T09:37:09.2146217Z
+2026-09-23T09:37:09.2146641Z #1 [internal] load build definition from Dockerfile
+2026-09-23T09:37:09.2147664Z #1 transferring dockerfile: 672B done
+2026-09-23T09:37:09.2148163Z #1 DONE 0.0s
+2026-09-23T09:37:09.2148385Z
+2026-09-23T09:37:09.2148696Z #2 [auth] library/nginx:pull token for registry-1.docker.io
+2026-09-23T09:37:09.2149289Z #2 DONE 0.0s
+2026-09-23T09:37:09.2149838Z
+2026-09-23T09:37:09.2150197Z #3 [auth] library/node:pull token for registry-1.docker.io
+2026-09-23T09:37:09.2150765Z #3 DONE 0.0s
+2026-09-23T09:37:09.2150974Z
+2026-09-23T09:37:09.2151257Z #4 [internal] load metadata for docker.io/library/node:20-alpine
+2026-09-23T09:37:09.3768173Z #4 DONE 0.3s
+2026-09-23T09:37:09.3768591Z
+2026-09-23T09:37:09.3769051Z #5 [internal] load metadata for docker.io/library/nginx:1.28-alpine
+2026-09-23T09:37:09.4771830Z #5 DONE 0.3s
+2026-09-23T09:37:09.4772814Z
+2026-09-23T09:37:09.4773110Z #6 [internal] load .dockerignore
+2026-09-23T09:37:09.4773675Z #6 transferring context: 172B done
+2026-09-23T09:37:09.4774521Z #6 DONE 0.0s
+2026-09-23T09:37:09.4774760Z
+2026-09-23T09:37:09.4777730Z #7 [runtime 1/6] FROM docker.io/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+2026-09-23T09:37:09.4780637Z #7 resolve docker.io/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 done
+2026-09-23T09:37:09.5953321Z #7 ...
+2026-09-23T09:37:09.5967914Z
+2026-09-23T09:37:09.5969183Z #8 [internal] load build context
+2026-09-23T09:37:09.5970755Z #8 transferring context: 1.64MB 0.1s done
+2026-09-23T09:37:09.5971785Z #8 DONE 0.1s
+2026-09-23T09:37:09.5972361Z
+2026-09-23T09:37:09.5973479Z #7 [runtime 1/6] FROM docker.io/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+2026-09-23T09:37:09.5975316Z #7 sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 10.32kB / 10.32kB done
+2026-09-23T09:37:09.5977201Z #7 sha256:0dcc88822d45581e65ae329f8be769762bf628d3b2bb7d2a077d4aa5c98b30e3 2.49kB / 2.49kB done
+2026-09-23T09:37:09.5978840Z #7 sha256:dc73b49f5124cf2ee538dfbdfbd121f0b4ccdcb20fea30f3a81bd477c02e2bb5 12.29kB / 12.29kB done
+2026-09-23T09:37:09.7020059Z #7 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 2.10MB / 3.86MB 0.2s
+2026-09-23T09:37:09.7029394Z #7 sha256:1d9cbdb003be4f77dc59400a5eb400afcac245934b539c7bffe52abae7720f3c 1.05MB / 1.83MB 0.2s
+2026-09-23T09:37:09.7042278Z #7 extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153
+2026-09-23T09:37:09.8032616Z #7 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 3.86MB / 3.86MB 0.2s done
+2026-09-23T09:37:09.8035369Z #7 sha256:1d9cbdb003be4f77dc59400a5eb400afcac245934b539c7bffe52abae7720f3c 1.83MB / 1.83MB 0.2s done
+2026-09-23T09:37:09.8037848Z #7 extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 0.2s done
+2026-09-23T09:37:09.8039220Z #7 sha256:e914c6e98e37815624beb8c5043be292f121898059d4d50c0709bc4da661f685 626B / 626B 0.2s done
+2026-09-23T09:37:09.8041678Z #7 sha256:44fa0a5a779fdf3b85972e8dfb3b2755a72a97290b682794f57212d88fa3a631 1.21kB / 1.21kB 0.3s done
+2026-09-23T09:37:09.8043300Z #7 sha256:98104829f3fe8d2ead9a69b1f56c1f98955fd2b5933f089301331bb1f349683b 1.40kB / 1.40kB 0.3s done
+2026-09-23T09:37:09.8046168Z #7 sha256:d631a49fb4f72e5bc609d0af4ce6d3ed054498068dc16c730be6b4e37c4a7f6c 956B / 956B 0.2s done
+2026-09-23T09:37:09.8047459Z #7 sha256:8f7c784e247120771f7bdb83b2ab8e17af75af4858332b63e0ed40610f5a9b59 405B / 405B 0.2s done
+2026-09-23T09:37:09.8048724Z #7 sha256:0151c82f84a9c78800cb330f93f88d6ffe39f030ec9a60dbc0a12c4c7109536c 20.25MB / 20.25MB 0.4s
+2026-09-23T09:37:09.9810621Z #7 sha256:0151c82f84a9c78800cb330f93f88d6ffe39f030ec9a60dbc0a12c4c7109536c 20.25MB / 20.25MB 0.4s done
+2026-09-23T09:37:09.9812313Z #7 extracting sha256:1d9cbdb003be4f77dc59400a5eb400afcac245934b539c7bffe52abae7720f3c 0.0s done
+2026-09-23T09:37:10.2237289Z #7 extracting sha256:e914c6e98e37815624beb8c5043be292f121898059d4d50c0709bc4da661f685 done
+2026-09-23T09:37:10.2239677Z #7 extracting sha256:d631a49fb4f72e5bc609d0af4ce6d3ed054498068dc16c730be6b4e37c4a7f6c done
+2026-09-23T09:37:10.2241584Z #7 extracting sha256:8f7c784e247120771f7bdb83b2ab8e17af75af4858332b63e0ed40610f5a9b59 done
+2026-09-23T09:37:10.2242746Z #7 extracting sha256:44fa0a5a779fdf3b85972e8dfb3b2755a72a97290b682794f57212d88fa3a631 done
+2026-09-23T09:37:10.2243814Z #7 extracting sha256:98104829f3fe8d2ead9a69b1f56c1f98955fd2b5933f089301331bb1f349683b done
+2026-09-23T09:37:10.2244855Z #7 extracting sha256:0151c82f84a9c78800cb330f93f88d6ffe39f030ec9a60dbc0a12c4c7109536c
+2026-09-23T09:37:10.6587714Z #7 extracting sha256:0151c82f84a9c78800cb330f93f88d6ffe39f030ec9a60dbc0a12c4c7109536c 0.4s done
+2026-09-23T09:37:10.8068261Z #7 DONE 1.4s
+2026-09-23T09:37:10.8069116Z
+2026-09-23T09:37:10.8069813Z #9 [build 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+2026-09-23T09:37:10.8070926Z #9 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 done
+2026-09-23T09:37:10.8072922Z #9 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.1s done
+2026-09-23T09:37:10.8074322Z #9 sha256:afdf98210b07b586eb71fa22ba2e432e058e4cd1304d31ed60888755b8c865fb 1.72kB / 1.72kB done
+2026-09-23T09:37:10.8075395Z #9 sha256:11cedc39e663e7c5d5cb9cc77a461a0d2adc25537b94e6831a6108f09cb2001b 6.52kB / 6.52kB done
+2026-09-23T09:37:10.8076186Z #9 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 0.1s done
+2026-09-23T09:37:10.8078357Z #9 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 0.2s done
+2026-09-23T09:37:10.8080227Z #9 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 0.1s done
+2026-09-23T09:37:10.8081426Z #9 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 0.1s done
+2026-09-23T09:37:10.8082598Z #9 sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 7.67kB / 7.67kB done
+2026-09-23T09:37:10.8083720Z #9 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 1.0s
+2026-09-23T09:37:11.1082949Z #9 ...
+2026-09-23T09:37:11.1083812Z
+2026-09-23T09:37:11.1084441Z #10 [runtime 2/6] RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+2026-09-23T09:37:11.1085291Z #10 DONE 0.2s
+2026-09-23T09:37:11.1085517Z
+2026-09-23T09:37:11.1086263Z #9 [build 1/7] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+2026-09-23T09:37:11.1087299Z #9 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 1.4s done
+2026-09-23T09:37:11.2188140Z #9 extracting sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0.0s done
+2026-09-23T09:37:11.4253553Z #9 extracting sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 done
+2026-09-23T09:37:11.4254249Z #9 DONE 1.9s
+2026-09-23T09:37:11.4254414Z
+2026-09-23T09:37:11.4254545Z #11 [build 2/7] WORKDIR /app
+2026-09-23T09:37:11.4254873Z #11 DONE 0.0s
+2026-09-23T09:37:11.4255062Z
+2026-09-23T09:37:11.4255312Z #12 [build 3/7] COPY package.json pnpm-lock.yaml ./
+2026-09-23T09:37:11.4255786Z #12 DONE 0.0s
+2026-09-23T09:37:11.4255967Z
+2026-09-23T09:37:11.4256263Z #13 [build 4/7] RUN corepack enable && corepack prepare pnpm@9.11.0 --activate
+2026-09-23T09:37:11.5562513Z #13 0.281 Preparing pnpm@9.11.0 for immediate activation...
+2026-09-23T09:37:12.5485944Z #13 DONE 1.3s
+2026-09-23T09:37:12.6993109Z
+2026-09-23T09:37:12.6993662Z #14 [build 5/7] RUN pnpm install --frozen-lockfile
+2026-09-23T09:37:13.3734411Z #14 0.824 Lockfile is up to date, resolution step is skipped
+2026-09-23T09:37:13.5294370Z #14 0.980 Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-09-23T09:37:13.7797640Z #14 1.230 Packages: +1308
+2026-09-23T09:37:13.7798469Z #14 1.230 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2026-09-23T09:37:14.0983689Z #14 1.549
+2026-09-23T09:37:14.0985080Z #14 1.549    ╭──────────────────────────────────────────────────────────────────╮
+2026-09-23T09:37:14.0985846Z #14 1.549    │                                                                  │
+2026-09-23T09:37:14.0986868Z #14 1.549    │                Update available! 9.11.0 → 12.5.1.                │
+2026-09-23T09:37:14.0989611Z #14 1.549    │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v12.5.1   │
+2026-09-23T09:37:14.0990463Z #14 1.549    │         Run "corepack install -g pnpm@12.5.1" to update.         │
+2026-09-23T09:37:14.0991084Z #14 1.549    │                                                                  │
+2026-09-23T09:37:14.0991703Z #14 1.549    │         Follow @pnpmjs for updates: https://x.com/pnpmjs         │
+2026-09-23T09:37:14.0992226Z #14 1.549    │                                                                  │
+2026-09-23T09:37:14.0992710Z #14 1.549    ╰──────────────────────────────────────────────────────────────────╯
+2026-09-23T09:37:14.0993024Z #14 1.549
+2026-09-23T09:37:14.5336568Z #14 1.984 Progress: resolved 1308, reused 0, downloaded 10, added 0
+2026-09-23T09:37:15.5328559Z #14 2.984 Progress: resolved 1308, reused 0, downloaded 94, added 84
+2026-09-23T09:37:16.5367531Z #14 3.987 Progress: resolved 1308, reused 0, downloaded 175, added 168
+2026-09-23T09:37:17.5347216Z #14 4.985 Progress: resolved 1308, reused 0, downloaded 196, added 180
+2026-09-23T09:37:18.5356257Z #14 5.986 Progress: resolved 1308, reused 0, downloaded 261, added 250
+2026-09-23T09:37:19.5374356Z #14 6.988 Progress: resolved 1308, reused 0, downloaded 280, added 266
+2026-09-23T09:37:20.5371783Z #14 7.988 Progress: resolved 1308, reused 0, downloaded 287, added 276
+2026-09-23T09:37:21.5410906Z #14 8.988 Progress: resolved 1308, reused 0, downloaded 303, added 289
+2026-09-23T09:37:22.5394980Z #14 9.988 Progress: resolved 1308, reused 0, downloaded 406, added 402
+2026-09-23T09:37:23.5408492Z #14 10.99 Progress: resolved 1308, reused 0, downloaded 524, added 510
+2026-09-23T09:37:24.5458002Z #14 12.00 Progress: resolved 1308, reused 0, downloaded 644, added 640
+2026-09-23T09:37:25.5470274Z #14 13.00 Progress: resolved 1308, reused 0, downloaded 805, added 796
+2026-09-23T09:37:26.5481567Z #14 14.00 Progress: resolved 1308, reused 0, downloaded 990, added 989
+2026-09-23T09:37:27.5483715Z #14 15.00 Progress: resolved 1308, reused 0, downloaded 1257, added 1246
+2026-09-23T09:37:28.0257355Z #14 15.48 Progress: resolved 1308, reused 0, downloaded 1308, added 1308, done
+2026-09-23T09:37:28.5105822Z #14 15.96 .../esbuild@0.23.1/node_modules/esbuild postinstall$ node install.js
+2026-09-23T09:37:28.6111309Z #14 15.96 .../node_modules/vue-demi postinstall$ node ./scripts/postinstall.js
+2026-09-23T09:37:28.6112724Z #14 15.96 .../esbuild@0.18.20/node_modules/esbuild postinstall$ node install.js
+2026-09-23T09:37:28.6114076Z #14 15.96 .../node_modules/vue-demi postinstall$ node ./scripts/postinstall.js
+2026-09-23T09:37:28.6115259Z #14 16.06 .../esbuild@0.23.1/node_modules/esbuild postinstall: Done
+2026-09-23T09:37:28.6116285Z #14 16.06 .../esbuild@0.18.20/node_modules/esbuild postinstall: Done
+2026-09-23T09:37:28.8278831Z #14 16.11 .../node_modules/vue-demi postinstall: Done
+2026-09-23T09:37:28.8279799Z #14 16.13 .../node_modules/vue-demi postinstall: Done
+2026-09-23T09:37:28.8561248Z #14 16.31
+2026-09-23T09:37:28.8561668Z #14 16.31 dependencies:
+2026-09-23T09:37:28.8562417Z #14 16.31 + @it-tools/bip39 0.0.4
+2026-09-23T09:37:28.8563240Z #14 16.31 + @it-tools/oggen 1.3.0
+2026-09-23T09:37:28.8565745Z #14 16.31 + @regexper/render 1.0.0
+2026-09-23T09:37:28.8566250Z #14 16.31 + @sindresorhus/slugify 2.2.1
+2026-09-23T09:37:28.8566749Z #14 16.31 + @tabler/icons-vue 3.20.0
+2026-09-23T09:37:28.8567262Z #14 16.31 + @tiptap/pm 2.1.6
+2026-09-23T09:37:28.8567735Z #14 16.31 + @tiptap/starter-kit 2.1.6
+2026-09-23T09:37:28.8568231Z #14 16.31 + @tiptap/vue-3 2.0.3
+2026-09-23T09:37:28.8568674Z #14 16.31 + @types/figlet 1.5.8
+2026-09-23T09:37:28.8569116Z #14 16.31 + @types/markdown-it 13.0.9
+2026-09-23T09:37:28.8570051Z #14 16.31 + @vicons/material 0.12.0
+2026-09-23T09:37:28.8570576Z #14 16.31 + @vicons/tabler 0.12.0
+2026-09-23T09:37:28.8571055Z #14 16.31 + @vueuse/core 10.3.0
+2026-09-23T09:37:28.8571488Z #14 16.31 + @vueuse/head 1.0.0
+2026-09-23T09:37:28.8571956Z #14 16.31 + @vueuse/router 10.0.0
+2026-09-23T09:37:28.8572389Z #14 16.31 + bcryptjs 2.4.3
+2026-09-23T09:37:28.8572788Z #14 16.31 + change-case 4.1.2
+2026-09-23T09:37:28.8573203Z #14 16.31 + colord 2.9.3
+2026-09-23T09:37:28.8573602Z #14 16.31 + composerize-ts 0.6.2
+2026-09-23T09:37:28.8574063Z #14 16.31 + country-code-lookup 0.1.0
+2026-09-23T09:37:28.8574527Z #14 16.31 + cron-validator 1.3.1
+2026-09-23T09:37:28.8574949Z #14 16.31 + cronstrue 2.26.0
+2026-09-23T09:37:28.8575355Z #14 16.31 + crypto-js 4.1.1
+2026-09-23T09:37:28.8575822Z #14 16.31 + date-fns 2.29.3
+2026-09-23T09:37:28.8576211Z #14 16.31 + dompurify 3.0.6
+2026-09-23T09:37:28.8576612Z #14 16.31 + email-normalizer 1.0.0
+2026-09-23T09:37:28.8577040Z #14 16.31 + emojilib 3.0.10
+2026-09-23T09:37:28.8577404Z #14 16.31 + figlet 1.7.0
+2026-09-23T09:37:28.8577811Z #14 16.31 + figue 1.2.0
+2026-09-23T09:37:28.8578222Z #14 16.31 + fuse.js 6.6.2
+2026-09-23T09:37:28.8578643Z #14 16.31 + highlight.js 11.7.0
+2026-09-23T09:37:28.8579658Z #14 16.31 + iarna-toml-esm 3.0.5
+2026-09-23T09:37:28.8580184Z #14 16.31 + ibantools 4.3.3
+2026-09-23T09:37:28.8580619Z #14 16.31 + js-base64 3.7.7
+2026-09-23T09:37:28.8581034Z #14 16.31 + json5 2.2.3
+2026-09-23T09:37:28.8581432Z #14 16.31 + jwt-decode 3.1.2
+2026-09-23T09:37:28.8581889Z #14 16.31 + libphonenumber-js 1.10.28
+2026-09-23T09:37:28.8582365Z #14 16.31 + lodash 4.17.21
+2026-09-23T09:37:28.8582788Z #14 16.31 + markdown-it 14.1.0
+2026-09-23T09:37:28.8583229Z #14 16.31 + marked 10.0.0
+2026-09-23T09:37:28.8583624Z #14 16.31 + mathjs 11.9.1
+2026-09-23T09:37:28.8584030Z #14 16.31 + mime-types 2.1.35
+2026-09-23T09:37:28.8584475Z #14 16.31 + monaco-editor 0.43.0
+2026-09-23T09:37:28.8584938Z #14 16.31 + naive-ui 2.35.0
+2026-09-23T09:37:28.8585369Z #14 16.31 + netmask 2.0.2
+2026-09-23T09:37:28.8585786Z #14 16.31 + node-forge 1.3.1
+2026-09-23T09:37:28.8586209Z #14 16.31 + oui-data 1.0.10
+2026-09-23T09:37:28.8586977Z #14 16.31 + pdf-signature-reader 1.4.2
+2026-09-23T09:37:28.8587474Z #14 16.31 + pinia 2.0.34
+2026-09-23T09:37:28.8587917Z #14 16.31 + plausible-tracker 0.3.8
+2026-09-23T09:37:28.8588393Z #14 16.31 + qrcode 1.5.1
+2026-09-23T09:37:28.8588795Z #14 16.31 + randexp 0.5.3
+2026-09-23T09:37:28.8589219Z #14 16.31 + sql-formatter 13.0.0
+2026-09-23T09:37:28.8593599Z #14 16.31 + ua-parser-js 1.0.35
+2026-09-23T09:37:28.8594058Z #14 16.31 + ulid 2.3.0
+2026-09-23T09:37:28.8594478Z #14 16.31 + unicode-emoji-json 0.4.0
+2026-09-23T09:37:28.8594993Z #14 16.31 + unplugin-auto-import 0.16.4
+2026-09-23T09:37:28.8595478Z #14 16.31 + uuid 9.0.0
+2026-09-23T09:37:28.8595856Z #14 16.31 + vue 3.3.4
+2026-09-23T09:37:28.8596236Z #14 16.31 + vue-i18n 9.9.1
+2026-09-23T09:37:28.8596663Z #14 16.31 + vue-router 4.1.6
+2026-09-23T09:37:28.8597108Z #14 16.31 + vue-shadow-dom 4.2.0
+2026-09-23T09:37:28.8597558Z #14 16.31 + vue-tsc 1.8.1
+2026-09-23T09:37:28.8597982Z #14 16.31 + vuedraggable 4.1.0
+2026-09-23T09:37:28.8598435Z #14 16.31 + xml-formatter 3.3.2
+2026-09-23T09:37:28.8598864Z #14 16.31 + xml-js 1.6.11
+2026-09-23T09:37:28.8599247Z #14 16.31 + yaml 2.2.1
+2026-09-23T09:37:28.8599866Z #14 16.31
+2026-09-23T09:37:28.8600220Z #14 16.31 devDependencies:
+2026-09-23T09:37:28.8600672Z #14 16.31 + @antfu/eslint-config 0.41.0
+2026-09-23T09:37:28.8601174Z #14 16.31 + @iconify-json/mdi 1.1.50
+2026-09-23T09:37:28.8601684Z #14 16.31 + @intlify/unplugin-vue-i18n 2.0.0
+2026-09-23T09:37:28.8602219Z #14 16.31 + @playwright/test 1.32.3
+2026-09-23T09:37:28.8602719Z #14 16.31 + @rushstack/eslint-patch 1.2.0
+2026-09-23T09:37:28.8603230Z #14 16.31 + @tsconfig/node18 18.2.0
+2026-09-23T09:37:28.8603702Z #14 16.31 + @types/bcryptjs 2.4.2
+2026-09-23T09:37:28.8604163Z #14 16.31 + @types/crypto-js 4.1.1
+2026-09-23T09:37:28.8604629Z #14 16.31 + @types/dompurify 3.0.5
+2026-09-23T09:37:28.8605082Z #14 16.31 + @types/jsdom 21.1.0
+2026-09-23T09:37:28.8605510Z #14 16.31 + @types/lodash 4.14.192
+2026-09-23T09:37:28.8605960Z #14 16.31 + @types/mime-types 2.1.1
+2026-09-23T09:37:28.8606425Z #14 16.31 + @types/netmask 2.0.0
+2026-09-23T09:37:28.8606852Z #14 16.31 + @types/node 18.15.11
+2026-09-23T09:37:28.8607295Z #14 16.31 + @types/node-forge 1.3.2
+2026-09-23T09:37:28.8607741Z #14 16.31 + @types/qrcode 1.5.0
+2026-09-23T09:37:28.8608179Z #14 16.31 + @types/ua-parser-js 0.7.36
+2026-09-23T09:37:28.8608639Z #14 16.31 + @types/uuid 9.0.0
+2026-09-23T09:37:28.8609065Z #14 16.31 + @unocss/eslint-config 0.57.1
+2026-09-23T09:37:28.8609775Z #14 16.31 + @vitejs/plugin-vue 4.3.2
+2026-09-23T09:37:28.8610277Z #14 16.31 + @vitejs/plugin-vue-jsx 3.0.2
+2026-09-23T09:37:28.8610759Z #14 16.31 + @vue/compiler-sfc 3.2.47
+2026-09-23T09:37:28.8611217Z #14 16.31 + @vue/runtime-dom 3.3.4
+2026-09-23T09:37:28.8611655Z #14 16.31 + @vue/test-utils 2.3.2
+2026-09-23T09:37:28.8612078Z #14 16.31 + @vue/tsconfig 0.4.0
+2026-09-23T09:37:28.8612490Z #14 16.31 + consola 3.0.2
+2026-09-23T09:37:28.8612874Z #14 16.31 + eslint 8.47.0
+2026-09-23T09:37:28.8613261Z #14 16.31 + hygen 6.2.11
+2026-09-23T09:37:28.8613653Z #14 16.31 + jsdom 22.0.0
+2026-09-23T09:37:28.8614030Z #14 16.31 + less 4.1.3
+2026-09-23T09:37:28.8614401Z #14 16.31 + prettier 3.0.0
+2026-09-23T09:37:28.8615057Z #14 16.31 + typescript 5.2.2
+2026-09-23T09:37:28.8615497Z #14 16.31 + unocss 0.65.1
+2026-09-23T09:37:28.8615935Z #14 16.31 + unocss-preset-scrollbar 0.2.1
+2026-09-23T09:37:28.8616451Z #14 16.31 + unplugin-icons 0.17.0
+2026-09-23T09:37:28.8616927Z #14 16.31 + unplugin-vue-components 0.25.0
+2026-09-23T09:37:28.8617420Z #14 16.31 + vite 4.4.9
+2026-09-23T09:37:28.8617823Z #14 16.31 + vite-plugin-pwa 0.16.0
+2026-09-23T09:37:28.8618295Z #14 16.31 + vite-plugin-vue-markdown 0.23.5
+2026-09-23T09:37:28.8618814Z #14 16.31 + vite-svg-loader 4.0.0
+2026-09-23T09:37:28.8619261Z #14 16.31 + vitest 0.34.0
+2026-09-23T09:37:28.8619908Z #14 16.31 + workbox-window 7.0.0
+2026-09-23T09:37:28.8620338Z #14 16.31 + zx 7.2.1
+2026-09-23T09:37:28.8620686Z #14 16.31
+2026-09-23T09:37:29.0400696Z #14 16.34 Done in 16.1s
+2026-09-23T09:37:30.5740405Z #14 DONE 18.0s
+2026-09-23T09:37:30.8170617Z
+2026-09-23T09:37:30.8171141Z #15 [build 6/7] COPY . .
+2026-09-23T09:37:30.8171643Z #15 DONE 0.1s
+2026-09-23T09:37:30.8171900Z
+2026-09-23T09:37:30.8172066Z #16 [build 7/7] RUN pnpm build
+2026-09-23T09:37:31.2044660Z #16 0.538
+2026-09-23T09:37:31.2045144Z #16 0.538 > it-tools@2024.10.22-7ca5933 build /app
+2026-09-23T09:37:31.2046018Z #16 0.538 > vue-tsc --noEmit && NODE_OPTIONS=--max_old_space_size=4096 vite build
+2026-09-23T09:37:31.2046718Z #16 0.538
+2026-09-23T09:37:38.1245278Z #16 7.458 vite v4.4.9 building for production...
+2026-09-23T09:37:38.3827034Z #16 7.716 transforming...
+2026-09-23T09:38:07.1364816Z #16 36.47 [plugin:vite:resolve] Module "crypto" has been externalized for browser compatibility, imported by "/app/node_modules/.pnpm/bcryptjs@2.4.3/node_modules/bcryptjs/dist/bcrypt.js". See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+2026-09-23T09:38:07.2670589Z #16 36.60 [plugin:vite:resolve] Module "path" has been externalized for browser compatibility, imported by "/app/node_modules/.pnpm/mime-types@2.1.35/node_modules/mime-types/index.js". See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+2026-09-23T09:38:13.2128281Z #16 42.55 [plugin:vite:resolve] Module "tls" has been externalized for browser compatibility, imported by "/app/node_modules/.pnpm/pdf-signature-reader@1.4.2/node_modules/pdf-signature-reader/helpers/verification.js". See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.
+2026-09-23T09:38:22.2196449Z #16 51.55 node_modules/.pnpm/iarna-toml-esm@3.0.5/node_modules/iarna-toml-esm/lib/toml-parser.js (183:22) Use of eval in "node_modules/.pnpm/iarna-toml-esm@3.0.5/node_modules/iarna-toml-esm/lib/toml-parser.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+2026-09-23T09:38:22.3297196Z #16 51.66 node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js (83:17) Use of eval in "node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+2026-09-23T09:38:22.4803872Z #16 51.66 node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js (84:17) Use of eval in "node_modules/.pnpm/js-sha256@0.9.0/node_modules/js-sha256/src/sha256.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+2026-09-23T09:38:36.1018649Z #16 65.44 ✓ 24634 modules transformed.
+2026-09-23T09:38:39.9464461Z #16 69.28 rendering chunks...
+2026-09-23T09:38:41.3644439Z #16 70.70 computing gzip size...
+2026-09-23T09:38:42.7967305Z #16 72.13 dist/manifest.webmanifest                                                          0.59 kB
+2026-09-23T09:38:42.7969056Z #16 72.13 dist/index.html                                                                    2.79 kB │ gzip:     0.75 kB
+2026-09-23T09:38:42.7970575Z #16 72.13 dist/assets/prime.worker.min-e367bd53.js                                          21.08 kB
+2026-09-23T09:38:42.7972269Z #16 72.13 dist/assets/codicon-8b349ebc.ttf                                                  73.62 kB
+2026-09-23T09:38:42.7973911Z #16 72.13 dist/assets/roman-numeral-converter-f56170f5.css                                   0.04 kB │ gzip:     0.06 kB
+2026-09-23T09:38:42.7975476Z #16 72.13 dist/assets/svg-placeholder-generator-8f39727a.css                                 0.05 kB │ gzip:     0.07 kB
+2026-09-23T09:38:42.7977235Z #16 72.13 dist/assets/base64-file-converter-15f3e52d.css                                     0.05 kB │ gzip:     0.07 kB
+2026-09-23T09:38:42.7978820Z #16 72.13 dist/assets/jwt-parser-fb0db5b5.css                                                0.05 kB │ gzip:     0.07 kB
+2026-09-23T09:38:42.7985756Z #16 72.13 dist/assets/uuid-generator-93c8bfcc.css                                            0.06 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.7987326Z #16 72.13 dist/assets/token-generator.tool-da0729d3.css                                      0.06 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.7989585Z #16 72.13 dist/assets/integer-base-converter-d188b46a.css                                    0.07 kB │ gzip:     0.09 kB
+2026-09-23T09:38:42.7991146Z #16 72.13 dist/assets/TextareaCopyable-fb18840f.css                                          0.07 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.7992695Z #16 72.13 dist/assets/eta-calculator-ad84d819.css                                            0.08 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.7994207Z #16 72.13 dist/assets/random-port-generator-95e78649.css                                     0.09 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.7995777Z #16 72.13 dist/assets/chronometer-0d8c66f6.css                                               0.10 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.7997189Z #16 72.13 dist/assets/url-parser-091134c3.css                                                0.10 kB │ gzip:     0.09 kB
+2026-09-23T09:38:42.7998728Z #16 72.13 dist/assets/basic-auth-generator-635aa9e2.css                                      0.11 kB │ gzip:     0.12 kB
+2026-09-23T09:38:42.8000442Z #16 72.13 dist/assets/git-memo-e2793d39.css                                                  0.12 kB │ gzip:     0.12 kB
+2026-09-23T09:38:42.8001903Z #16 72.13 dist/assets/bcrypt-c3788105.css                                                    0.12 kB │ gzip:     0.10 kB
+2026-09-23T09:38:42.9603254Z #16 72.13 dist/assets/json-viewer-a81cb043.css                                               0.13 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.9610754Z #16 72.13 dist/assets/sql-prettify-7b111448.css                                              0.13 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.9612237Z #16 72.13 dist/assets/yaml-viewer-2830747a.css                                               0.13 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.9613701Z #16 72.13 dist/assets/meta-tag-generator-c639b15a.css                                        0.17 kB │ gzip:     0.13 kB
+2026-09-23T09:38:42.9623018Z #16 72.13 dist/assets/otp-code-generator-and-validator-a5f6cc5c.css                          0.23 kB │ gzip:     0.16 kB
+2026-09-23T09:38:42.9624868Z #16 72.13 dist/assets/crontab-generator-b50f7ea4.css                                         0.23 kB │ gzip:     0.17 kB
+2026-09-23T09:38:42.9633470Z #16 72.13 dist/assets/device-information-94180c4b.css                                        0.31 kB │ gzip:     0.19 kB
+2026-09-23T09:38:42.9634996Z #16 72.13 dist/assets/regex-memo-05d7ce76.css                                                0.32 kB │ gzip:     0.19 kB
+2026-09-23T09:38:42.9636478Z #16 72.13 dist/assets/chmod-calculator-67ba53ae.css                                          0.46 kB │ gzip:     0.24 kB
+2026-09-23T09:38:42.9637979Z #16 72.13 dist/assets/html-wysiwyg-editor-b5b79779.css                                       1.51 kB │ gzip:     0.48 kB
+2026-09-23T09:38:42.9639860Z #16 72.13 dist/assets/json-diff-0c87ccdc.css                                                 2.15 kB │ gzip:     0.47 kB
+2026-09-23T09:38:42.9641644Z #16 72.13 dist/assets/index-5da4700d.css                                                    34.07 kB │ gzip:     7.05 kB
+2026-09-23T09:38:42.9643097Z #16 72.13 dist/assets/text-diff-1862df68.css                                               112.42 kB │ gzip:    18.28 kB
+2026-09-23T09:38:42.9644505Z #16 72.13 dist/assets/is-browser-fc34c9a6.js                                                 0.06 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.9645915Z #16 72.13 dist/assets/color-to-class-b0332f36.js                                             0.06 kB │ gzip:     0.08 kB
+2026-09-23T09:38:42.9647354Z #16 72.13 dist/assets/get-slot-1efb97e5.js                                                   0.09 kB │ gzip:     0.11 kB
+2026-09-23T09:38:42.9648722Z #16 72.13 dist/assets/boolean-c7e7c785.js                                                    0.11 kB │ gzip:     0.10 kB
+2026-09-23T09:38:42.9650424Z #16 72.13 dist/assets/hash-text.service-9de4e2c4.js                                          0.12 kB │ gzip:     0.13 kB
+2026-09-23T09:38:42.9652086Z #16 72.13 dist/assets/defaults-4d6daddf.js                                                   0.13 kB │ gzip:     0.10 kB
+2026-09-23T09:38:42.9653466Z #16 72.13 dist/assets/toml.services-387bcfeb.js                                              0.13 kB │ gzip:     0.13 kB
+2026-09-23T09:38:42.9655032Z #16 72.13 dist/assets/___vite-browser-external_commonjs-proxy-bf898253.js                    0.18 kB │ gzip:     0.17 kB
+2026-09-23T09:38:42.9656591Z #16 72.13 dist/assets/convert-ae87c221.js                                                    0.22 kB │ gzip:     0.19 kB
+2026-09-23T09:38:42.9657979Z #16 72.13 dist/assets/_commonjs-dynamic-modules-302442b1.js                                  0.24 kB │ gzip:     0.19 kB
+2026-09-23T09:38:42.9659664Z #16 72.13 dist/assets/About-7ee1f1c3.js                                                      0.30 kB │ gzip:     0.23 kB
+2026-09-23T09:38:42.9661053Z #16 72.13 dist/assets/token-generator.service-e5050ac1.js                                    0.34 kB │ gzip:     0.30 kB
+2026-09-23T09:38:42.9662570Z #16 72.13 dist/assets/computedRefreshable-f1ddea4d.js                                        0.37 kB │ gzip:     0.23 kB
+2026-09-23T09:38:42.9664159Z #16 72.13 dist/assets/macAddress-6592e34f.js                                                 0.40 kB │ gzip:     0.24 kB
+2026-09-23T09:38:42.9665691Z #16 72.13 dist/assets/integer-base-converter.model-834f64a6.js                               0.43 kB │ gzip:     0.34 kB
+2026-09-23T09:38:42.9667293Z #16 72.13 dist/assets/ipv4-address-converter.service-e4236f67.js                             0.48 kB │ gzip:     0.33 kB
+2026-09-23T09:38:42.9668776Z #16 72.13 dist/assets/Copy-f2248a77.js                                                       0.50 kB │ gzip:     0.35 kB
+2026-09-23T09:38:42.9670499Z #16 72.13 dist/assets/SpanCopyable.vue_vue_type_script_setup_true_lang-e4a28e4f.js           0.51 kB │ gzip:     0.37 kB
+2026-09-23T09:38:42.9672022Z #16 72.13 dist/assets/Scrollbar-36e6a10a.js                                                  0.56 kB │ gzip:     0.34 kB
+2026-09-23T09:38:42.9673400Z #16 72.13 dist/assets/index-000e9fad.js                                                      0.66 kB │ gzip:     0.38 kB
+2026-09-23T09:38:42.9674759Z #16 72.13 dist/assets/Remove-e5680e29.js                                                     0.66 kB │ gzip:     0.36 kB
+2026-09-23T09:38:42.9676365Z #16 72.13 dist/assets/InputCopyable.vue_vue_type_script_setup_true_lang-1e57ed91.js          0.68 kB │ gzip:     0.45 kB
+2026-09-23T09:38:42.9677987Z #16 72.13 dist/assets/random-port-generator-2b25baaf.js                                      0.73 kB │ gzip:     0.48 kB
+2026-09-23T09:38:42.9679691Z #16 72.13 dist/assets/use-form-item-e86301d0.js                                              0.79 kB │ gzip:     0.41 kB
+2026-09-23T09:38:42.9681109Z #16 72.13 dist/assets/yaml-to-toml-484f1186.js                                               0.80 kB │ gzip:     0.50 kB
+2026-09-23T09:38:42.9682520Z #16 72.13 dist/assets/toml-to-json-1959d8ac.js                                               0.80 kB │ gzip:     0.49 kB
+2026-09-23T09:38:42.9684123Z #16 72.13 dist/assets/json-minify-2fdf4076.js                                                0.81 kB │ gzip:     0.50 kB
+2026-09-23T09:38:42.9685552Z #16 72.13 dist/assets/json-to-toml-06034e51.js                                               0.81 kB │ gzip:     0.50 kB
+2026-09-23T09:38:42.9686916Z #16 72.13 dist/assets/json-to-yaml-d132cda9.js                                               0.82 kB │ gzip:     0.49 kB
+2026-09-23T09:38:42.9688265Z #16 72.13 dist/assets/yaml-to-json-031af363.js                                               0.82 kB │ gzip:     0.51 kB
+2026-09-23T09:38:42.9689846Z #16 72.13 dist/assets/toml-to-yaml-434a4663.js                                               0.84 kB │ gzip:     0.50 kB
+2026-09-23T09:38:42.9691229Z #16 72.13 dist/assets/demo-wrapper-9aba7985.js                                               0.85 kB │ gzip:     0.53 kB
+2026-09-23T09:38:42.9692856Z #16 72.13 dist/assets/xml-to-json-19bf7cfe.js                                                0.89 kB │ gzip:     0.54 kB
+2026-09-23T09:38:42.9694237Z #16 72.13 dist/assets/json-to-xml-bcf053f7.js                                                0.90 kB │ gzip:     0.55 kB
+2026-09-23T09:38:42.9695621Z #16 72.13 dist/assets/text-statistics-a47e2316.js                                            0.95 kB │ gzip:     0.51 kB
+2026-09-23T09:38:42.9697053Z #16 72.13 dist/assets/safelink-decoder-7edb0663.js                                           1.01 kB │ gzip:     0.62 kB
+2026-09-23T09:38:42.9698543Z #16 72.13 dist/assets/numeronym-generator-6b852956.js                                        1.09 kB │ gzip:     0.69 kB
+2026-09-23T09:38:42.9700301Z #16 72.13 dist/assets/azcli-23a1b956.js                                                      1.09 kB │ gzip:     0.46 kB
+2026-09-23T09:38:42.9701713Z #16 72.13 dist/assets/http-status-codes-a2493f05.js                                          1.10 kB │ gzip:     0.65 kB
+2026-09-23T09:38:42.9703110Z #16 72.13 dist/assets/json-to-csv-29543440.js                                                1.13 kB │ gzip:     0.66 kB
+2026-09-23T09:38:42.9704584Z #16 72.13 dist/assets/chronometer-99d3a7ad.js                                                1.14 kB │ gzip:     0.62 kB
+2026-09-23T09:38:42.9706146Z #16 72.13 dist/assets/FormatTransformer.vue_vue_type_script_setup_true_lang-75e65e6f.js      1.21 kB │ gzip:     0.65 kB
+2026-09-23T09:38:42.9707678Z #16 72.13 dist/assets/javascript-f6f05b0b.js                                                 1.22 kB │ gzip:     0.64 kB
+2026-09-23T09:38:42.9709067Z #16 72.13 dist/assets/text-to-nato-alphabet-3591899d.js                                      1.29 kB │ gzip:     0.79 kB
+2026-09-23T09:38:42.9710726Z #16 72.13 dist/assets/ini-41c1946f.js                                                        1.35 kB │ gzip:     0.68 kB
+2026-09-23T09:38:42.9712070Z #16 72.13 dist/assets/basic-auth-generator-72239224.js                                       1.37 kB │ gzip:     0.75 kB
+2026-09-23T09:38:42.9713617Z #16 72.13 dist/assets/ipv4-address-converter-5fd399d1.js                                     1.42 kB │ gzip:     0.75 kB
+2026-09-23T09:38:42.9715116Z #16 72.13 dist/assets/downloadBase64-c4c1b276.js                                             1.49 kB │ gzip:     0.70 kB
+2026-09-23T09:38:42.9716533Z #16 72.13 dist/assets/queryParams-be5ab68c.js                                                1.49 kB │ gzip:     0.76 kB
+2026-09-23T09:38:42.9717903Z #16 72.13 dist/assets/keycode-info-4d130868.js                                               1.53 kB │ gzip:     0.80 kB
+2026-09-23T09:38:42.9719627Z #16 72.13 dist/assets/c-key-value-list.vue_vue_type_script_setup_true_lang-e8cb35f5.js       1.59 kB │ gzip:     0.67 kB
+2026-09-23T09:38:42.9721227Z #16 72.13 dist/assets/ipv6-ula-generator-a5d8e64e.js                                         1.61 kB │ gzip:     0.94 kB
+2026-09-23T09:38:42.9722618Z #16 72.13 dist/assets/csp-aed6305a.js                                                        1.67 kB │ gzip:     0.67 kB
+2026-09-23T09:38:42.9724218Z #16 72.13 dist/assets/device-information-b950957b.js                                         1.67 kB │ gzip:     0.80 kB
+2026-09-23T09:38:42.9725784Z #16 72.13 dist/assets/html-entities-877efe20.js                                              1.70 kB │ gzip:     0.69 kB
+2026-09-23T09:38:42.9727307Z #16 72.13 dist/assets/hash-text-44e2c81f.js                                                  1.88 kB │ gzip:     1.01 kB
+2026-09-23T09:38:42.9728694Z #16 72.13 dist/assets/git-memo-a4b18a9c.js                                                   1.88 kB │ gzip:     0.76 kB
+2026-09-23T09:38:42.9730276Z #16 72.13 dist/assets/xml-formatter-e6fa1bd5.js                                              1.92 kB │ gzip:     1.00 kB
+2026-09-23T09:38:42.9731622Z #16 72.13 dist/assets/pla-54a12d9b.js                                                        1.93 kB │ gzip:     0.79 kB
+2026-09-23T09:38:42.9732950Z #16 72.13 dist/assets/url-encoder-847cf1b2.js                                                1.95 kB │ gzip:     0.78 kB
+2026-09-23T09:38:42.9734582Z #16 72.13 dist/assets/url-parser-6863d96b.js                                                 1.96 kB │ gzip:     1.10 kB
+2026-09-23T09:38:42.9736007Z #16 72.13 dist/assets/InputGroupLabel-6ae500b6.js                                            2.01 kB │ gzip:     0.93 kB
+2026-09-23T09:38:42.9737453Z #16 72.13 dist/assets/scheme-03c92c15.js                                                     2.01 kB │ gzip:     0.96 kB
+2026-09-23T09:38:42.9738855Z #16 72.13 dist/assets/temperature-converter-c19081e8.js                                      2.02 kB │ gzip:     0.99 kB
+2026-09-23T09:38:42.9740586Z #16 72.13 dist/assets/string-obfuscator-73d60f30.js                                          2.02 kB │ gzip:     1.03 kB
+2026-09-23T09:38:42.9741943Z #16 72.13 dist/assets/flow9-d862b93b.js                                                      2.06 kB │ gzip:     1.00 kB
+2026-09-23T09:38:42.9743252Z #16 72.13 dist/assets/text-to-unicode-8f0cac4c.js                                            2.06 kB │ gzip:     0.86 kB
+2026-09-23T09:38:42.9744605Z #16 72.13 dist/assets/sb-c1c59486.js                                                         2.08 kB │ gzip:     0.97 kB
+2026-09-23T09:38:42.9745897Z #16 72.13 dist/assets/bat-2c82a72d.js                                                        2.09 kB │ gzip:     1.01 kB
+2026-09-23T09:38:42.9747182Z #16 72.13 dist/assets/Form-43140623.js                                                       2.10 kB │ gzip:     1.10 kB
+2026-09-23T09:38:42.9748691Z #16 72.13 dist/assets/chmod-calculator-b101169a.js                                           2.11 kB │ gzip:     1.01 kB
+2026-09-23T09:38:42.9750503Z #16 72.13 dist/assets/rsa-key-pair-generator-688f419b.js                                     2.11 kB │ gzip:     1.14 kB
+2026-09-23T09:38:42.9751946Z #16 72.13 dist/assets/dockerfile-c55b64af.js                                                 2.12 kB │ gzip:     0.82 kB
+2026-09-23T09:38:42.9753393Z #16 72.13 dist/assets/email-normalizer-76039812.js                                           2.15 kB │ gzip:     1.03 kB
+2026-09-23T09:38:42.9754804Z #16 72.13 dist/assets/pascaligo-ae9a3940.js                                                  2.25 kB │ gzip:     1.06 kB
+2026-09-23T09:38:42.9756184Z #16 72.13 dist/assets/hmac-generator-711934fa.js                                             2.30 kB │ gzip:     1.09 kB
+2026-09-23T09:38:42.9757511Z #16 72.13 dist/assets/lua-98fb5662.js                                                        2.37 kB │ gzip:     1.07 kB
+2026-09-23T09:38:42.9758877Z #16 72.13 dist/assets/InputGroup-d77b36b0.js                                                 2.37 kB │ gzip:     0.53 kB
+2026-09-23T09:38:42.9760421Z #16 72.13 dist/assets/index-3aa13386.js                                                      2.41 kB │ gzip:     1.28 kB
+2026-09-23T09:38:42.9761766Z #16 72.13 dist/assets/cameligo-1c616f6f.js                                                   2.43 kB │ gzip:     1.11 kB
+2026-09-23T09:38:42.9763372Z #16 72.13 dist/assets/qr-code-generator-53b08bb7.js                                          2.44 kB │ gzip:     1.15 kB
+2026-09-23T09:38:42.9764782Z #16 72.13 dist/assets/text-to-binary-4e54e002.js                                             2.44 kB │ gzip:     1.06 kB
+2026-09-23T09:38:42.9766253Z #16 72.13 dist/assets/base64-string-converter-8863955e.js                                    2.46 kB │ gzip:     0.99 kB
+2026-09-23T09:38:42.9767595Z #16 72.13 dist/assets/Divider-141ab5f7.js                                                    2.47 kB │ gzip:     1.06 kB
+2026-09-23T09:38:42.9768952Z #16 72.13 dist/assets/roman-numeral-converter-fd949b76.js                                    2.48 kB │ gzip:     1.29 kB
+2026-09-23T09:38:42.9770646Z #16 72.13 dist/assets/Statistic-cc9ccf0d.js                                                  2.48 kB │ gzip:     0.97 kB
+2026-09-23T09:38:42.9771933Z #16 72.13 dist/assets/graphql-a707cdaa.js                                                    2.51 kB │ gzip:     1.17 kB
+2026-09-23T09:38:42.9773670Z #16 72.13 dist/assets/json-viewer-dbea7142.js                                                2.60 kB │ gzip:     1.33 kB
+2026-09-23T09:38:42.9775065Z #16 72.13 dist/assets/objective-c-2b1285e8.js                                                2.65 kB │ gzip:     1.20 kB
+2026-09-23T09:38:42.9776435Z #16 72.13 dist/assets/lexon-b30b84ba.js                                                      2.68 kB │ gzip:     1.07 kB
+2026-09-23T09:38:42.9777777Z #16 72.13 dist/assets/xml-a9b710e1.js                                                        2.72 kB │ gzip:     1.13 kB
+2026-09-23T09:38:42.9779148Z #16 72.13 dist/assets/token-generator.tool-5b610a20.js                                       2.72 kB │ gzip:     1.05 kB
+2026-09-23T09:38:42.9781138Z #16 72.13 dist/assets/mac-address-generator-c4ea3f40.js                                      2.77 kB │ gzip:     1.32 kB
+2026-09-23T09:38:42.9782397Z #16 72.13 dist/assets/bicep-338bfe58.js                                                      2.78 kB │ gzip:     1.11 kB
+2026-09-23T09:38:42.9783624Z #16 72.13 dist/assets/mime-types-7ddfd3e0.js                                                 2.78 kB │ gzip:     1.10 kB
+2026-09-23T09:38:42.9784918Z #16 72.13 dist/assets/sparql-8602c7d8.js                                                     2.80 kB │ gzip:     1.31 kB
+2026-09-23T09:38:42.9786204Z #16 72.13 dist/assets/base64-file-converter-f4555d38.js                                      2.82 kB │ gzip:     1.34 kB
+2026-09-23T09:38:42.9787491Z #16 72.13 dist/assets/mips-a6f8cea7.js                                                       2.83 kB │ gzip:     1.22 kB
+2026-09-23T09:38:42.9788824Z #16 72.13 dist/assets/ulid-generator-77d72532.js                                             2.86 kB │ gzip:     1.51 kB
+2026-09-23T09:38:42.9800179Z #16 72.13 dist/assets/go-b074840c.js                                                         2.90 kB │ gzip:     1.29 kB
+2026-09-23T09:38:42.9801499Z #16 72.13 dist/assets/password-strength-analyser-9d57be65.js                                 2.91 kB │ gzip:     1.43 kB
+2026-09-23T09:38:42.9802864Z #16 72.13 dist/assets/encryption-27973d5f.js                                                 2.91 kB │ gzip:     1.17 kB
+2026-09-23T09:38:42.9804085Z #16 72.13 dist/assets/sophia-8f79d2a2.js                                                     3.01 kB │ gzip:     1.36 kB
+2026-09-23T09:38:42.9805360Z #16 72.13 dist/assets/yaml-viewer-52479237.js                                                3.06 kB │ gzip:     1.56 kB
+2026-09-23T09:38:42.9806548Z #16 72.13 dist/assets/m3-bebbe313.js                                                         3.06 kB │ gzip:     1.47 kB
+2026-09-23T09:38:42.9807798Z #16 72.13 dist/assets/percentage-calculator-276e96a6.js                                      3.11 kB │ gzip:     1.07 kB
+2026-09-23T09:38:42.9809087Z #16 72.13 dist/assets/qsharp-3747268d.js                                                     3.18 kB │ gzip:     1.51 kB
+2026-09-23T09:38:42.9810546Z #16 72.13 dist/assets/integer-base-converter-04ebca7a.js                                     3.20 kB │ gzip:     1.34 kB
+2026-09-23T09:38:42.9812093Z #16 72.13 dist/assets/fsharp-f2bb837e.js                                                     3.23 kB │ gzip:     1.47 kB
+2026-09-23T09:38:42.9813303Z #16 72.13 dist/assets/pascal-4649eefa.js                                                     3.24 kB │ gzip:     1.55 kB
+2026-09-23T09:38:42.9814466Z #16 72.13 dist/assets/shell-5561a5b3.js                                                      3.32 kB │ gzip:     1.35 kB
+2026-09-23T09:38:42.9815655Z #16 72.13 dist/assets/case-converter-a5f67a02.js                                             3.36 kB │ gzip:     1.38 kB
+2026-09-23T09:38:42.9816986Z #16 72.13 dist/assets/r-3faaa0ed.js                                                          3.38 kB │ gzip:     1.42 kB
+2026-09-23T09:38:42.9818105Z #16 72.13 dist/assets/java-47f7782f.js                                                       3.47 kB │ gzip:     1.55 kB
+2026-09-23T09:38:42.9839826Z #16 72.13 dist/assets/powershell-da6840f5.js                                                 3.52 kB │ gzip:     1.53 kB
+2026-09-23T09:38:42.9841053Z #16 72.13 dist/assets/cypher-3ffc0570.js                                                     3.63 kB │ gzip:     1.58 kB
+2026-09-23T09:38:42.9842239Z #16 72.14 dist/assets/kotlin-ae5ef343.js                                                     3.69 kB │ gzip:     1.63 kB
+2026-09-23T09:38:42.9843402Z #16 72.14 dist/assets/redis-e60e99b1.js                                                      3.80 kB │ gzip:     1.64 kB
+2026-09-23T09:38:42.9844694Z #16 72.14 dist/assets/svg-placeholder-generator-6ab2cb72.js                                  3.81 kB │ gzip:     1.58 kB
+2026-09-23T09:38:42.9846058Z #16 72.14 dist/assets/tcl-cb6e370b.js                                                        3.82 kB │ gzip:     1.52 kB
+2026-09-23T09:38:42.9847209Z #16 72.14 dist/assets/hcl-d4ee186a.js                                                        3.84 kB │ gzip:     1.64 kB
+2026-09-23T09:38:42.9848423Z #16 72.14 dist/assets/coffee-ec486f98.js                                                     3.84 kB │ gzip:     1.45 kB
+2026-09-23T09:38:42.9849779Z #16 72.14 dist/assets/python-8a04151a.js                                                     3.93 kB │ gzip:     1.76 kB
+2026-09-23T09:38:42.9850919Z #16 72.14 dist/assets/markdown-d21a565e.js                                                   4.03 kB │ gzip:     1.54 kB
+2026-09-23T09:38:42.9852302Z #16 72.14 dist/assets/list-converter-ec96eb49.js                                             4.09 kB │ gzip:     1.43 kB
+2026-09-23T09:38:42.9853758Z #16 72.14 dist/assets/restructuredtext-2ed0fd83.js                                           4.14 kB │ gzip:     1.52 kB
+2026-09-23T09:38:42.9854538Z #16 72.14 dist/assets/less-1fe8fdbb.js                                                       4.14 kB │ gzip:     1.57 kB
+2026-09-23T09:38:42.9855295Z #16 72.14 dist/assets/apex-7aadd462.js                                                       4.20 kB │ gzip:     1.91 kB
+2026-09-23T09:38:42.9856667Z #16 72.14 dist/assets/liquid-b2861448.js                                                     4.27 kB │ gzip:     1.83 kB
+2026-09-23T09:38:42.9857957Z #16 72.14 dist/assets/yaml-10f62cac.js                                                       4.32 kB │ gzip:     1.69 kB
+2026-09-23T09:38:42.9859529Z #16 72.14 dist/assets/lorem-ipsum-generator-c24145c8.js                                      4.37 kB │ gzip:     1.85 kB
+2026-09-23T09:38:42.9860895Z #16 72.14 dist/assets/rust-ed06c9d7.js                                                       4.41 kB │ gzip:     1.97 kB
+2026-09-23T09:38:42.9861702Z #16 72.14 dist/assets/ipv4-range-expander-0cb2ec60.js                                        4.47 kB │ gzip:     2.02 kB
+2026-09-23T09:38:42.9862686Z #16 72.14 dist/assets/base64-6a7151fc.js                                                     4.48 kB │ gzip:     1.89 kB
+2026-09-23T09:38:42.9863989Z #16 72.14 dist/assets/dart-68bf5326.js                                                       4.50 kB │ gzip:     1.80 kB
+2026-09-23T09:38:42.9865526Z #16 72.14 dist/assets/css-a82dd746.js                                                        4.76 kB │ gzip:     1.54 kB
+2026-09-23T09:38:42.9866851Z #16 72.14 dist/assets/csharp-d2941385.js                                                     4.77 kB │ gzip:     1.87 kB
+2026-09-23T09:38:42.9868137Z #16 72.14 dist/assets/Table-99157468.js                                                      4.82 kB │ gzip:     1.41 kB
+2026-09-23T09:38:42.9869639Z #16 72.14 dist/assets/json-diff-2a1dbeab.js                                                  5.02 kB │ gzip:     1.96 kB
+2026-09-23T09:38:42.9870509Z #16 72.14 dist/assets/pug-58d85519.js                                                        5.07 kB │ gzip:     1.80 kB
+2026-09-23T09:38:42.9871388Z #16 72.14 dist/assets/xml-formatter.service-73e6e0bc.js                                      5.13 kB │ gzip:     2.07 kB
+2026-09-23T09:38:42.9872429Z #16 72.14 dist/assets/msdax-b68e245c.js                                                      5.16 kB │ gzip:     2.11 kB
+2026-09-23T09:38:42.9873724Z #16 72.14 dist/assets/mdx-64e14536.js                                                        5.17 kB │ gzip:     1.62 kB
+2026-09-23T09:38:42.9874974Z #16 72.14 dist/assets/workbox-window.prod.es5-a7b12eab.js                                    5.29 kB │ gzip:     2.19 kB
+2026-09-23T09:38:42.9876442Z #16 72.14 dist/assets/wifi-qr-code-generator-72fcc5dd.js                                     5.29 kB │ gzip:     2.06 kB
+2026-09-23T09:38:42.9877806Z #16 72.14 dist/assets/html-ced17364.js                                                       5.32 kB │ gzip:     1.57 kB
+2026-09-23T09:38:42.9879039Z #16 72.14 dist/assets/swift-9dc68841.js                                                      5.42 kB │ gzip:     2.22 kB
+2026-09-23T09:38:42.9880552Z #16 72.14 dist/assets/ecl-e008be52.js                                                        5.59 kB │ gzip:     2.38 kB
+2026-09-23T09:38:42.9881440Z #16 72.14 dist/assets/typescript-cd2f5e95.js                                                 5.72 kB │ gzip:     2.34 kB
+2026-09-23T09:38:42.9882449Z #16 72.14 dist/assets/cpp-98740ad6.js                                                        5.72 kB │ gzip:     2.29 kB
+2026-09-23T09:38:42.9883564Z #16 72.14 dist/assets/benchmark-builder-d83d2823.js                                          5.86 kB │ gzip:     2.53 kB
+2026-09-23T09:38:42.9884664Z #16 72.14 dist/assets/vb-c8fb3e3d.js                                                         6.04 kB │ gzip:     2.21 kB
+2026-09-23T09:38:42.9885662Z #16 72.14 dist/assets/twig-2fc36860.js                                                       6.22 kB │ gzip:     1.68 kB
+2026-09-23T09:38:42.9886717Z #16 72.14 dist/assets/ipv4-subnet-calculator-027def85.js                                     6.24 kB │ gzip:     2.57 kB
+2026-09-23T09:38:42.9887801Z #16 72.14 dist/assets/Grid-baaff47a.js                                                       6.29 kB │ gzip:     2.65 kB
+2026-09-23T09:38:42.9888880Z #16 72.14 dist/assets/scss-3439df1c.js                                                       6.66 kB │ gzip:     1.90 kB
+2026-09-23T09:38:42.9890183Z #16 72.14 dist/assets/jwt-parser-12dbd181.js                                                 6.73 kB │ gzip:     3.30 kB
+2026-09-23T09:38:42.9891198Z #16 72.14 dist/assets/Alert-d12592ec.js                                                      7.05 kB │ gzip:     2.39 kB
+2026-09-23T09:38:42.9892208Z #16 72.14 dist/assets/handlebars-bfc272e4.js                                                 7.08 kB │ gzip:     1.79 kB
+2026-09-23T09:38:42.9893201Z #16 72.14 dist/assets/julia-f7e41405.js                                                      7.34 kB │ gzip:     2.81 kB
+2026-09-23T09:38:42.9894202Z #16 72.14 dist/assets/scala-b8919493.js                                                      7.56 kB │ gzip:     2.25 kB
+2026-09-23T09:38:42.9895168Z #16 72.14 dist/assets/wgsl-36d9888f.js                                                       7.58 kB │ gzip:     2.89 kB
+2026-09-23T09:38:42.9896406Z #16 72.14 dist/assets/st-aef311b0.js                                                         7.64 kB │ gzip:     2.39 kB
+2026-09-23T09:38:42.9897536Z #16 72.14 dist/assets/camera-recorder-411b6a7f.js                                            7.82 kB │ gzip:     2.92 kB
+2026-09-23T09:38:42.9898608Z #16 72.14 dist/assets/systemverilog-46198f6a.js                                              7.85 kB │ gzip:     2.91 kB
+2026-09-23T09:38:42.9899937Z #16 72.14 dist/assets/postiats-7c2e9d70.js                                                   8.10 kB │ gzip:     2.59 kB
+2026-09-23T09:38:42.9900916Z #16 72.14 dist/assets/php-9f7865da.js                                                        8.27 kB │ gzip:     2.22 kB
+2026-09-23T09:38:42.9901875Z #16 72.14 dist/assets/perl-36ad82fa.js                                                       8.50 kB │ gzip:     3.29 kB
+2026-09-23T09:38:42.9902802Z #16 72.14 dist/assets/ruby-25cf1311.js                                                       8.75 kB │ gzip:     2.73 kB
+2026-09-23T09:38:42.9904094Z #16 72.14 dist/assets/Checkbox-ed703e76.js                                                   8.81 kB │ gzip:     3.10 kB
+2026-09-23T09:38:42.9905109Z #16 72.14 dist/assets/Switch-b321afbd.js                                                     8.87 kB │ gzip:     2.97 kB
+2026-09-23T09:38:42.9906071Z #16 72.14 dist/assets/razor-ceedd022.js                                                      9.09 kB │ gzip:     2.47 kB
+2026-09-23T09:38:42.9907276Z #16 72.14 dist/assets/protobuf-1aff1783.js                                                   9.29 kB │ gzip:     2.23 kB
+2026-09-23T09:38:42.9908431Z #16 72.14 dist/assets/InputNumber-8509c354.js                                                9.49 kB │ gzip:     3.25 kB
+2026-09-23T09:38:42.9909180Z #16 72.14 dist/assets/Tag-91ef6fac.js                                                        9.50 kB │ gzip:     2.95 kB
+2026-09-23T09:38:42.9910329Z #16 72.14 dist/assets/regex-memo-4e5c0bbd.js                                                 9.80 kB │ gzip:     1.85 kB
+2026-09-23T09:38:42.9911065Z #16 72.14 dist/assets/clojure-9bb82a82.js                                                    9.89 kB │ gzip:     3.77 kB
+2026-09-23T09:38:42.9911746Z #16 72.14 dist/assets/use-locale-a11adb36.js                                                10.00 kB │ gzip:     3.53 kB
+2026-09-23T09:38:42.9912462Z #16 72.14 dist/assets/date-time-converter-d9a5fdab.js                                       10.31 kB │ gzip:     3.93 kB
+2026-09-23T09:38:42.9913162Z #16 72.14 dist/assets/elixir-932a57fd.js                                                    10.50 kB │ gzip:     2.69 kB
+2026-09-23T09:38:42.9913813Z #16 72.14 dist/assets/sql-435600dc.js                                                       10.54 kB │ gzip:     4.01 kB
+2026-09-23T09:38:42.9914494Z #16 72.14 dist/assets/uuid-generator-8384bda6.js                                            10.96 kB │ gzip:     4.59 kB
+2026-09-23T09:38:42.9915182Z #16 72.14 dist/assets/mysql-5b539782.js                                                     11.52 kB │ gzip:     4.22 kB
+2026-09-23T09:38:42.9915848Z #16 72.14 dist/assets/redshift-9471542a.js                                                  12.05 kB │ gzip:     4.49 kB
+2026-09-23T09:38:42.9916527Z #16 72.14 dist/assets/pgsql-e710ca22.js                                                     13.71 kB │ gzip:     4.65 kB
+2026-09-23T09:38:42.9917199Z #16 72.14 dist/assets/abap-b90a1f1e.js                                                      14.41 kB │ gzip:     5.47 kB
+2026-09-23T09:38:42.9917855Z #16 72.14 dist/assets/Button-89909052.js                                                    14.79 kB │ gzip:     4.45 kB
+2026-09-23T09:38:42.9918511Z #16 72.14 dist/assets/Slider-07ccd072.js                                                    16.26 kB │ gzip:     5.11 kB
+2026-09-23T09:38:42.9919190Z #16 72.14 dist/assets/freemarker2-ae812b15.js                                               16.40 kB │ gzip:     4.33 kB
+2026-09-23T09:38:42.9920552Z #16 72.14 dist/assets/iban-validator-and-parser-58397e5f.js                                 16.82 kB │ gzip:     4.53 kB
+2026-09-23T09:38:42.9922236Z #16 72.14 dist/assets/powerquery-f1a5c841.js                                                17.19 kB │ gzip:     5.01 kB
+2026-09-23T09:38:42.9923623Z #16 72.14 dist/assets/color-converter-648c5f73.js                                           18.24 kB │ gzip:     6.57 kB
+2026-09-23T09:38:42.9924970Z #16 72.14 dist/assets/solidity-d6124224.js                                                  18.84 kB │ gzip:     4.62 kB
+2026-09-23T09:38:42.9925850Z #16 72.14 dist/assets/otp-code-generator-and-validator-f5046c6c.js                          19.60 kB │ gzip:     6.10 kB
+2026-09-23T09:38:42.9927152Z #16 72.14 dist/assets/meta-tag-generator-3eb6ee48.js                                        21.08 kB │ gzip:     6.84 kB
+2026-09-23T09:38:42.9928279Z #16 72.14 dist/assets/ascii-text-drawer-f3c8f585.js                                         21.34 kB │ gzip:     8.20 kB
+2026-09-23T09:38:42.9929913Z #16 72.14 dist/assets/user-agent-parser-8180f23a.js                                         21.67 kB │ gzip:     9.20 kB
+2026-09-23T09:38:42.9930893Z #16 72.14 dist/assets/tsMode-b5562ade.js                                                    22.84 kB │ gzip:     6.51 kB
+2026-09-23T09:38:42.9931924Z #16 72.14 dist/assets/useQRCode-e1301595.js                                                 23.36 kB │ gzip:     9.18 kB
+2026-09-23T09:38:42.9932982Z #16 72.14 dist/assets/slugify-string-febbb0ea.js                                            23.57 kB │ gzip:     8.98 kB
+2026-09-23T09:38:42.9934305Z #16 72.14 dist/assets/bcrypt-9b3d33d9.js                                                    24.18 kB │ gzip:    10.90 kB
+2026-09-23T09:38:42.9935040Z #16 72.14 dist/assets/browser-e933942f.js                                                   24.59 kB │ gzip:     9.68 kB
+2026-09-23T09:38:42.9935762Z #16 72.14 dist/assets/ColorPicker-5bf01808.js                                               24.62 kB │ gzip:     7.32 kB
+2026-09-23T09:38:42.9937167Z #16 72.14 dist/assets/crontab-generator-dd2a1872.js                                         25.53 kB │ gzip:     7.72 kB
+2026-09-23T09:38:42.9938067Z #16 72.14 dist/assets/index-231c3e11.js                                                     27.04 kB │ gzip:     7.80 kB
+2026-09-23T09:38:42.9938806Z #16 72.14 dist/assets/FormItem-706becf8.js                                                  30.38 kB │ gzip:    10.00 kB
+2026-09-23T09:38:42.9939784Z #16 72.14 dist/assets/Input-a92c326a.js                                                     32.47 kB │ gzip:     9.74 kB
+2026-09-23T09:38:42.9940536Z #16 72.14 dist/assets/cssMode-802520f1.js                                                   33.48 kB │ gzip:     8.88 kB
+2026-09-23T09:38:42.9941288Z #16 72.14 dist/assets/htmlMode-8b00d4ea.js                                                  34.03 kB │ gzip:     9.01 kB
+2026-09-23T09:38:42.9942022Z #16 72.14 dist/assets/toml-esm-9c5f6a1e.js                                                  39.10 kB │ gzip:     7.85 kB
+2026-09-23T09:38:42.9942779Z #16 72.14 dist/assets/jsonMode-a907e62a.js                                                  39.48 kB │ gzip:    11.05 kB
+2026-09-23T09:38:42.9943587Z #16 72.14 dist/assets/TextareaCopyable-4f1799e8.js                                          40.70 kB │ gzip:    15.45 kB
+2026-09-23T09:38:42.9944342Z #16 72.14 dist/assets/index-3fa2fdbc.js                                                     56.78 kB │ gzip:    19.58 kB
+2026-09-23T09:38:42.9945088Z #16 72.14 dist/assets/index-67acd565.js                                                     59.85 kB │ gzip:    18.35 kB
+2026-09-23T09:38:42.9945851Z #16 72.14 dist/assets/markdown-to-html-b1c99476.js                                          93.01 kB │ gzip:    46.72 kB
+2026-09-23T09:38:42.9946603Z #16 72.14 dist/assets/public-api-1d5b2fbb.js                                               100.55 kB │ gzip:    30.94 kB
+2026-09-23T09:38:42.9947451Z #16 72.14 dist/assets/docker-run-to-docker-compose-converter-e4b1efb0.js                   108.60 kB │ gzip:    33.46 kB
+2026-09-23T09:38:42.9948464Z #16 72.14 dist/assets/index-d1f3c59c.js                                                    138.20 kB │ gzip:    21.68 kB
+2026-09-23T09:38:42.9949251Z #16 72.14 dist/assets/regex-tester-487c9c80.js                                             162.99 kB │ gzip:    41.33 kB
+2026-09-23T09:38:42.9950462Z #16 72.14 dist/assets/bip39-generator-3b0ea6c9.js                                          179.78 kB │ gzip:    78.87 kB
+2026-09-23T09:38:42.9951875Z #16 72.14 dist/assets/sql-prettify-08884617.js                                             212.78 kB │ gzip:    56.97 kB
+2026-09-23T09:38:42.9975954Z #16 72.14 dist/assets/phone-parser-and-formatter-69e32ad1.js                               226.47 kB │ gzip:    58.76 kB
+2026-09-23T09:38:42.9976833Z #16 72.14 dist/assets/eta-calculator-86f4a0a7.js                                           228.06 kB │ gzip:    54.60 kB
+2026-09-23T09:38:42.9977961Z #16 72.14 dist/assets/pdf-signature-checker-420532d1.js                                    244.61 kB │ gzip:   134.59 kB
+2026-09-23T09:38:42.9978734Z #16 72.14 dist/assets/index-55f58f91.js                                                    282.32 kB │ gzip:    74.53 kB
+2026-09-23T09:38:42.9981238Z #16 72.14 dist/assets/emoji-picker-69a5fc62.js                                             373.17 kB │ gzip:    63.20 kB
+2026-09-23T09:38:42.9982161Z #16 72.14 dist/assets/html-wysiwyg-editor-26cb8d3c.js                                      489.28 kB │ gzip:   153.90 kB
+2026-09-23T09:38:42.9982945Z #16 72.14 dist/assets/math-evaluator-7626557c.js                                           623.24 kB │ gzip:   180.12 kB
+2026-09-23T09:38:42.9983757Z #16 72.14 dist/assets/index-33ba6200.js                                                  1,045.71 kB │ gzip:   322.87 kB
+2026-09-23T09:38:42.9984493Z #16 72.14 dist/assets/text-diff-a7e2362d.js                                              3,160.67 kB │ gzip:   804.30 kB
+2026-09-23T09:38:42.9985366Z #16 72.14 dist/assets/mac-address-lookup-27abf7aa.js                                     3,347.28 kB │ gzip: 1,065.98 kB
+2026-09-23T09:38:42.9985923Z #16 72.14
+2026-09-23T09:38:42.9986252Z #16 72.14 (!) Some chunks are larger than 500 kBs after minification. Consider:
+2026-09-23T09:38:42.9986715Z #16 72.14 - Using dynamic import() to code-split the application
+2026-09-23T09:38:42.9987471Z #16 72.14 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-09-23T09:38:42.9988371Z #16 72.14 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2026-09-23T09:38:43.7864862Z #16 73.12 Browserslist: browsers data (caniuse-lite) is 21 months old. Please run:
+2026-09-23T09:38:43.7866030Z #16 73.12   npx update-browserslist-db@latest
+2026-09-23T09:38:43.7867354Z #16 73.12   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2026-09-23T09:38:45.4127882Z #16 74.75
+2026-09-23T09:38:45.4128434Z #16 74.75 PWA v0.16.0
+2026-09-23T09:38:45.4130437Z #16 74.75 mode      generateSW
+2026-09-23T09:38:45.4131252Z #16 74.75 precache  264 entries (6070.95 KiB)
+2026-09-23T09:38:45.4132071Z #16 74.75 files generated
+2026-09-23T09:38:45.4132509Z #16 74.75   dist/sw.js
+2026-09-23T09:38:45.4132930Z #16 74.75   dist/workbox-3e8df8c8.js
+2026-09-23T09:38:45.5637050Z #16 74.75 warnings
+2026-09-23T09:38:45.5638582Z #16 74.75   assets/mac-address-lookup-27abf7aa.js is 3.35 MB, and won't be precached. Configure maximumFileSizeToCacheInBytes to change this limit.
+2026-09-23T09:38:45.5640444Z #16 74.75   assets/text-diff-a7e2362d.js is 3.16 MB, and won't be precached. Configure maximumFileSizeToCacheInBytes to change this limit.
+2026-09-23T09:38:45.5641439Z #16 74.75
+2026-09-23T09:38:45.5642033Z #16 74.75 ✓ built in 1m 7s
+2026-09-23T09:38:45.9574964Z #16 DONE 75.3s
+2026-09-23T09:38:48.8702829Z
+2026-09-23T09:38:48.8703601Z #17 [runtime 3/6] COPY --from=build /app/dist /usr/share/nginx/html
+2026-09-23T09:38:49.0935826Z #17 DONE 0.1s
+2026-09-23T09:38:49.0936131Z
+2026-09-23T09:38:49.0936847Z #18 [runtime 4/6] COPY nginx.conf /etc/nginx/conf.d/default.conf
+2026-09-23T09:38:49.0937330Z #18 DONE 0.0s
+2026-09-23T09:38:49.0937484Z
+2026-09-23T09:38:49.0937944Z #19 [runtime 5/6] RUN chown -R appuser:appgroup /usr/share/nginx/html /var/cache/nginx /var/run /etc/nginx/conf.d
+2026-09-23T09:38:49.2071029Z #19 DONE 0.3s
+2026-09-23T09:38:49.3394626Z
+2026-09-23T09:38:49.3395957Z #20 [runtime 6/6] RUN touch /var/run/nginx.pid && chown -R appuser:appgroup /var/run/nginx.pid
+2026-09-23T09:38:49.4914919Z #20 DONE 0.1s
+2026-09-23T09:38:49.4915209Z
+2026-09-23T09:38:49.4915756Z #21 exporting to image
+2026-09-23T09:38:49.4916541Z #21 exporting layers
+2026-09-23T09:38:50.0151338Z #21 exporting layers 0.7s done
+2026-09-23T09:38:50.0351375Z #21 writing image sha256:4b4bb396701c1dec2db0ae583180b9d0a9e571e55dc08332dc611b3f419e7437 done
+2026-09-23T09:38:50.0353249Z #21 naming to 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c done
+2026-09-23T09:38:50.0354951Z #21 DONE 0.7s
+2026-09-23T09:38:50.0737753Z Platform: linux/amd64; user: appuser
+2026-09-23T09:38:50.0738818Z Local image ID: sha256:4b4bb396701c1dec2db0ae583180b9d0a9e571e55dc08332dc611b3f419e7437
+2026-09-23T09:38:50.0814064Z ##[group]Run set -euo pipefail
+2026-09-23T09:38:50.0814425Z [36;1mset -euo pipefail[0m
+2026-09-23T09:38:50.0814690Z [36;1mdocker run --detach \[0m
+2026-09-23T09:38:50.0814966Z [36;1m  --name application-smoke \[0m
+2026-09-23T09:38:50.0815269Z [36;1m  --publish 127.0.0.1:18080:8080 \[0m
+2026-09-23T09:38:50.0815562Z [36;1m  "$IMAGE_URI"[0m
+2026-09-23T09:38:50.0815783Z [36;1m[0m
+2026-09-23T09:38:50.0815979Z [36;1mpython3 - <<'PY'[0m
+2026-09-23T09:38:50.0816213Z [36;1mimport json[0m
+2026-09-23T09:38:50.0816440Z [36;1mimport time[0m
+2026-09-23T09:38:50.0816663Z [36;1mimport urllib.error[0m
+2026-09-23T09:38:50.0816918Z [36;1mimport urllib.request[0m
+2026-09-23T09:38:50.0817158Z [36;1m[0m
+2026-09-23T09:38:50.0817385Z [36;1mfor attempt in range(30):[0m
+2026-09-23T09:38:50.0817646Z [36;1m    try:[0m
+2026-09-23T09:38:50.0817893Z [36;1m        with urllib.request.urlopen([0m
+2026-09-23T09:38:50.0818304Z [36;1m            "http://127.0.0.1:18080/health", timeout=2[0m
+2026-09-23T09:38:50.0818646Z [36;1m        ) as response:[0m
+2026-09-23T09:38:50.0818922Z [36;1m            if response.status != 200:[0m
+2026-09-23T09:38:50.0819287Z [36;1m                raise ValueError("Health status was not 200.")[0m
+2026-09-23T09:38:50.0819964Z [36;1m            if json.load(response) != {"status": "ok"}:[0m
+2026-09-23T09:38:50.0820366Z [36;1m                raise ValueError("Unexpected health response.")[0m
+2026-09-23T09:38:50.0820721Z [36;1m        break[0m
+2026-09-23T09:38:50.0821074Z [36;1m    except (urllib.error.URLError, TimeoutError, ValueError) as error:[0m
+2026-09-23T09:38:50.0821486Z [36;1m        if attempt == 29:[0m
+2026-09-23T09:38:50.0821837Z [36;1m            raise SystemExit(f"Container health failed: {error}")[0m
+2026-09-23T09:38:50.0822205Z [36;1m        time.sleep(1)[0m
+2026-09-23T09:38:50.0822438Z [36;1m[0m
+2026-09-23T09:38:50.0822641Z [36;1mwith urllib.request.urlopen([0m
+2026-09-23T09:38:50.0822955Z [36;1m    "http://127.0.0.1:18080/", timeout=10[0m
+2026-09-23T09:38:50.0823244Z [36;1m) as response:[0m
+2026-09-23T09:38:50.0823508Z [36;1m    body = response.read().decode("utf-8")[0m
+2026-09-23T09:38:50.0823875Z [36;1m    if response.status != 200 or "<html" not in body.lower():[0m
+2026-09-23T09:38:50.0824289Z [36;1m        raise SystemExit("Application page check failed.")[0m
+2026-09-23T09:38:50.0824612Z [36;1m[0m
+2026-09-23T09:38:50.0824857Z [36;1mprint("PASS: /health JSON and application HTML.")[0m
+2026-09-23T09:38:50.0825164Z [36;1mPY[0m
+2026-09-23T09:38:50.0863784Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:38:50.0864131Z env:
+2026-09-23T09:38:50.0864328Z   AWS_REGION: eu-west-2
+2026-09-23T09:38:50.0864559Z   AWS_PAGER:
+2026-09-23T09:38:50.0864815Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:38:50.0865144Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:38:50.0865424Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:50.0865950Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:50.0866451Z ##[endgroup]
+2026-09-23T09:38:50.1232409Z af723dd3ff45cfdc6d17d44d93fb4686780cd9a22ef739b64c48b87f8f34d1b1
+2026-09-23T09:38:50.3736853Z PASS: /health JSON and application HTML.
+2026-09-23T09:38:50.3937199Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-23T09:38:50.3938960Z ##[group]Run aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+2026-09-23T09:38:50.3939794Z with:
+2026-09-23T09:38:50.3940127Z   role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-application
+2026-09-23T09:38:50.3940537Z   aws-region: eu-west-2
+2026-09-23T09:38:50.3940770Z   audience: sts.amazonaws.com
+2026-09-23T09:38:50.3941042Z   role-session-name: application-35843986916
+2026-09-23T09:38:50.3941333Z   role-duration-seconds: 900
+2026-09-23T09:38:50.3941585Z   unset-current-credentials: true
+2026-09-23T09:38:50.3941832Z env:
+2026-09-23T09:38:50.3942008Z   AWS_REGION: eu-west-2
+2026-09-23T09:38:50.3942259Z   AWS_PAGER:
+2026-09-23T09:38:50.3942504Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:38:50.3942817Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:38:50.3943077Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:50.3943592Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:50.3944072Z ##[endgroup]
+2026-09-23T09:38:50.5761261Z Assuming role with OIDC
+2026-09-23T09:38:50.9253174Z Authenticated as assumedRoleId AROAZYNZXEAOKWE6IRCCL:application-35843986916
+2026-09-23T09:38:51.0279843Z ##[group]Run set -euo pipefail
+2026-09-23T09:38:51.0280260Z [36;1mset -euo pipefail[0m
+2026-09-23T09:38:51.0280543Z [36;1mpython3 - <<'PY'[0m
+2026-09-23T09:38:51.0280798Z [36;1mimport json[0m
+2026-09-23T09:38:51.0281031Z [36;1mimport os[0m
+2026-09-23T09:38:51.0281272Z [36;1mimport subprocess[0m
+2026-09-23T09:38:51.0281524Z [36;1m[0m
+2026-09-23T09:38:51.0281742Z [36;1mdef aws(*args):[0m
+2026-09-23T09:38:51.0282047Z [36;1m    return json.loads(subprocess.check_output([0m
+2026-09-23T09:38:51.0282467Z [36;1m        ["aws", *args, "--output", "json", "--no-cli-pager"],[0m
+2026-09-23T09:38:51.0282839Z [36;1m        text=True,[0m
+2026-09-23T09:38:51.0283085Z [36;1m    ))[0m
+2026-09-23T09:38:51.0283300Z [36;1m[0m
+2026-09-23T09:38:51.0283557Z [36;1midentity = aws("sts", "get-caller-identity")[0m
+2026-09-23T09:38:51.0283909Z [36;1mexpected = ([0m
+2026-09-23T09:38:51.0284194Z [36;1m    "arn:aws:sts::670941257756:assumed-role/"[0m
+2026-09-23T09:38:51.0284621Z [36;1m    "ecs-it-tools-github-application/application-"[0m
+2026-09-23T09:38:51.0284997Z [36;1m    + os.environ["GITHUB_RUN_ID"][0m
+2026-09-23T09:38:51.0285295Z [36;1m)[0m
+2026-09-23T09:38:51.0285632Z [36;1mif identity["Account"] != "670941257756" or identity["Arn"] != expected:[0m
+2026-09-23T09:38:51.0286103Z [36;1m    raise SystemExit("Unexpected AWS identity.")[0m
+2026-09-23T09:38:51.0286476Z [36;1mprint(json.dumps(identity, indent=2))[0m
+2026-09-23T09:38:51.0286782Z [36;1m[0m
+2026-09-23T09:38:51.0286995Z [36;1mrepository = aws([0m
+2026-09-23T09:38:51.0287273Z [36;1m    "ecr", "describe-repositories",[0m
+2026-09-23T09:38:51.0287638Z [36;1m    "--repository-names", os.environ["REPOSITORY"],[0m
+2026-09-23T09:38:51.0287994Z [36;1m)["repositories"][0][0m
+2026-09-23T09:38:51.0288241Z [36;1m[0m
+2026-09-23T09:38:51.0288575Z [36;1mexpected_uri = os.environ["REGISTRY"] + "/" + os.environ["REPOSITORY"][0m
+2026-09-23T09:38:51.0289101Z [36;1mif repository["repositoryUri"] != expected_uri:[0m
+2026-09-23T09:38:51.0289748Z [36;1m    raise SystemExit("Unexpected repository.")[0m
+2026-09-23T09:38:51.0290147Z [36;1mif repository["imageTagMutability"] != "IMMUTABLE":[0m
+2026-09-23T09:38:51.0290582Z [36;1m    raise SystemExit("Repository must enforce immutable tags.")[0m
+2026-09-23T09:38:51.0290949Z [36;1m[0m
+2026-09-23T09:38:51.0291152Z [36;1mresult = aws([0m
+2026-09-23T09:38:51.0291395Z [36;1m    "ecr", "batch-get-image",[0m
+2026-09-23T09:38:51.0291725Z [36;1m    "--repository-name", os.environ["REPOSITORY"],[0m
+2026-09-23T09:38:51.0292109Z [36;1m    "--image-ids", "imageTag=" + os.environ["IMAGE_TAG"],[0m
+2026-09-23T09:38:51.0292433Z [36;1m)[0m
+2026-09-23T09:38:51.0292644Z [36;1mif result.get("images"):[0m
+2026-09-23T09:38:51.0292909Z [36;1m    raise SystemExit([0m
+2026-09-23T09:38:51.0293211Z [36;1m        "This immutable commit tag already exists. "[0m
+2026-09-23T09:38:51.0293825Z [36;1m        "Preserve it; inspect its existing publication evidence. "[0m
+2026-09-23T09:38:51.0294271Z [36;1m        "This workflow does not overwrite or delete images."[0m
+2026-09-23T09:38:51.0294615Z [36;1m    )[0m
+2026-09-23T09:38:51.0294812Z [36;1m[0m
+2026-09-23T09:38:51.0295037Z [36;1mfailures = result.get("failures", [])[0m
+2026-09-23T09:38:51.0295449Z [36;1mif len(failures) != 1 or failures[0].get("failureCode") != "ImageNotFound":[0m
+2026-09-23T09:38:51.0295987Z [36;1m    raise SystemExit("Unexpected image lookup result: " + json.dumps(result))[0m
+2026-09-23T09:38:51.0296400Z [36;1m[0m
+2026-09-23T09:38:51.0296660Z [36;1mprint("Verified repository and unused commit tag.")[0m
+2026-09-23T09:38:51.0296991Z [36;1mPY[0m
+2026-09-23T09:38:51.0335119Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:38:51.0335488Z env:
+2026-09-23T09:38:51.0335695Z   AWS_REGION: eu-west-2
+2026-09-23T09:38:51.0335930Z   AWS_PAGER:
+2026-09-23T09:38:51.0336210Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:38:51.0336550Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:38:51.0337021Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:51.0337583Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:51.0338409Z   AWS_ACCESS_KEY_ID: ***
+2026-09-23T09:38:51.0338779Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-23T09:38:51.0343809Z   AWS_SESSION_TOKEN: ***
+2026-09-23T09:38:51.0344132Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-23T09:38:51.0344555Z ##[endgroup]
+2026-09-23T09:38:54.5217480Z {
+2026-09-23T09:38:54.5218171Z   "UserId": "AROAZYNZXEAOKWE6IRCCL:application-35843986916",
+2026-09-23T09:38:54.5218746Z   "Account": "670941257756",
+2026-09-23T09:38:54.5224761Z   "Arn": "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-application/application-35843986916"
+2026-09-23T09:38:54.5225513Z }
+2026-09-23T09:38:54.5225820Z Verified repository and unused commit tag.
+2026-09-23T09:38:54.5296493Z ##[group]Run set -euo pipefail
+2026-09-23T09:38:54.5296848Z [36;1mset -euo pipefail[0m
+2026-09-23T09:38:54.5297144Z [36;1maws ecr get-login-password |[0m
+2026-09-23T09:38:54.5297537Z [36;1m  docker login --username AWS --password-stdin "$REGISTRY"[0m
+2026-09-23T09:38:54.5298126Z [36;1m[0m
+2026-09-23T09:38:54.5298439Z [36;1mdocker push "$IMAGE_URI" | tee "$RUNNER_TEMP/image-push.txt"[0m
+2026-09-23T09:38:54.5335287Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:38:54.5335659Z env:
+2026-09-23T09:38:54.5335872Z   AWS_REGION: eu-west-2
+2026-09-23T09:38:54.5336114Z   AWS_PAGER:
+2026-09-23T09:38:54.5336398Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:38:54.5336762Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:38:54.5337050Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:54.5337617Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:38:54.5338328Z   AWS_ACCESS_KEY_ID: ***
+2026-09-23T09:38:54.5338685Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-23T09:38:54.5343980Z   AWS_SESSION_TOKEN: ***
+2026-09-23T09:38:54.5344254Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-23T09:38:54.5344524Z ##[endgroup]
+2026-09-23T09:38:56.1313226Z
+2026-09-23T09:38:56.1313728Z Login Succeeded
+2026-09-23T09:38:56.1314865Z WARNING! Your credentials are stored unencrypted in '/home/runner/.docker/config.json'.
+2026-09-23T09:38:56.1316281Z Configure a credential helper to remove this warning. See
+2026-09-23T09:38:56.1317040Z https://docs.docker.com/go/credential-store/
+2026-09-23T09:38:56.1317510Z
+2026-09-23T09:38:56.1809611Z The push refers to repository [670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools]
+2026-09-23T09:38:56.5000248Z e74fe63a219c: Preparing
+2026-09-23T09:38:56.5001158Z e024a5d7565b: Preparing
+2026-09-23T09:38:56.5001471Z d056841c94b2: Preparing
+2026-09-23T09:38:56.5001839Z e71e05c38211: Preparing
+2026-09-23T09:38:56.5002799Z a2e059571255: Preparing
+2026-09-23T09:38:56.5003217Z f76f397f2ce6: Preparing
+2026-09-23T09:38:56.5003578Z 53c769b49ca0: Preparing
+2026-09-23T09:38:56.5003963Z 42608b42cb5e: Preparing
+2026-09-23T09:38:56.5004769Z a3446cc6c821: Preparing
+2026-09-23T09:38:56.5005157Z 9e707aa6db47: Preparing
+2026-09-23T09:38:56.5005550Z 47a53288c3ef: Preparing
+2026-09-23T09:38:56.5005895Z a2738b08d711: Preparing
+2026-09-23T09:38:56.5006298Z 989e799e6349: Preparing
+2026-09-23T09:38:56.5006649Z f76f397f2ce6: Waiting
+2026-09-23T09:38:56.5007008Z 53c769b49ca0: Waiting
+2026-09-23T09:38:56.5007372Z 42608b42cb5e: Waiting
+2026-09-23T09:38:56.5007754Z a3446cc6c821: Waiting
+2026-09-23T09:38:56.5008175Z 9e707aa6db47: Waiting
+2026-09-23T09:38:56.5021837Z 47a53288c3ef: Waiting
+2026-09-23T09:38:56.5022212Z a2738b08d711: Waiting
+2026-09-23T09:38:56.5022579Z 989e799e6349: Waiting
+2026-09-23T09:38:58.1509739Z d056841c94b2: Pushed
+2026-09-23T09:38:58.1510448Z e74fe63a219c: Pushed
+2026-09-23T09:38:58.1890704Z a2e059571255: Pushed
+2026-09-23T09:38:58.5116073Z 53c769b49ca0: Layer already exists
+2026-09-23T09:38:58.5211007Z 42608b42cb5e: Layer already exists
+2026-09-23T09:38:58.5302304Z f76f397f2ce6: Layer already exists
+2026-09-23T09:38:58.8610994Z a3446cc6c821: Layer already exists
+2026-09-23T09:38:58.8628167Z 9e707aa6db47: Layer already exists
+2026-09-23T09:38:58.8713017Z 47a53288c3ef: Layer already exists
+2026-09-23T09:38:59.0262991Z e024a5d7565b: Pushed
+2026-09-23T09:38:59.0325973Z e71e05c38211: Pushed
+2026-09-23T09:38:59.2172586Z 989e799e6349: Layer already exists
+2026-09-23T09:38:59.2250207Z a2738b08d711: Layer already exists
+2026-09-23T09:39:01.8862457Z 1c7747cb376d54351f98073e39ef0f72c8ff813c: digest: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6 size: 3032
+2026-09-23T09:39:01.8928728Z ##[group]Run set -euo pipefail
+2026-09-23T09:39:01.8929097Z [36;1mset -euo pipefail[0m
+2026-09-23T09:39:01.8929710Z [36;1mpython3 - <<'PY'[0m
+2026-09-23T09:39:01.8930042Z [36;1mimport json[0m
+2026-09-23T09:39:01.8930295Z [36;1mimport os[0m
+2026-09-23T09:39:01.8930522Z [36;1mimport re[0m
+2026-09-23T09:39:01.8930749Z [36;1mimport subprocess[0m
+2026-09-23T09:39:01.8930997Z [36;1m[0m
+2026-09-23T09:39:01.8931261Z [36;1mresult = json.loads(subprocess.check_output([[0m
+2026-09-23T09:39:01.8931632Z [36;1m    "aws", "ecr", "describe-images",[0m
+2026-09-23T09:39:01.8932009Z [36;1m    "--repository-name", os.environ["REPOSITORY"],[0m
+2026-09-23T09:39:01.8932423Z [36;1m    "--image-ids", "imageTag=" + os.environ["IMAGE_TAG"],[0m
+2026-09-23T09:39:01.8932825Z [36;1m    "--output", "json", "--no-cli-pager",[0m
+2026-09-23T09:39:01.8933146Z [36;1m], text=True))[0m
+2026-09-23T09:39:01.8933450Z [36;1mdigest = result["imageDetails"][0]["imageDigest"][0m
+2026-09-23T09:39:01.8933834Z [36;1m[0m
+2026-09-23T09:39:01.8934161Z [36;1mwith open(os.environ["RUNNER_TEMP"] + "/image-push.txt") as stream:[0m
+2026-09-23T09:39:01.8934686Z [36;1m    pushed = re.findall(r"digest: (sha256:[0-9a-f]{64})", stream.read())[0m
+2026-09-23T09:39:01.8935107Z [36;1mif pushed != [digest]:[0m
+2026-09-23T09:39:01.8935438Z [36;1m    raise SystemExit("Push digest does not match ECR.")[0m
+2026-09-23T09:39:01.8935783Z [36;1m[0m
+2026-09-23T09:39:01.8935986Z [36;1mimmutable_uri = ([0m
+2026-09-23T09:39:01.8936343Z [36;1m    os.environ["REGISTRY"] + "/" + os.environ["REPOSITORY"] + "@" + digest[0m
+2026-09-23T09:39:01.8936738Z [36;1m)[0m
+2026-09-23T09:39:01.8936951Z [36;1msubprocess.run([[0m
+2026-09-23T09:39:01.8937291Z [36;1m    "docker", "pull", "--platform", "linux/amd64", immutable_uri,[0m
+2026-09-23T09:39:01.8937661Z [36;1m], check=True)[0m
+2026-09-23T09:39:01.8937884Z [36;1m[0m
+2026-09-23T09:39:01.8938147Z [36;1mremote = json.loads(subprocess.check_output([[0m
+2026-09-23T09:39:01.8938513Z [36;1m    "docker", "image", "inspect", immutable_uri,[0m
+2026-09-23T09:39:01.8938834Z [36;1m], text=True))[0][0m
+2026-09-23T09:39:01.8939205Z [36;1mwith open(os.environ["RUNNER_TEMP"] + "/local-image.json") as stream:[0m
+2026-09-23T09:39:01.8940144Z [36;1m    local = json.load(stream)[0][0m
+2026-09-23T09:39:01.8940431Z [36;1m[0m
+2026-09-23T09:39:01.8940640Z [36;1mif remote["Id"] != local["Id"]:[0m
+2026-09-23T09:39:01.8941045Z [36;1m    raise SystemExit("Published image differs from the tested image.")[0m
+2026-09-23T09:39:01.8941539Z [36;1mif (remote["Os"], remote["Architecture"]) != ("linux", "amd64"):[0m
+2026-09-23T09:39:01.8941975Z [36;1m    raise SystemExit("Published platform mismatch.")[0m
+2026-09-23T09:39:01.8942307Z [36;1m[0m
+2026-09-23T09:39:01.8942564Z [36;1mprint("Verified published image:", immutable_uri)[0m
+2026-09-23T09:39:01.8942992Z [36;1mwith open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:[0m
+2026-09-23T09:39:01.8943437Z [36;1m    summary.write("## Application publication\n\n")[0m
+2026-09-23T09:39:01.8943797Z [36;1m    summary.write("Result: PASS\n\n")[0m
+2026-09-23T09:39:01.8944221Z [36;1m    summary.write("Source commit: " + os.environ["IMAGE_TAG"] + "\n\n")[0m
+2026-09-23T09:39:01.8944686Z [36;1m    summary.write("Image: " + os.environ["IMAGE_URI"] + "\n\n")[0m
+2026-09-23T09:39:01.8945096Z [36;1m    summary.write("Digest: " + digest + "\n\n")[0m
+2026-09-23T09:39:01.8945450Z [36;1m    summary.write("Platform: linux/amd64\n\n")[0m
+2026-09-23T09:39:01.8945873Z [36;1m    summary.write("Container health and application HTML: PASS\n")[0m
+2026-09-23T09:39:01.8946264Z [36;1mPY[0m
+2026-09-23T09:39:01.8982482Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:39:01.8982833Z env:
+2026-09-23T09:39:01.8983044Z   AWS_REGION: eu-west-2
+2026-09-23T09:39:01.8983278Z   AWS_PAGER:
+2026-09-23T09:39:01.8983541Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:39:01.8983883Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:39:01.8984363Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:39:01.8984909Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:39:01.8985546Z   AWS_ACCESS_KEY_ID: ***
+2026-09-23T09:39:01.8985890Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-23T09:39:01.8990837Z   AWS_SESSION_TOKEN: ***
+2026-09-23T09:39:01.8991100Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-23T09:39:01.8991358Z ##[endgroup]
+2026-09-23T09:39:03.6420887Z 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools@sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6: Pulling from ecs-it-tools
+2026-09-23T09:39:03.6435006Z Digest: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-23T09:39:03.6436503Z Status: Image is up to date for 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools@sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-23T09:39:03.6446499Z 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools@sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-23T09:39:03.6599873Z Verified published image: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools@sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-23T09:39:03.6689709Z ##[group]Run docker logs application-smoke 2>&1 || true
+2026-09-23T09:39:03.6690198Z [36;1mdocker logs application-smoke 2>&1 || true[0m
+2026-09-23T09:39:03.6690585Z [36;1mdocker rm --force application-smoke || true[0m
+2026-09-23T09:39:03.6690931Z [36;1mdocker logout "$REGISTRY" || true[0m
+2026-09-23T09:39:03.6727263Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-23T09:39:03.6727630Z env:
+2026-09-23T09:39:03.6727842Z   AWS_REGION: eu-west-2
+2026-09-23T09:39:03.6728096Z   AWS_PAGER:
+2026-09-23T09:39:03.6728375Z   REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:39:03.6728735Z   REPOSITORY: ecs-it-tools
+2026-09-23T09:39:03.6729031Z   IMAGE_TAG: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:39:03.6729869Z   IMAGE_URI: 670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-23T09:39:03.6730538Z   AWS_ACCESS_KEY_ID: ***
+2026-09-23T09:39:03.6730888Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-23T09:39:03.6736145Z   AWS_SESSION_TOKEN: ***
+2026-09-23T09:39:03.6736406Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-23T09:39:03.6736674Z ##[endgroup]
+2026-09-23T09:39:03.6923231Z /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+2026-09-23T09:39:03.6924958Z /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+2026-09-23T09:39:03.6926729Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+2026-09-23T09:39:03.6928069Z 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+2026-09-23T09:39:03.6929843Z 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+2026-09-23T09:39:03.6931319Z /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+2026-09-23T09:39:03.6932551Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+2026-09-23T09:39:03.6933816Z /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+2026-09-23T09:39:03.6934976Z /docker-entrypoint.sh: Configuration complete; ready for start up
+2026-09-23T09:39:03.6936395Z 2026/09/23 09:38:50 [warn] 1#1: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+2026-09-23T09:39:03.6938031Z nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:2
+2026-09-23T09:39:03.6939271Z 2026/09/23 09:38:50 [notice] 1#1: using the "epoll" event method
+2026-09-23T09:39:03.6940283Z 2026/09/23 09:38:50 [notice] 1#1: nginx/1.28.3
+2026-09-23T09:39:03.6941033Z 2026/09/23 09:38:50 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0)
+2026-09-23T09:39:03.6941933Z 2026/09/23 09:38:50 [notice] 1#1: OS: Linux 6.17.0-1022-azure
+2026-09-23T09:39:03.6942793Z 2026/09/23 09:38:50 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 65536:65536
+2026-09-23T09:39:03.6943624Z 2026/09/23 09:38:50 [notice] 1#1: start worker processes
+2026-09-23T09:39:03.6944482Z 2026/09/23 09:38:50 [notice] 1#1: start worker process 29
+2026-09-23T09:39:03.6945253Z 2026/09/23 09:38:50 [notice] 1#1: start worker process 30
+2026-09-23T09:39:03.6946022Z 2026/09/23 09:38:50 [notice] 1#1: start worker process 31
+2026-09-23T09:39:03.6946737Z 2026/09/23 09:38:50 [notice] 1#1: start worker process 32
+2026-09-23T09:39:03.6947680Z 172.17.0.1 - - [23/Sep/2026:09:38:50 +0000] "GET / HTTP/1.1" 200 2787 "-" "Python-urllib/3.12" "-"
+2026-09-23T09:39:03.8202974Z application-smoke
+2026-09-23T09:39:03.8330145Z Removing login credentials for 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+2026-09-23T09:39:03.8454698Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-23T09:39:03.8455979Z Post job cleanup.
+2026-09-23T09:39:03.9561283Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-23T09:39:03.9562581Z Post job cleanup.
+2026-09-23T09:39:04.0437250Z [command]/usr/bin/git version
+2026-09-23T09:39:04.0480592Z git version 2.55.0
+2026-09-23T09:39:04.0522317Z Temporarily overriding HOME='/home/runner/work/_temp/c7e4561a-efd1-4572-8a07-0c7db244bfd9' before making global git config changes
+2026-09-23T09:39:04.0523773Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-23T09:39:04.0529121Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-23T09:39:04.0571207Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-23T09:39:04.0607651Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-23T09:39:04.0874005Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-23T09:39:04.0914075Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-23T09:39:04.1364732Z Cleaning up orphan processes
+2026-09-23T09:39:04.1767956Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
