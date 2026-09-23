@@ -1,0 +1,118 @@
+name: GitHub OIDC authentication proof
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  authenticate:
+    if: github.repository == 'Fer-as/ecs-v1-it-tools' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment: dev
+    timeout-minutes: 5
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Inspect expected OIDC claims
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64
+          import datetime
+          import json
+          import os
+          import urllib.request
+
+          url = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"]
+          url += ("&" if "?" in url else "?") + "audience=sts.amazonaws.com"
+          request = urllib.request.Request(
+              url,
+              headers={
+                  "Authorization": "Bearer " + os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]
+              },
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              token = json.load(response)["value"]
+
+          # Decode only to inspect claims. AWS validates the signed token
+          # during AssumeRoleWithWebIdentity in the following step.
+          payload = token.split(".")[1]
+          payload += "=" * (-len(payload) % 4)
+          claims = json.loads(base64.urlsafe_b64decode(payload))
+
+          expected = {
+              "iss": "https://token.actions.githubusercontent.com",
+              "aud": "sts.amazonaws.com",
+              "sub": "repo:Fer-as/ecs-v1-it-tools:environment:dev",
+              "repository": "Fer-as/ecs-v1-it-tools",
+              "repository_id": "1178475925",
+              "repository_owner_id": "78626961",
+              "ref": "refs/heads/main",
+              "event_name": "workflow_dispatch",
+          }
+
+          print("Checked at:", datetime.datetime.now(datetime.timezone.utc).isoformat())
+          print(json.dumps(
+              {key: claims.get(key) for key in expected},
+              indent=2,
+          ))
+
+          mismatches = [
+              key for key, value in expected.items()
+              if claims.get(key) != value
+          ]
+          if mismatches:
+              raise SystemExit("Unexpected OIDC claims: " + ", ".join(mismatches))
+
+          # Never print or persist the token or request credential.
+          print("Expected OIDC claims matched.")
+          PY
+
+      - name: Authenticate to AWS with OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-auth
+          aws-region: eu-west-2
+          audience: sts.amazonaws.com
+          role-session-name: oidc-proof-${{ github.run_id }}
+          role-duration-seconds: 900
+          unset-current-credentials: true
+
+      - name: Verify assumed AWS identity
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import datetime
+          import json
+          import os
+          import subprocess
+
+          identity = json.loads(subprocess.check_output(
+              ["aws", "sts", "get-caller-identity",
+               "--region", "eu-west-2", "--output", "json", "--no-cli-pager"],
+              text=True,
+          ))
+          expected_arn = (
+              "arn:aws:sts::670941257756:assumed-role/"
+              "ecs-it-tools-github-auth/oidc-proof-"
+              + os.environ["GITHUB_RUN_ID"]
+          )
+
+          print(json.dumps(identity, indent=2))
+          if identity["Account"] != "670941257756":
+              raise SystemExit("Unexpected AWS account.")
+          if identity["Arn"] != expected_arn:
+              raise SystemExit("Unexpected assumed-role identity.")
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("## OIDC authentication proof\n\n")
+              summary.write("Result: PASS\n\n")
+              summary.write("Time: " + datetime.datetime.now(
+                  datetime.timezone.utc).isoformat() + "\n\n")
+              summary.write("Workflow commit: " + os.environ["GITHUB_SHA"] + "\n\n")
+              summary.write("AWS identity: " + identity["Arn"] + "\n\n")
+              summary.write("Region: eu-west-2\n")
+          PY
