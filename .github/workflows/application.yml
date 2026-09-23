@@ -1,0 +1,247 @@
+name: Application build and publish
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: application-publish-dev
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'Fer-as/ecs-v1-it-tools' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment: dev
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      id-token: write
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      AWS_REGION: eu-west-2
+      AWS_PAGER: ""
+      REGISTRY: 670941257756.dkr.ecr.eu-west-2.amazonaws.com
+      REPOSITORY: ecs-it-tools
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Check out exact source commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Verify source identity
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$IMAGE_TAG"
+          [[ "$IMAGE_TAG" =~ ^[0-9a-f]{40}$ ]]
+          echo "Source commit: $IMAGE_TAG"
+          echo "IMAGE_URI=$REGISTRY/$REPOSITORY:$IMAGE_TAG" >> "$GITHUB_ENV"
+
+      - name: Build linux amd64 image
+        run: |
+          set -euo pipefail
+          docker build \
+            --platform linux/amd64 \
+            --label "org.opencontainers.image.revision=$IMAGE_TAG" \
+            --label "org.opencontainers.image.source=https://github.com/Fer-as/ecs-v1-it-tools" \
+            --tag "$IMAGE_URI" \
+            ./app
+
+          docker image inspect "$IMAGE_URI" > "$RUNNER_TEMP/local-image.json"
+          python3 - <<'PY'
+          import json
+          import os
+
+          with open(os.environ["RUNNER_TEMP"] + "/local-image.json") as stream:
+              image = json.load(stream)[0]
+
+          if (image["Os"], image["Architecture"]) != ("linux", "amd64"):
+              raise SystemExit("Unexpected image platform.")
+          if image["Config"]["User"] != "appuser":
+              raise SystemExit("Expected appuser.")
+          if image["Config"]["Labels"].get(
+              "org.opencontainers.image.revision"
+          ) != os.environ["IMAGE_TAG"]:
+              raise SystemExit("Source revision label mismatch.")
+
+          print("Platform: linux/amd64; user: appuser")
+          print("Local image ID:", image["Id"])
+          PY
+
+      - name: Test container health and application page
+        run: |
+          set -euo pipefail
+          docker run --detach \
+            --name application-smoke \
+            --publish 127.0.0.1:18080:8080 \
+            "$IMAGE_URI"
+
+          python3 - <<'PY'
+          import json
+          import time
+          import urllib.error
+          import urllib.request
+
+          for attempt in range(30):
+              try:
+                  with urllib.request.urlopen(
+                      "http://127.0.0.1:18080/health", timeout=2
+                  ) as response:
+                      if response.status != 200:
+                          raise ValueError("Health status was not 200.")
+                      if json.load(response) != {"status": "ok"}:
+                          raise ValueError("Unexpected health response.")
+                  break
+              except (urllib.error.URLError, TimeoutError, ValueError) as error:
+                  if attempt == 29:
+                      raise SystemExit(f"Container health failed: {error}")
+                  time.sleep(1)
+
+          with urllib.request.urlopen(
+              "http://127.0.0.1:18080/", timeout=10
+          ) as response:
+              body = response.read().decode("utf-8")
+              if response.status != 200 or "<html" not in body.lower():
+                  raise SystemExit("Application page check failed.")
+
+          print("PASS: /health JSON and application HTML.")
+          PY
+
+      - name: Authenticate with GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-application
+          aws-region: eu-west-2
+          audience: sts.amazonaws.com
+          role-session-name: application-${{ github.run_id }}
+          role-duration-seconds: 900
+          unset-current-credentials: true
+
+      - name: Verify AWS identity and immutable repository
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+
+          def aws(*args):
+              return json.loads(subprocess.check_output(
+                  ["aws", *args, "--output", "json", "--no-cli-pager"],
+                  text=True,
+              ))
+
+          identity = aws("sts", "get-caller-identity")
+          expected = (
+              "arn:aws:sts::670941257756:assumed-role/"
+              "ecs-it-tools-github-application/application-"
+              + os.environ["GITHUB_RUN_ID"]
+          )
+          if identity["Account"] != "670941257756" or identity["Arn"] != expected:
+              raise SystemExit("Unexpected AWS identity.")
+          print(json.dumps(identity, indent=2))
+
+          repository = aws(
+              "ecr", "describe-repositories",
+              "--repository-names", os.environ["REPOSITORY"],
+          )["repositories"][0]
+
+          expected_uri = os.environ["REGISTRY"] + "/" + os.environ["REPOSITORY"]
+          if repository["repositoryUri"] != expected_uri:
+              raise SystemExit("Unexpected repository.")
+          if repository["imageTagMutability"] != "IMMUTABLE":
+              raise SystemExit("Repository must enforce immutable tags.")
+
+          result = aws(
+              "ecr", "batch-get-image",
+              "--repository-name", os.environ["REPOSITORY"],
+              "--image-ids", "imageTag=" + os.environ["IMAGE_TAG"],
+          )
+          if result.get("images"):
+              raise SystemExit(
+                  "This immutable commit tag already exists. "
+                  "Preserve it; inspect its existing publication evidence. "
+                  "This workflow does not overwrite or delete images."
+              )
+
+          failures = result.get("failures", [])
+          if len(failures) != 1 or failures[0].get("failureCode") != "ImageNotFound":
+              raise SystemExit("Unexpected image lookup result: " + json.dumps(result))
+
+          print("Verified repository and unused commit tag.")
+          PY
+
+      - name: Push image
+        run: |
+          set -euo pipefail
+          aws ecr get-login-password |
+            docker login --username AWS --password-stdin "$REGISTRY"
+
+          docker push "$IMAGE_URI" | tee "$RUNNER_TEMP/image-push.txt"
+
+      - name: Verify published digest and image identity
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import subprocess
+
+          result = json.loads(subprocess.check_output([
+              "aws", "ecr", "describe-images",
+              "--repository-name", os.environ["REPOSITORY"],
+              "--image-ids", "imageTag=" + os.environ["IMAGE_TAG"],
+              "--output", "json", "--no-cli-pager",
+          ], text=True))
+          digest = result["imageDetails"][0]["imageDigest"]
+
+          with open(os.environ["RUNNER_TEMP"] + "/image-push.txt") as stream:
+              pushed = re.findall(r"digest: (sha256:[0-9a-f]{64})", stream.read())
+          if pushed != [digest]:
+              raise SystemExit("Push digest does not match ECR.")
+
+          immutable_uri = (
+              os.environ["REGISTRY"] + "/" + os.environ["REPOSITORY"] + "@" + digest
+          )
+          subprocess.run([
+              "docker", "pull", "--platform", "linux/amd64", immutable_uri,
+          ], check=True)
+
+          remote = json.loads(subprocess.check_output([
+              "docker", "image", "inspect", immutable_uri,
+          ], text=True))[0]
+          with open(os.environ["RUNNER_TEMP"] + "/local-image.json") as stream:
+              local = json.load(stream)[0]
+
+          if remote["Id"] != local["Id"]:
+              raise SystemExit("Published image differs from the tested image.")
+          if (remote["Os"], remote["Architecture"]) != ("linux", "amd64"):
+              raise SystemExit("Published platform mismatch.")
+
+          print("Verified published image:", immutable_uri)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("## Application publication\n\n")
+              summary.write("Result: PASS\n\n")
+              summary.write("Source commit: " + os.environ["IMAGE_TAG"] + "\n\n")
+              summary.write("Image: " + os.environ["IMAGE_URI"] + "\n\n")
+              summary.write("Digest: " + digest + "\n\n")
+              summary.write("Platform: linux/amd64\n\n")
+              summary.write("Container health and application HTML: PASS\n")
+          PY
+
+      - name: Container logs and cleanup
+        if: always()
+        run: |
+          docker logs application-smoke 2>&1 || true
+          docker rm --force application-smoke || true
+          docker logout "$REGISTRY" || true
