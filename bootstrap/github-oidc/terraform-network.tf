@@ -5,6 +5,7 @@ data "aws_iam_policy_document" "github_terraform_network" {
 
     actions = [
       "ec2:DescribeAddresses",
+      "ec2:DescribeAddressesAttribute",
       "ec2:DescribeAvailabilityZones",
       "ec2:DescribeInternetGateways",
       "ec2:DescribeNatGateways",
