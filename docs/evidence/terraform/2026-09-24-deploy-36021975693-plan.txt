@@ -1,0 +1,666 @@
+2026-09-24T15:41:14.9601362Z Current runner version: '2.337.0'
+2026-09-24T15:41:14.9637089Z ##[group]Runner Image Provisioner
+2026-09-24T15:41:14.9638605Z Hosted Compute Agent
+2026-09-24T15:41:14.9639567Z Version: 20260828.587
+2026-09-24T15:41:14.9640666Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-24T15:41:14.9641897Z Build Date: 2026-08-28T16:44:25Z
+2026-09-24T15:41:14.9643420Z Worker ID: {a5ee1fbc-d208-485d-8621-9b4be742a768}
+2026-09-24T15:41:14.9644618Z Azure Region: eastus
+2026-09-24T15:41:14.9645544Z ##[endgroup]
+2026-09-24T15:41:14.9647835Z ##[group]Operating System
+2026-09-24T15:41:14.9648864Z Ubuntu
+2026-09-24T15:41:14.9649804Z 24.04.5
+2026-09-24T15:41:14.9650786Z LTS
+2026-09-24T15:41:14.9651563Z ##[endgroup]
+2026-09-24T15:41:14.9652840Z ##[group]Runner Image
+2026-09-24T15:41:14.9653852Z Image: ubuntu-24.04
+2026-09-24T15:41:14.9654863Z Version: 20260920.314.1
+2026-09-24T15:41:14.9656933Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260920.314/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-24T15:41:14.9659676Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260920.314
+2026-09-24T15:41:14.9661337Z ##[endgroup]
+2026-09-24T15:41:14.9663626Z ##[group]GITHUB_TOKEN Permissions
+2026-09-24T15:41:14.9666340Z Contents: read
+2026-09-24T15:41:14.9667440Z Metadata: read
+2026-09-24T15:41:14.9668333Z ##[endgroup]
+2026-09-24T15:41:14.9671593Z Secret source: Actions
+2026-09-24T15:41:14.9673453Z Cache mode: write
+2026-09-24T15:41:14.9674766Z Prepare workflow directory
+2026-09-24T15:41:15.0455141Z Prepare all required actions
+2026-09-24T15:41:15.0529810Z Getting action download info
+2026-09-24T15:41:15.3220603Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-09-24T15:41:15.4211743Z Download action repository 'hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd' (SHA:b9cd54a3c349d3f38e8881555d616ced269862dd)
+2026-09-24T15:41:15.5698387Z Download action repository 'aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502' (SHA:e3dd6a429d7300a6a4c196c26e071d42e0343502)
+2026-09-24T15:41:15.8308381Z Complete job name: plan
+2026-09-24T15:41:15.9165406Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-09-24T15:41:15.9166869Z with:
+2026-09-24T15:41:15.9167451Z   ref: 12daf8f35026a62b7ee0809fc19203475e10623c
+2026-09-24T15:41:15.9168288Z   persist-credentials: false
+2026-09-24T15:41:15.9168979Z   repository: Fer-as/ecs-v1-it-tools
+2026-09-24T15:41:15.9178008Z   token: ***
+2026-09-24T15:41:15.9178525Z   ssh-strict: true
+2026-09-24T15:41:15.9179057Z   ssh-user: git
+2026-09-24T15:41:15.9179551Z   clean: true
+2026-09-24T15:41:15.9180101Z   sparse-checkout-cone-mode: true
+2026-09-24T15:41:15.9180794Z   fetch-depth: 1
+2026-09-24T15:41:15.9181542Z   fetch-tags: false
+2026-09-24T15:41:15.9182192Z   show-progress: true
+2026-09-24T15:41:15.9182924Z   lfs: false
+2026-09-24T15:41:15.9183445Z   submodules: false
+2026-09-24T15:41:15.9184008Z   set-safe-directory: true
+2026-09-24T15:41:15.9185014Z env:
+2026-09-24T15:41:15.9185504Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:15.9186075Z   AWS_PAGER:
+2026-09-24T15:41:15.9186622Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:15.9187214Z   TF_INPUT: false
+2026-09-24T15:41:15.9187751Z   TF_WORKSPACE: default
+2026-09-24T15:41:15.9188496Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:15.9190056Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:15.9191431Z   OPERATION: deploy
+2026-09-24T15:41:15.9192139Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:15.9193239Z ##[endgroup]
+2026-09-24T15:41:16.0367173Z Syncing repository: Fer-as/ecs-v1-it-tools
+2026-09-24T15:41:16.0370971Z ##[group]Getting Git version info
+2026-09-24T15:41:16.0373094Z Working directory is '/home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools'
+2026-09-24T15:41:16.0375962Z [command]/usr/bin/git version
+2026-09-24T15:41:16.0404762Z git version 2.55.0
+2026-09-24T15:41:16.0464361Z ##[endgroup]
+2026-09-24T15:41:16.0497574Z Temporarily overriding HOME='/home/runner/work/_temp/419b595e-2720-48e1-9d7f-8fc1a48e9a61' before making global git config changes
+2026-09-24T15:41:16.0502089Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-24T15:41:16.0506226Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-24T15:41:16.0554164Z Deleting the contents of '/home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools'
+2026-09-24T15:41:16.0557287Z ##[group]Initializing the repository
+2026-09-24T15:41:16.0559469Z [command]/usr/bin/git init /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-24T15:41:16.0692893Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-24T15:41:16.0696062Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-24T15:41:16.0721441Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-24T15:41:16.0724106Z hint: call:
+2026-09-24T15:41:16.0725139Z hint:
+2026-09-24T15:41:16.0726639Z hint: 	git config --global init.defaultBranch <name>
+2026-09-24T15:41:16.0728265Z hint:
+2026-09-24T15:41:16.0729714Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-24T15:41:16.0735555Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-24T15:41:16.0737755Z hint:
+2026-09-24T15:41:16.0738738Z hint: 	git branch -m <name>
+2026-09-24T15:41:16.0739987Z hint:
+2026-09-24T15:41:16.0741708Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-24T15:41:16.0745596Z Initialized empty Git repository in /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools/.git/
+2026-09-24T15:41:16.0750989Z [command]/usr/bin/git remote add origin https://github.com/Fer-as/ecs-v1-it-tools
+2026-09-24T15:41:16.0787258Z ##[endgroup]
+2026-09-24T15:41:16.0788948Z ##[group]Disabling automatic garbage collection
+2026-09-24T15:41:16.0790600Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-24T15:41:16.0845042Z ##[endgroup]
+2026-09-24T15:41:16.0848156Z ##[group]Setting up auth
+2026-09-24T15:41:16.0857510Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-24T15:41:16.0901150Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-24T15:41:16.1328322Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-24T15:41:16.1374003Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-24T15:41:16.1620499Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-24T15:41:16.1667229Z ##[endgroup]
+2026-09-24T15:41:16.1668452Z ##[group]Fetching the repository
+2026-09-24T15:41:16.1678219Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 12daf8f35026a62b7ee0809fc19203475e10623c
+2026-09-24T15:41:16.4538879Z From https://github.com/Fer-as/ecs-v1-it-tools
+2026-09-24T15:41:16.4541805Z  * branch            12daf8f35026a62b7ee0809fc19203475e10623c -> FETCH_HEAD
+2026-09-24T15:41:16.4547739Z ##[endgroup]
+2026-09-24T15:41:16.4550276Z ##[group]Determining the checkout info
+2026-09-24T15:41:16.4553182Z ##[endgroup]
+2026-09-24T15:41:16.4556949Z [command]/usr/bin/git sparse-checkout disable
+2026-09-24T15:41:16.4619342Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-24T15:41:16.4658249Z ##[group]Checking out the ref
+2026-09-24T15:41:16.4664111Z [command]/usr/bin/git checkout --progress --force 12daf8f35026a62b7ee0809fc19203475e10623c
+2026-09-24T15:41:16.5094486Z Note: switching to '12daf8f35026a62b7ee0809fc19203475e10623c'.
+2026-09-24T15:41:16.5095818Z
+2026-09-24T15:41:16.5096496Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-09-24T15:41:16.5098181Z changes and commit them, and you can discard any commits you make in this
+2026-09-24T15:41:16.5100385Z state without impacting any branches by switching back to a branch.
+2026-09-24T15:41:16.5102017Z
+2026-09-24T15:41:16.5103341Z If you want to create a new branch to retain commits you create, you may
+2026-09-24T15:41:16.5105784Z do so (now or later) by using -c with the switch command. Example:
+2026-09-24T15:41:16.5107308Z
+2026-09-24T15:41:16.5107992Z   git switch -c <new-branch-name>
+2026-09-24T15:41:16.5109151Z
+2026-09-24T15:41:16.5110049Z Or undo this operation with:
+2026-09-24T15:41:16.5111302Z
+2026-09-24T15:41:16.5112105Z   git switch -
+2026-09-24T15:41:16.5113444Z
+2026-09-24T15:41:16.5114752Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-09-24T15:41:16.5116585Z
+2026-09-24T15:41:16.5118209Z HEAD is now at 12daf8f Merge pull request #5 from Fer-as/fix/terraform-ecs-deployment-reads
+2026-09-24T15:41:16.5125040Z ##[endgroup]
+2026-09-24T15:41:16.5171689Z [command]/usr/bin/git log -1 --format=%H
+2026-09-24T15:41:16.5200545Z 12daf8f35026a62b7ee0809fc19203475e10623c
+2026-09-24T15:41:16.5210879Z ##[group]Removing auth
+2026-09-24T15:41:16.5215184Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-24T15:41:16.5251269Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-24T15:41:16.5484042Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-24T15:41:16.5515888Z http.https://github.com/.extraheader
+2026-09-24T15:41:16.5523846Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-24T15:41:16.5560509Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-24T15:41:16.5790915Z ##[endgroup]
+2026-09-24T15:41:16.6090407Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:16.6091718Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:16.6093316Z [36;1mtest "$(git rev-parse HEAD)" = "$GITHUB_SHA"[0m
+2026-09-24T15:41:16.6094755Z [36;1m[[ "$TF_VAR_image_tag" =~ ^[0-9a-f]{40}$ ]][0m
+2026-09-24T15:41:16.6096051Z [36;1mcase "$OPERATION" in[0m
+2026-09-24T15:41:16.6097132Z [36;1m  deploy)[0m
+2026-09-24T15:41:16.6098316Z [36;1m    [[ "$EXPECTED_IMAGE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]][0m
+2026-09-24T15:41:16.6099623Z [36;1m    ;;[0m
+2026-09-24T15:41:16.6100669Z [36;1m  ecr-bootstrap|certificate-bootstrap) ;;[0m
+2026-09-24T15:41:16.6102065Z [36;1m  *) echo "Unsupported operation"; exit 1 ;;[0m
+2026-09-24T15:41:16.6103502Z [36;1mesac[0m
+2026-09-24T15:41:16.6394587Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:16.6396006Z env:
+2026-09-24T15:41:16.6396921Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:16.6397906Z   AWS_PAGER:
+2026-09-24T15:41:16.6398870Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:16.6399855Z   TF_INPUT: false
+2026-09-24T15:41:16.6400763Z   TF_WORKSPACE: default
+2026-09-24T15:41:16.6401898Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:16.6403969Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:16.6405727Z   OPERATION: deploy
+2026-09-24T15:41:16.6406821Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:16.6408066Z ##[endgroup]
+2026-09-24T15:41:16.6670689Z ##[group]Run hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
+2026-09-24T15:41:16.6672471Z with:
+2026-09-24T15:41:16.6673371Z   terraform_version: 1.16.2
+2026-09-24T15:41:16.6674360Z   terraform_wrapper: false
+2026-09-24T15:41:16.6675674Z   cli_config_credentials_hostname: app.terraform.io
+2026-09-24T15:41:16.6676854Z env:
+2026-09-24T15:41:16.6677696Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:16.6678626Z   AWS_PAGER:
+2026-09-24T15:41:16.6679502Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:16.6680454Z   TF_INPUT: false
+2026-09-24T15:41:16.6681337Z   TF_WORKSPACE: default
+2026-09-24T15:41:16.6682677Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:16.6684530Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:16.6686226Z   OPERATION: deploy
+2026-09-24T15:41:16.6687313Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:16.6688529Z ##[endgroup]
+2026-09-24T15:41:16.8054150Z (node:2255) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-09-24T15:41:16.8057663Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-24T15:41:17.1683438Z [command]/usr/bin/unzip -o -q /home/runner/work/_temp/21a94989-cb20-42bf-8001-620d2caf9e9a
+2026-09-24T15:41:17.9438236Z ##[group]Run aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+2026-09-24T15:41:17.9438803Z with:
+2026-09-24T15:41:17.9439212Z   role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-terraform-plan
+2026-09-24T15:41:17.9439689Z   aws-region: eu-west-2
+2026-09-24T15:41:17.9439978Z   audience: sts.amazonaws.com
+2026-09-24T15:41:17.9440322Z   role-session-name: terraform-plan-36021975693
+2026-09-24T15:41:17.9440689Z   role-duration-seconds: 1800
+2026-09-24T15:41:17.9441000Z   unset-current-credentials: true
+2026-09-24T15:41:17.9441301Z env:
+2026-09-24T15:41:17.9441540Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:17.9441799Z   AWS_PAGER:
+2026-09-24T15:41:17.9442045Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:17.9442493Z   TF_INPUT: false
+2026-09-24T15:41:17.9442779Z   TF_WORKSPACE: default
+2026-09-24T15:41:17.9443122Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:17.9443744Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:17.9444260Z   OPERATION: deploy
+2026-09-24T15:41:17.9444574Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:17.9444935Z ##[endgroup]
+2026-09-24T15:41:18.1163585Z Assuming role with OIDC
+2026-09-24T15:41:18.4580565Z Authenticated as assumedRoleId AROAZYNZXEAOBKPBDKFPC:terraform-plan-36021975693
+2026-09-24T15:41:18.5592814Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:18.5593258Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:18.5593731Z [36;1maws sts get-caller-identity --output json > "$RUNNER_TEMP/identity.json"[0m
+2026-09-24T15:41:18.5594238Z [36;1mjq -e --arg expected \[0m
+2026-09-24T15:41:18.5594857Z [36;1m  "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-terraform-plan/terraform-plan-$GITHUB_RUN_ID" \[0m
+2026-09-24T15:41:18.5595563Z [36;1m  '.Account == "670941257756" and .Arn == $expected' \[0m
+2026-09-24T15:41:18.5595979Z [36;1m  "$RUNNER_TEMP/identity.json"[0m
+2026-09-24T15:41:18.5596338Z [36;1mcat "$RUNNER_TEMP/identity.json"[0m
+2026-09-24T15:41:18.5658628Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:18.5659085Z env:
+2026-09-24T15:41:18.5659351Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:18.5659644Z   AWS_PAGER:
+2026-09-24T15:41:18.5659917Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:18.5660228Z   TF_INPUT: false
+2026-09-24T15:41:18.5660632Z   TF_WORKSPACE: default
+2026-09-24T15:41:18.5660999Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:18.5661583Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:18.5662125Z   OPERATION: deploy
+2026-09-24T15:41:18.5662651Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:18.5663408Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:18.5664023Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:18.5668659Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:18.5668975Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:18.5669298Z ##[endgroup]
+2026-09-24T15:41:20.0023131Z true
+2026-09-24T15:41:20.0034275Z {
+2026-09-24T15:41:20.0034835Z     "UserId": "AROAZYNZXEAOBKPBDKFPC:terraform-plan-36021975693",
+2026-09-24T15:41:20.0035512Z     "Account": "670941257756",
+2026-09-24T15:41:20.0040225Z     "Arn": "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-terraform-plan/terraform-plan-36021975693"
+2026-09-24T15:41:20.0040917Z }
+2026-09-24T15:41:20.0074210Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:20.0074549Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:20.0074906Z [36;1mterraform -chdir=terraform init -input=false -lockfile=readonly[0m
+2026-09-24T15:41:20.0075355Z [36;1mterraform -chdir=terraform fmt -recursive -check[0m
+2026-09-24T15:41:20.0075715Z [36;1mterraform -chdir=terraform validate[0m
+2026-09-24T15:41:20.0076099Z [36;1mtest "$(terraform -chdir=terraform workspace show)" = "default"[0m
+2026-09-24T15:41:20.0076524Z [36;1mtest ! -e terraform/validation-import.tf[0m
+2026-09-24T15:41:20.0076868Z [36;1mterraform -chdir=terraform state list[0m
+2026-09-24T15:41:20.0137837Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:20.0138175Z env:
+2026-09-24T15:41:20.0138374Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:20.0138605Z   AWS_PAGER:
+2026-09-24T15:41:20.0138813Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:20.0139045Z   TF_INPUT: false
+2026-09-24T15:41:20.0139267Z   TF_WORKSPACE: default
+2026-09-24T15:41:20.0139602Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:20.0140131Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:20.0140606Z   OPERATION: deploy
+2026-09-24T15:41:20.0140879Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:20.0141329Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:20.0141676Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:20.0146463Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:20.0146723Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:20.0146967Z ##[endgroup]
+2026-09-24T15:41:20.0481343Z [0m[1mInitializing the backend...[0m
+2026-09-24T15:41:20.7958485Z [0m[32m
+2026-09-24T15:41:20.7959285Z Successfully configured the backend "s3"! Terraform will automatically
+2026-09-24T15:41:20.7960193Z use this backend unless the backend configuration changes.[0m
+2026-09-24T15:41:20.7965041Z
+2026-09-24T15:41:21.3018298Z [0m[1mInitializing modules...[0m
+2026-09-24T15:41:21.3040607Z - alb in modules/alb
+2026-09-24T15:41:21.3053067Z - vpc in modules/vpc
+2026-09-24T15:41:21.3053556Z - ecr in modules/ecr
+2026-09-24T15:41:21.3096654Z - ecs in modules/ecs
+2026-09-24T15:41:21.3097453Z
+2026-09-24T15:41:21.3132002Z [0m[1mInitializing provider plugins...[0m
+2026-09-24T15:41:21.3132841Z - Reusing previous version of hashicorp/aws from the dependency lock file
+2026-09-24T15:41:21.5008835Z - Installing hashicorp/aws v6.36.0...
+2026-09-24T15:41:29.2253981Z - Installed hashicorp/aws v6.36.0 (signed by HashiCorp)
+2026-09-24T15:41:29.2254980Z
+2026-09-24T15:41:29.2256112Z [0m[1m[32mTerraform has been successfully initialized![0m[32m[0m
+2026-09-24T15:41:31.5501614Z [32m[1mSuccess![0m The configuration is valid.
+2026-09-24T15:41:31.5502023Z [0m
+2026-09-24T15:41:33.4388232Z data.aws_route53_zone.existing
+2026-09-24T15:41:33.4388815Z aws_acm_certificate.this
+2026-09-24T15:41:33.4389170Z aws_acm_certificate_validation.this
+2026-09-24T15:41:33.4389524Z aws_route53_record.app
+2026-09-24T15:41:33.4389983Z aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]
+2026-09-24T15:41:33.4390457Z module.alb.aws_lb.this
+2026-09-24T15:41:33.4390762Z module.alb.aws_lb_listener.http
+2026-09-24T15:41:33.4391105Z module.alb.aws_lb_listener.https
+2026-09-24T15:41:33.4391450Z module.alb.aws_lb_target_group.this
+2026-09-24T15:41:33.4391805Z module.alb.aws_security_group.alb
+2026-09-24T15:41:33.4392159Z module.ecr.aws_ecr_repository.this
+2026-09-24T15:41:33.4393559Z module.ecs.aws_cloudwatch_log_group.this
+2026-09-24T15:41:33.4394019Z module.ecs.aws_ecs_cluster.this
+2026-09-24T15:41:33.4394439Z module.ecs.aws_ecs_service.this
+2026-09-24T15:41:33.4394883Z module.ecs.aws_ecs_task_definition.this
+2026-09-24T15:41:33.4395368Z module.ecs.aws_iam_role.execution
+2026-09-24T15:41:33.4395877Z module.ecs.aws_iam_role_policy_attachment.execution
+2026-09-24T15:41:33.4396418Z module.ecs.aws_security_group.task
+2026-09-24T15:41:33.4396969Z module.ecs.aws_vpc_security_group_egress_rule.task_outbound
+2026-09-24T15:41:33.4397998Z module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task
+2026-09-24T15:41:33.4398559Z module.vpc.aws_eip.nat
+2026-09-24T15:41:33.4398933Z module.vpc.aws_internet_gateway.this
+2026-09-24T15:41:33.4399346Z module.vpc.aws_nat_gateway.this
+2026-09-24T15:41:33.4399757Z module.vpc.aws_route_table.private
+2026-09-24T15:41:33.4400156Z module.vpc.aws_route_table.public
+2026-09-24T15:41:33.4400625Z module.vpc.aws_route_table_association.private[0]
+2026-09-24T15:41:33.4401196Z module.vpc.aws_route_table_association.private[1]
+2026-09-24T15:41:33.4401820Z module.vpc.aws_route_table_association.public[0]
+2026-09-24T15:41:33.4402611Z module.vpc.aws_route_table_association.public[1]
+2026-09-24T15:41:33.4403129Z module.vpc.aws_subnet.private[0]
+2026-09-24T15:41:33.4403573Z module.vpc.aws_subnet.private[1]
+2026-09-24T15:41:33.4404019Z module.vpc.aws_subnet.public[0]
+2026-09-24T15:41:33.4404470Z module.vpc.aws_subnet.public[1]
+2026-09-24T15:41:33.4404855Z module.vpc.aws_vpc.this
+2026-09-24T15:41:33.4458444Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:33.4458786Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:33.4459071Z [36;1maws route53 list-resource-record-sets \[0m
+2026-09-24T15:41:33.4459425Z [36;1m  --hosted-zone-id Z01014153ETFBQT2QXXK2 \[0m
+2026-09-24T15:41:33.4459740Z [36;1m  --output json[0m
+2026-09-24T15:41:33.4520574Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:33.4520928Z env:
+2026-09-24T15:41:33.4521127Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:33.4521357Z   AWS_PAGER:
+2026-09-24T15:41:33.4521563Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:33.4521783Z   TF_INPUT: false
+2026-09-24T15:41:33.4521992Z   TF_WORKSPACE: default
+2026-09-24T15:41:33.4522515Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:33.4523040Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:33.4523508Z   OPERATION: deploy
+2026-09-24T15:41:33.4523816Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:33.4524249Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:33.4524582Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:33.4529090Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:33.4529338Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:33.4529575Z ##[endgroup]
+2026-09-24T15:41:34.4511262Z {
+2026-09-24T15:41:34.4511863Z     "ResourceRecordSets": [
+2026-09-24T15:41:34.4512592Z         {
+2026-09-24T15:41:34.4513047Z             "Name": "feras-dev.co.uk.",
+2026-09-24T15:41:34.4513583Z             "Type": "NS",
+2026-09-24T15:41:34.4514006Z             "TTL": 172800,
+2026-09-24T15:41:34.4514443Z             "ResourceRecords": [
+2026-09-24T15:41:34.4514884Z                 {
+2026-09-24T15:41:34.4515312Z                     "Value": "ns-1865.awsdns-41.co.uk."
+2026-09-24T15:41:34.4515835Z                 },
+2026-09-24T15:41:34.4516205Z                 {
+2026-09-24T15:41:34.4516614Z                     "Value": "ns-1137.awsdns-14.org."
+2026-09-24T15:41:34.4517136Z                 },
+2026-09-24T15:41:34.4517495Z                 {
+2026-09-24T15:41:34.4517860Z                     "Value": "ns-878.awsdns-45.net."
+2026-09-24T15:41:34.4518191Z                 },
+2026-09-24T15:41:34.4518433Z                 {
+2026-09-24T15:41:34.4518696Z                     "Value": "ns-403.awsdns-50.com."
+2026-09-24T15:41:34.4519027Z                 }
+2026-09-24T15:41:34.4519257Z             ]
+2026-09-24T15:41:34.4519483Z         },
+2026-09-24T15:41:34.4520059Z         {
+2026-09-24T15:41:34.4520304Z             "Name": "feras-dev.co.uk.",
+2026-09-24T15:41:34.4520628Z             "Type": "SOA",
+2026-09-24T15:41:34.4520910Z             "TTL": 900,
+2026-09-24T15:41:34.4521189Z             "ResourceRecords": [
+2026-09-24T15:41:34.4521478Z                 {
+2026-09-24T15:41:34.4521956Z                     "Value": "ns-1865.awsdns-41.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+2026-09-24T15:41:34.4522774Z                 }
+2026-09-24T15:41:34.4523021Z             ]
+2026-09-24T15:41:34.4523257Z         },
+2026-09-24T15:41:34.4523463Z         {
+2026-09-24T15:41:34.4523671Z             "Name": "tm.feras-dev.co.uk.",
+2026-09-24T15:41:34.4523948Z             "Type": "A",
+2026-09-24T15:41:34.4524186Z             "AliasTarget": {
+2026-09-24T15:41:34.4524456Z                 "HostedZoneId": "ZHURV8PSTC4K8",
+2026-09-24T15:41:34.4524864Z                 "DNSName": "ecs-it-tools-alb-249009895.eu-west-2.elb.amazonaws.com.",
+2026-09-24T15:41:34.4525283Z                 "EvaluateTargetHealth": true
+2026-09-24T15:41:34.4525549Z             }
+2026-09-24T15:41:34.4525736Z         },
+2026-09-24T15:41:34.4525921Z         {
+2026-09-24T15:41:34.4526205Z             "Name": "_acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.",
+2026-09-24T15:41:34.4526566Z             "Type": "CNAME",
+2026-09-24T15:41:34.4526803Z             "TTL": 300,
+2026-09-24T15:41:34.4527026Z             "ResourceRecords": [
+2026-09-24T15:41:34.4527267Z                 {
+2026-09-24T15:41:34.4527849Z                     "Value": "_c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws."
+2026-09-24T15:41:34.4528262Z                 }
+2026-09-24T15:41:34.4528458Z             ]
+2026-09-24T15:41:34.4528641Z         }
+2026-09-24T15:41:34.4528818Z     ]
+2026-09-24T15:41:34.4529005Z }
+2026-09-24T15:41:34.5404010Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:34.5404385Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:34.5404670Z [36;1maws ecr describe-images \[0m
+2026-09-24T15:41:34.5404999Z [36;1m  --repository-name ecs-it-tools \[0m
+2026-09-24T15:41:34.5405363Z [36;1m  --image-ids "imageTag=$TF_VAR_image_tag" \[0m
+2026-09-24T15:41:34.5405717Z [36;1m  --output json > "$RUNNER_TEMP/image.json"[0m
+2026-09-24T15:41:34.5406017Z [36;1m[0m
+2026-09-24T15:41:34.5406263Z [36;1mjq -e --arg digest "$EXPECTED_IMAGE_DIGEST" \[0m
+2026-09-24T15:41:34.5406640Z [36;1m  '.imageDetails | length == 1' "$RUNNER_TEMP/image.json"[0m
+2026-09-24T15:41:34.5406974Z [36;1m[0m
+2026-09-24T15:41:34.5407205Z [36;1mjq -e --arg digest "$EXPECTED_IMAGE_DIGEST" \[0m
+2026-09-24T15:41:34.5407622Z [36;1m  '.imageDetails[0].imageDigest == $digest' "$RUNNER_TEMP/image.json"[0m
+2026-09-24T15:41:34.5407994Z [36;1m[0m
+2026-09-24T15:41:34.5408200Z [36;1mcat "$RUNNER_TEMP/image.json"[0m
+2026-09-24T15:41:34.5469822Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:34.5470164Z env:
+2026-09-24T15:41:34.5470363Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:34.5470592Z   AWS_PAGER:
+2026-09-24T15:41:34.5470800Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:34.5471034Z   TF_INPUT: false
+2026-09-24T15:41:34.5471242Z   TF_WORKSPACE: default
+2026-09-24T15:41:34.5471515Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:34.5472035Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:34.5472770Z   OPERATION: deploy
+2026-09-24T15:41:34.5473060Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:34.5473659Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:34.5474005Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:34.5478456Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:34.5478707Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:34.5478949Z ##[endgroup]
+2026-09-24T15:41:35.5425623Z true
+2026-09-24T15:41:35.5449776Z true
+2026-09-24T15:41:35.5460589Z {
+2026-09-24T15:41:35.5460969Z     "imageDetails": [
+2026-09-24T15:41:35.5461410Z         {
+2026-09-24T15:41:35.5461785Z             "registryId": "670941257756",
+2026-09-24T15:41:35.5462958Z             "repositoryName": "ecs-it-tools",
+2026-09-24T15:41:35.5463988Z             "imageDigest": "sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6",
+2026-09-24T15:41:35.5464878Z             "imageTags": [
+2026-09-24T15:41:35.5465368Z                 "1c7747cb376d54351f98073e39ef0f72c8ff813c"
+2026-09-24T15:41:35.5465812Z             ],
+2026-09-24T15:41:35.5466075Z             "imageSizeInBytes": 34022517,
+2026-09-24T15:41:35.5466464Z             "imagePushedAt": "2026-09-23T09:39:01.677000+00:00",
+2026-09-24T15:41:35.5467051Z             "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+2026-09-24T15:41:35.5467754Z             "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+2026-09-24T15:41:35.5468331Z             "lastRecordedPullTime": "2026-09-24T15:26:05.103000+00:00",
+2026-09-24T15:41:35.5468750Z             "imageStatus": "ACTIVE"
+2026-09-24T15:41:35.5469049Z         }
+2026-09-24T15:41:35.5469272Z     ]
+2026-09-24T15:41:35.5469489Z }
+2026-09-24T15:41:35.5497936Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:35.5498278Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:35.5498517Z [36;1mtargets=()[0m
+2026-09-24T15:41:35.5498738Z [36;1mcase "$OPERATION" in[0m
+2026-09-24T15:41:35.5499052Z [36;1m  ecr-bootstrap) targets+=("-target=module.ecr") ;;[0m
+2026-09-24T15:41:35.5499522Z [36;1m  certificate-bootstrap) targets+=("-target=aws_acm_certificate.this") ;;[0m
+2026-09-24T15:41:35.5499924Z [36;1mesac[0m
+2026-09-24T15:41:35.5500122Z [36;1m[0m
+2026-09-24T15:41:35.5500344Z [36;1mterraform -chdir=terraform plan \[0m
+2026-09-24T15:41:35.5500682Z [36;1m  -input=false -no-color -lock-timeout=5m \[0m
+2026-09-24T15:41:35.5501046Z [36;1m  -var-file=environments/dev/terraform.tfvars \[0m
+2026-09-24T15:41:35.5501369Z [36;1m  "${targets[@]}" \[0m
+2026-09-24T15:41:35.5501615Z [36;1m  -out=deployment.tfplan[0m
+2026-09-24T15:41:35.5501857Z [36;1m[0m
+2026-09-24T15:41:35.5502186Z [36;1mterraform -chdir=terraform show -no-color deployment.tfplan \[0m
+2026-09-24T15:41:35.5502858Z [36;1m  > "$RUNNER_TEMP/deployment-plan.txt"[0m
+2026-09-24T15:41:35.5503139Z [36;1m[0m
+2026-09-24T15:41:35.5503426Z [36;1mterraform -chdir=terraform show -json deployment.tfplan \[0m
+2026-09-24T15:41:35.5503809Z [36;1m  > "$RUNNER_TEMP/deployment-plan.json"[0m
+2026-09-24T15:41:35.5564340Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:35.5564683Z env:
+2026-09-24T15:41:35.5564883Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:35.5565113Z   AWS_PAGER:
+2026-09-24T15:41:35.5565324Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:35.5565555Z   TF_INPUT: false
+2026-09-24T15:41:35.5565761Z   TF_WORKSPACE: default
+2026-09-24T15:41:35.5566036Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:35.5566552Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:35.5567021Z   OPERATION: deploy
+2026-09-24T15:41:35.5567305Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:35.5567758Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:35.5568092Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:35.5572796Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:35.5573056Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:35.5573298Z ##[endgroup]
+2026-09-24T15:41:39.5183755Z data.aws_route53_zone.existing: Reading...
+2026-09-24T15:41:39.5184522Z module.vpc.aws_vpc.this: Refreshing state... [id=vpc-05506e4d646de3807]
+2026-09-24T15:41:39.5185373Z module.vpc.aws_eip.nat: Refreshing state... [id=eipalloc-0219456e4a1310175]
+2026-09-24T15:41:39.5186292Z module.ecr.aws_ecr_repository.this: Refreshing state... [id=ecs-it-tools]
+2026-09-24T15:41:39.5187437Z aws_acm_certificate.this: Refreshing state... [id=arn:aws:acm:eu-west-2:670941257756:certificate/84cdab54-b409-43d7-babc-0865a4aa17cf]
+2026-09-24T15:41:39.6658324Z data.aws_route53_zone.existing: Read complete after 0s [id=Z01014153ETFBQT2QXXK2]
+2026-09-24T15:41:39.9634061Z aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]: Refreshing state... [id=Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk._CNAME]
+2026-09-24T15:41:40.0431368Z aws_acm_certificate_validation.this: Refreshing state... [id=0001-01-01 00:00:00 +0000 UTC]
+2026-09-24T15:41:40.8938919Z module.vpc.aws_internet_gateway.this: Refreshing state... [id=igw-0de74bad587cd926f]
+2026-09-24T15:41:40.8952237Z module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-075ac29670a72c2bd]
+2026-09-24T15:41:40.8953711Z module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-01a5f3b8fbae059f2]
+2026-09-24T15:41:40.8975403Z module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0f6852154698b8906]
+2026-09-24T15:41:40.8987119Z module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-0bdc93ae056a8a633]
+2026-09-24T15:41:40.9003556Z module.alb.aws_security_group.alb: Refreshing state... [id=sg-0d311346e03444dc2]
+2026-09-24T15:41:40.9011438Z module.alb.aws_lb_target_group.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/23b86d820a08800f]
+2026-09-24T15:41:41.0429473Z module.vpc.aws_route_table.public: Refreshing state... [id=rtb-0aaf2ef58bb81f8a5]
+2026-09-24T15:41:41.3347765Z module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0664abae3e7fad34d]
+2026-09-24T15:41:41.3349168Z module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0426bb5765e835ca3]
+2026-09-24T15:41:41.3350387Z module.vpc.aws_nat_gateway.this: Refreshing state... [id=nat-0e3ca6f025f2f3958]
+2026-09-24T15:41:41.3367442Z module.alb.aws_lb.this: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/7296261e706d90a1]
+2026-09-24T15:41:41.4583428Z module.vpc.aws_route_table.private: Refreshing state... [id=rtb-04b30fe11e8bbcaeb]
+2026-09-24T15:41:41.5906774Z module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0640cc3613c2b1109]
+2026-09-24T15:41:41.5907857Z module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0c1f685550979bf8a]
+2026-09-24T15:41:41.9122518Z module.alb.aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/7296261e706d90a1/6acf2ae643c177bb]
+2026-09-24T15:41:41.9124468Z module.alb.aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/7296261e706d90a1/62d946fc2df1c220]
+2026-09-24T15:41:41.9142493Z aws_route53_record.app: Refreshing state... [id=Z01014153ETFBQT2QXXK2_tm.feras-dev.co.uk_A]
+2026-09-24T15:41:42.2559059Z module.ecs.aws_cloudwatch_log_group.this: Refreshing state... [id=/ecs/ecs-it-tools]
+2026-09-24T15:41:42.2560274Z module.ecs.aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster]
+2026-09-24T15:41:42.2561197Z module.ecs.aws_security_group.task: Refreshing state... [id=sg-0cd73f63b3e3d9ede]
+2026-09-24T15:41:42.2562494Z module.ecs.aws_iam_role.execution: Refreshing state... [id=ecs-it-tools-ecs-execution]
+2026-09-24T15:41:42.3870327Z module.ecs.aws_iam_role_policy_attachment.execution: Refreshing state... [id=ecs-it-tools-ecs-execution/arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy]
+2026-09-24T15:41:42.4029631Z module.ecs.aws_vpc_security_group_ingress_rule.alb_to_task: Refreshing state... [id=sgr-0ccbe394334371de8]
+2026-09-24T15:41:42.4043874Z module.ecs.aws_vpc_security_group_egress_rule.task_outbound: Refreshing state... [id=sgr-05a86006f085070a5]
+2026-09-24T15:41:42.7766307Z module.ecs.aws_ecs_task_definition.this: Refreshing state... [id=ecs-it-tools]
+2026-09-24T15:41:42.8891920Z module.ecs.aws_ecs_service.this: Refreshing state... [id=arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service]
+2026-09-24T15:41:43.2032584Z
+2026-09-24T15:41:43.2033915Z No changes. Your infrastructure matches the configuration.
+2026-09-24T15:41:43.2035065Z
+2026-09-24T15:41:43.2035686Z Terraform has compared your real infrastructure against your configuration
+2026-09-24T15:41:43.2036916Z and found no differences, so no changes are needed.
+2026-09-24T15:41:47.6770872Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:47.6771281Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:47.6771535Z [36;1mpython3 - <<'PY'[0m
+2026-09-24T15:41:47.6771778Z [36;1mimport json[0m
+2026-09-24T15:41:47.6771993Z [36;1mimport os[0m
+2026-09-24T15:41:47.6772197Z [36;1m[0m
+2026-09-24T15:41:47.6772877Z [36;1mwith open(os.environ["RUNNER_TEMP"] + "/deployment-plan.json") as stream:[0m
+2026-09-24T15:41:47.6773337Z [36;1m    plan = json.load(stream)[0m
+2026-09-24T15:41:47.6773607Z [36;1m[0m
+2026-09-24T15:41:47.6773814Z [36;1mif plan.get("errored"):[0m
+2026-09-24T15:41:47.6774151Z [36;1m    raise SystemExit("Terraform reported an errored plan.")[0m
+2026-09-24T15:41:47.6774493Z [36;1m[0m
+2026-09-24T15:41:47.6774810Z [36;1mif plan["variables"]["image_tag"]["value"] != os.environ["TF_VAR_image_tag"]:[0m
+2026-09-24T15:41:47.6775301Z [36;1m    raise SystemExit("Plan image input mismatch.")[0m
+2026-09-24T15:41:47.6775742Z [36;1mif plan["variables"]["aws_region"]["value"] != "eu-west-2":[0m
+2026-09-24T15:41:47.6776140Z [36;1m    raise SystemExit("Plan region mismatch.")[0m
+2026-09-24T15:41:47.6776560Z [36;1mif plan["variables"]["hosted_zone_id"]["value"] != "Z01014153ETFBQT2QXXK2":[0m
+2026-09-24T15:41:47.6777008Z [36;1m    raise SystemExit("Plan hosted zone mismatch.")[0m
+2026-09-24T15:41:47.6777311Z [36;1m[0m
+2026-09-24T15:41:47.6777513Z [36;1mallowed_types = {[0m
+2026-09-24T15:41:47.6777800Z [36;1m    "aws_vpc", "aws_internet_gateway", "aws_subnet",[0m
+2026-09-24T15:41:47.6778156Z [36;1m    "aws_eip", "aws_nat_gateway", "aws_route_table",[0m
+2026-09-24T15:41:47.6778528Z [36;1m    "aws_route_table_association", "aws_security_group",[0m
+2026-09-24T15:41:47.6778887Z [36;1m    "aws_vpc_security_group_ingress_rule",[0m
+2026-09-24T15:41:47.6779216Z [36;1m    "aws_vpc_security_group_egress_rule",[0m
+2026-09-24T15:41:47.6779569Z [36;1m    "aws_lb", "aws_lb_target_group", "aws_lb_listener",[0m
+2026-09-24T15:41:47.6780016Z [36;1m    "aws_ecr_repository", "aws_ecs_cluster", "aws_ecs_service",[0m
+2026-09-24T15:41:47.6780445Z [36;1m    "aws_ecs_task_definition", "aws_cloudwatch_log_group",[0m
+2026-09-24T15:41:47.6780836Z [36;1m    "aws_iam_role", "aws_iam_role_policy_attachment",[0m
+2026-09-24T15:41:47.6781229Z [36;1m    "aws_acm_certificate", "aws_acm_certificate_validation",[0m
+2026-09-24T15:41:47.6781576Z [36;1m    "aws_route53_record",[0m
+2026-09-24T15:41:47.6781824Z [36;1m}[0m
+2026-09-24T15:41:47.6782007Z [36;1m[0m
+2026-09-24T15:41:47.6782224Z [36;1moperation = os.environ["OPERATION"][0m
+2026-09-24T15:41:47.6782826Z [36;1mfor change in plan.get("resource_changes", []):[0m
+2026-09-24T15:41:47.6783162Z [36;1m    if change["mode"] != "managed":[0m
+2026-09-24T15:41:47.6783437Z [36;1m        continue[0m
+2026-09-24T15:41:47.6783691Z [36;1m    address = change["address"][0m
+2026-09-24T15:41:47.6783992Z [36;1m    actions = change["change"]["actions"][0m
+2026-09-24T15:41:47.6784278Z [36;1m[0m
+2026-09-24T15:41:47.6784508Z [36;1m    if change["type"] not in allowed_types:[0m
+2026-09-24T15:41:47.6784887Z [36;1m        raise SystemExit("Unexpected resource type: " + address)[0m
+2026-09-24T15:41:47.6785240Z [36;1m[0m
+2026-09-24T15:41:47.6785439Z [36;1m    if actions == ["no-op"]:[0m
+2026-09-24T15:41:47.6785706Z [36;1m        continue[0m
+2026-09-24T15:41:47.6785925Z [36;1m[0m
+2026-09-24T15:41:47.6786142Z [36;1m    if change["change"].get("importing"):[0m
+2026-09-24T15:41:47.6786614Z [36;1m        raise SystemExit("Imports require separate ownership review: " + address)[0m
+2026-09-24T15:41:47.6787019Z [36;1m[0m
+2026-09-24T15:41:47.6787236Z [36;1m    if operation == "ecr-bootstrap":[0m
+2026-09-24T15:41:47.6787589Z [36;1m        if address != "module.ecr.aws_ecr_repository.this":[0m
+2026-09-24T15:41:47.6788027Z [36;1m            raise SystemExit("Unexpected ECR bootstrap change: " + address)[0m
+2026-09-24T15:41:47.6788666Z [36;1m    elif operation == "certificate-bootstrap":[0m
+2026-09-24T15:41:47.6789162Z [36;1m        if address != "aws_acm_certificate.this":[0m
+2026-09-24T15:41:47.6789621Z [36;1m            raise SystemExit("Unexpected certificate bootstrap change: " + address)[0m
+2026-09-24T15:41:47.6790023Z [36;1m[0m
+2026-09-24T15:41:47.6790226Z [36;1m    if "delete" in actions:[0m
+2026-09-24T15:41:47.6790501Z [36;1m        task_replacement = ([0m
+2026-09-24T15:41:47.6790780Z [36;1m            operation == "deploy"[0m
+2026-09-24T15:41:47.6791148Z [36;1m            and address == "module.ecs.aws_ecs_task_definition.this"[0m
+2026-09-24T15:41:47.6791525Z [36;1m            and "create" in actions[0m
+2026-09-24T15:41:47.6791794Z [36;1m        )[0m
+2026-09-24T15:41:47.6792030Z [36;1m        if not task_replacement:[0m
+2026-09-24T15:41:47.6792713Z [36;1m            raise SystemExit("Destructive deployment change requires review: " + address)[0m
+2026-09-24T15:41:47.6793181Z [36;1m[0m
+2026-09-24T15:41:47.6793480Z [36;1m    print(address, actions)[0m
+2026-09-24T15:41:47.6793776Z [36;1m[0m
+2026-09-24T15:41:47.6794095Z [36;1mprint("Plan scope checks passed; operator review is still required.")[0m
+2026-09-24T15:41:47.6794485Z [36;1mPY[0m
+2026-09-24T15:41:47.6856841Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:47.6857192Z env:
+2026-09-24T15:41:47.6857403Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:47.6857637Z   AWS_PAGER:
+2026-09-24T15:41:47.6857845Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:47.6858086Z   TF_INPUT: false
+2026-09-24T15:41:47.6858295Z   TF_WORKSPACE: default
+2026-09-24T15:41:47.6858584Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:47.6859095Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:47.6859573Z   OPERATION: deploy
+2026-09-24T15:41:47.6859852Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:47.6860500Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:47.6860846Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:47.6865660Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:47.6865919Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:47.6866163Z ##[endgroup]
+2026-09-24T15:41:47.7166822Z Plan scope checks passed; operator review is still required.
+2026-09-24T15:41:47.7256516Z ##[group]Run set -euo pipefail
+2026-09-24T15:41:47.7256881Z [36;1mset -euo pipefail[0m
+2026-09-24T15:41:47.7257293Z [36;1mplan_key="ecs-v1/dev/plans/$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT/deployment.tfplan"[0m
+2026-09-24T15:41:47.7257909Z [36;1mplan_sha256="$(sha256sum terraform/deployment.tfplan | cut -d ' ' -f 1)"[0m
+2026-09-24T15:41:47.7258555Z [36;1m[0m
+2026-09-24T15:41:47.7258885Z [36;1maws s3api put-object \[0m
+2026-09-24T15:41:47.7259161Z [36;1m  --bucket "$PLAN_BUCKET" \[0m
+2026-09-24T15:41:47.7259438Z [36;1m  --key "$plan_key" \[0m
+2026-09-24T15:41:47.7259720Z [36;1m  --body terraform/deployment.tfplan \[0m
+2026-09-24T15:41:47.7260068Z [36;1m  --server-side-encryption AES256 \[0m
+2026-09-24T15:41:47.7260415Z [36;1m  --output json > "$RUNNER_TEMP/plan-upload.json"[0m
+2026-09-24T15:41:47.7260729Z [36;1m[0m
+2026-09-24T15:41:47.7261031Z [36;1mplan_version="$(jq -er '.VersionId | select(. != "null" and . != "")' \[0m
+2026-09-24T15:41:47.7261475Z [36;1m  "$RUNNER_TEMP/plan-upload.json")"[0m
+2026-09-24T15:41:47.7261747Z [36;1m[0m
+2026-09-24T15:41:47.7261949Z [36;1maws s3api put-object \[0m
+2026-09-24T15:41:47.7262209Z [36;1m  --bucket "$PLAN_BUCKET" \[0m
+2026-09-24T15:41:47.7262908Z [36;1m  --key "ecs-v1/dev/plans/$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT/deployment-plan.txt" \[0m
+2026-09-24T15:41:47.7263398Z [36;1m  --body "$RUNNER_TEMP/deployment-plan.txt" \[0m
+2026-09-24T15:41:47.7263752Z [36;1m  --server-side-encryption AES256 > /dev/null[0m
+2026-09-24T15:41:47.7264049Z [36;1m[0m
+2026-09-24T15:41:47.7264230Z [36;1m{[0m
+2026-09-24T15:41:47.7264435Z [36;1m  echo "plan_key=$plan_key"[0m
+2026-09-24T15:41:47.7264934Z [36;1m  echo "plan_version=$plan_version"[0m
+2026-09-24T15:41:47.7265229Z [36;1m  echo "plan_sha256=$plan_sha256"[0m
+2026-09-24T15:41:47.7265509Z [36;1m} >> "$GITHUB_OUTPUT"[0m
+2026-09-24T15:41:47.7265744Z [36;1m[0m
+2026-09-24T15:41:47.7265927Z [36;1m{[0m
+2026-09-24T15:41:47.7266168Z [36;1m  echo "## Terraform plan ready for review"[0m
+2026-09-24T15:41:47.7266461Z [36;1m  echo[0m
+2026-09-24T15:41:47.7266680Z [36;1m  echo "Operation: $OPERATION"[0m
+2026-09-24T15:41:47.7266985Z [36;1m  echo "Workflow commit: $GITHUB_SHA"[0m
+2026-09-24T15:41:47.7267291Z [36;1m  echo "Image tag: $TF_VAR_image_tag"[0m
+2026-09-24T15:41:47.7267639Z [36;1m  echo "Expected image digest: $EXPECTED_IMAGE_DIGEST"[0m
+2026-09-24T15:41:47.7267991Z [36;1m  echo "Plan SHA256: $plan_sha256"[0m
+2026-09-24T15:41:47.7268276Z [36;1m  echo "S3 key: $plan_key"[0m
+2026-09-24T15:41:47.7268558Z [36;1m  echo "S3 version: $plan_version"[0m
+2026-09-24T15:41:47.7268821Z [36;1m  echo[0m
+2026-09-24T15:41:47.7269123Z [36;1m  echo "Review the Create saved plan log before approving apply."[0m
+2026-09-24T15:41:47.7269876Z [36;1m  echo "Binary plan is stored in private S3. Human-readable plan output and infrastructure metadata appear in this public repository's Actions logs."[0m
+2026-09-24T15:41:47.7270527Z [36;1m} >> "$GITHUB_STEP_SUMMARY"[0m
+2026-09-24T15:41:47.7332665Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-24T15:41:47.7333043Z env:
+2026-09-24T15:41:47.7333263Z   AWS_REGION: eu-west-2
+2026-09-24T15:41:47.7333496Z   AWS_PAGER:
+2026-09-24T15:41:47.7333709Z   TF_IN_AUTOMATION: true
+2026-09-24T15:41:47.7333947Z   TF_INPUT: false
+2026-09-24T15:41:47.7334155Z   TF_WORKSPACE: default
+2026-09-24T15:41:47.7334439Z   TF_VAR_image_tag: 1c7747cb376d54351f98073e39ef0f72c8ff813c
+2026-09-24T15:41:47.7334956Z   EXPECTED_IMAGE_DIGEST: sha256:7dbfb5a3e69b389bf1e1f573609b19b4c245b24d03f8bd9c9bffa076ff6e77f6
+2026-09-24T15:41:47.7335419Z   OPERATION: deploy
+2026-09-24T15:41:47.7335707Z   PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+2026-09-24T15:41:47.7336270Z   AWS_ACCESS_KEY_ID: ***
+2026-09-24T15:41:47.7336606Z   AWS_SECRET_ACCESS_KEY: ***
+2026-09-24T15:41:47.7341056Z   AWS_SESSION_TOKEN: ***
+2026-09-24T15:41:47.7341297Z   AWS_DEFAULT_REGION: eu-west-2
+2026-09-24T15:41:47.7341539Z ##[endgroup]
+2026-09-24T15:41:50.0918755Z Post job cleanup.
+2026-09-24T15:41:50.2003286Z Post job cleanup.
+2026-09-24T15:41:50.2940505Z [command]/usr/bin/git version
+2026-09-24T15:41:50.2972150Z git version 2.55.0
+2026-09-24T15:41:50.3020789Z Temporarily overriding HOME='/home/runner/work/_temp/69ab6ab6-7373-4bd6-a133-86128107baa5' before making global git config changes
+2026-09-24T15:41:50.3022124Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-24T15:41:50.3027997Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ecs-v1-it-tools/ecs-v1-it-tools
+2026-09-24T15:41:50.3071933Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-24T15:41:50.3113031Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-24T15:41:50.3369140Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-24T15:41:50.3421373Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-24T15:41:50.3844238Z Evaluate and set job outputs
+2026-09-24T15:41:50.3855464Z Set output 'plan_key'
+2026-09-24T15:41:50.3858507Z Set output 'plan_version'
+2026-09-24T15:41:50.3859777Z Set output 'plan_sha256'
+2026-09-24T15:41:50.3860940Z Cleaning up orphan processes
+2026-09-24T15:41:50.4327929Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502, hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
