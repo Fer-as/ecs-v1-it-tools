@@ -55,6 +55,27 @@ data "aws_iam_policy_document" "github_terraform_services" {
   }
 
   statement {
+    sid     = "ListApplicationServiceDeployments"
+    effect  = "Allow"
+    actions = ["ecs:ListServiceDeployments"]
+
+    resources = [
+      "arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service"
+    ]
+  }
+
+  statement {
+    sid     = "DescribeApplicationServiceDeployments"
+    effect  = "Allow"
+    actions = ["ecs:DescribeServiceDeployments"]
+
+    resources = [
+      "arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service",
+      "arn:aws:ecs:eu-west-2:670941257756:service-deployment/ecs-it-tools-cluster/ecs-it-tools-service/*",
+    ]
+  }
+
+  statement {
     sid     = "ManageApplicationTaskDefinitions"
     effect  = "Allow"
     actions = ["ecs:RegisterTaskDefinition"]
