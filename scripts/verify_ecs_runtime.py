@@ -1,6 +1,7 @@
 import json
 import os
 import subprocess
+import time
 
 
 def aws(*args):
@@ -16,6 +17,80 @@ def require(condition, message):
         raise SystemExit(message)
 
 
+def wait_for_service(cluster, service_name):
+    selected_definition = None
+    selected_deployment = None
+
+    for attempt in range(1, 31):
+        result = aws(
+            "ecs", "describe-services",
+            "--cluster", cluster, "--services", service_name,
+        )
+        require(not result.get("failures"), "ECS service lookup failed.")
+        require(len(result["services"]) == 1, "Expected exactly one service.")
+        service = result["services"][0]
+
+        require(service["status"] == "ACTIVE", "Service is not ACTIVE.")
+        require(service["desiredCount"] == 1, "Expected one desired task.")
+        require(
+            service["networkConfiguration"]["awsvpcConfiguration"]
+            ["assignPublicIp"] == "DISABLED",
+            "Service public IP assignment must be disabled.",
+        )
+
+        deployments = service["deployments"]
+        primary = [
+            item for item in deployments if item["status"] == "PRIMARY"
+        ]
+        require(len(primary) == 1, "Expected exactly one PRIMARY deployment.")
+        deployment = primary[0]
+
+        if selected_definition is None:
+            selected_definition = service["taskDefinition"]
+            selected_deployment = deployment["id"]
+
+        require(
+            service["taskDefinition"] == selected_definition
+            and deployment["taskDefinition"] == selected_definition
+            and deployment["id"] == selected_deployment,
+            "Selected deployment changed during verification.",
+        )
+        require(
+            deployment.get("rolloutState") != "FAILED",
+            "Service deployment failed: "
+            + (deployment.get("rolloutStateReason") or "No reason returned."),
+        )
+        require(
+            deployment.get("failedTasks", 0) == 0,
+            "Service deployment reports failed tasks.",
+        )
+
+        ready = (
+            service["runningCount"] == 1
+            and service["pendingCount"] == 0
+            and len(deployments) == 1
+            and deployment.get("rolloutState") == "COMPLETED"
+        )
+        if ready:
+            return service
+
+        print(json.dumps({
+            "check": "service_readiness",
+            "attempt": attempt,
+            "deployment": deployment["id"],
+            "rollout_state": deployment.get("rolloutState"),
+            "reason": deployment.get("rolloutStateReason"),
+            "running": service["runningCount"],
+            "pending": service["pendingCount"],
+            "deployment_count": len(deployments),
+        }), flush=True)
+
+        if attempt < 30:
+            time.sleep(10)
+
+    raise SystemExit("Service readiness did not pass within 30 checks.")
+
+
 def main():
     cluster = "ecs-it-tools-cluster"
     service_name = "ecs-it-tools-service"
@@ -25,33 +100,8 @@ def main():
     )
     expected_digest = os.environ["EXPECTED_IMAGE_DIGEST"]
 
-    result = aws(
-        "ecs", "describe-services",
-        "--cluster", cluster, "--services", service_name,
-    )
-    require(not result.get("failures"), "ECS service lookup failed.")
-    require(len(result["services"]) == 1, "Expected exactly one service.")
-    service = result["services"][0]
-
-    require(service["status"] == "ACTIVE", "Service is not ACTIVE.")
-    require(
-        (service["desiredCount"], service["runningCount"],
-         service["pendingCount"]) == (1, 1, 0),
-        "Expected one desired/running task and zero pending tasks.",
-    )
+    service = wait_for_service(cluster, service_name)
     deployments = service["deployments"]
-    require(
-        len(deployments) == 1
-        and deployments[0]["status"] == "PRIMARY"
-        and deployments[0].get("rolloutState") == "COMPLETED"
-        and deployments[0].get("failedTasks", 0) == 0,
-        "Service deployment is not successfully completed.",
-    )
-    require(
-        service["networkConfiguration"]["awsvpcConfiguration"]
-        ["assignPublicIp"] == "DISABLED",
-        "Service public IP assignment must be disabled.",
-    )
 
     task_arns = aws(
         "ecs", "list-tasks", "--cluster", cluster,
