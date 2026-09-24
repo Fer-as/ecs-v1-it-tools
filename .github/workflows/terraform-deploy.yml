@@ -1,0 +1,407 @@
+name: Terraform deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Deployment stage
+        type: choice
+        options:
+          - deploy
+          - ecr-bootstrap
+          - certificate-bootstrap
+        default: deploy
+      image_tag:
+        description: Explicit full source commit SHA for the image
+        type: string
+        required: true
+      image_digest:
+        description: Expected ECR sha256 digest; required for deploy
+        type: string
+        required: false
+      apply:
+        description: Request approval to apply the saved plan
+        type: boolean
+        default: false
+
+permissions: {}
+
+concurrency:
+  group: terraform-application-dev
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: eu-west-2
+  AWS_PAGER: ""
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  TF_WORKSPACE: default
+  TF_VAR_image_tag: ${{ inputs.image_tag }}
+  EXPECTED_IMAGE_DIGEST: ${{ inputs.image_digest }}
+  OPERATION: ${{ inputs.operation }}
+  PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+
+jobs:
+  plan:
+    if: github.repository == 'Fer-as/ecs-v1-it-tools' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment: dev
+    timeout-minutes: 20
+
+    permissions:
+      contents: read
+      id-token: write
+
+    outputs:
+      plan_key: ${{ steps.store.outputs.plan_key }}
+      plan_version: ${{ steps.store.outputs.plan_version }}
+      plan_sha256: ${{ steps.store.outputs.plan_sha256 }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out workflow commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Validate explicit inputs
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          [[ "$TF_VAR_image_tag" =~ ^[0-9a-f]{40}$ ]]
+          case "$OPERATION" in
+            deploy)
+              [[ "$EXPECTED_IMAGE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+              ;;
+            ecr-bootstrap|certificate-bootstrap) ;;
+            *) echo "Unsupported operation"; exit 1 ;;
+          esac
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
+        with:
+          terraform_version: 1.16.2
+          terraform_wrapper: false
+
+      - name: Authenticate planning role
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-terraform-plan
+          aws-region: eu-west-2
+          audience: sts.amazonaws.com
+          role-session-name: terraform-plan-${{ github.run_id }}
+          role-duration-seconds: 1800
+          unset-current-credentials: true
+
+      - name: Verify planning identity
+        run: |
+          set -euo pipefail
+          aws sts get-caller-identity --output json > "$RUNNER_TEMP/identity.json"
+          jq -e --arg expected \
+            "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-terraform-plan/terraform-plan-$GITHUB_RUN_ID" \
+            '.Account == "670941257756" and .Arn == $expected' \
+            "$RUNNER_TEMP/identity.json"
+          cat "$RUNNER_TEMP/identity.json"
+
+      - name: Initialize and validate
+        run: |
+          set -euo pipefail
+          terraform -chdir=terraform init -input=false -lockfile=readonly
+          terraform -chdir=terraform fmt -recursive -check
+          terraform -chdir=terraform validate
+          test "$(terraform -chdir=terraform workspace show)" = "default"
+          test ! -e terraform/validation-import.tf
+          terraform -chdir=terraform state list
+
+      - name: Inspect DNS before planning
+        run: |
+          set -euo pipefail
+          aws route53 list-resource-record-sets \
+            --hosted-zone-id Z01014153ETFBQT2QXXK2 \
+            --output json
+
+      - name: Verify selected image
+        if: inputs.operation == 'deploy'
+        run: |
+          set -euo pipefail
+          aws ecr describe-images \
+            --repository-name ecs-it-tools \
+            --image-ids "imageTag=$TF_VAR_image_tag" \
+            --output json > "$RUNNER_TEMP/image.json"
+
+          jq -e --arg digest "$EXPECTED_IMAGE_DIGEST" \
+            '.imageDetails | length == 1' "$RUNNER_TEMP/image.json"
+
+          jq -e --arg digest "$EXPECTED_IMAGE_DIGEST" \
+            '.imageDetails[0].imageDigest == $digest' "$RUNNER_TEMP/image.json"
+
+          cat "$RUNNER_TEMP/image.json"
+
+      - name: Create saved plan
+        run: |
+          set -euo pipefail
+          targets=()
+          case "$OPERATION" in
+            ecr-bootstrap) targets+=("-target=module.ecr") ;;
+            certificate-bootstrap) targets+=("-target=aws_acm_certificate.this") ;;
+          esac
+
+          terraform -chdir=terraform plan \
+            -input=false -no-color -lock-timeout=5m \
+            -var-file=environments/dev/terraform.tfvars \
+            "${targets[@]}" \
+            -out=deployment.tfplan
+
+          terraform -chdir=terraform show -no-color deployment.tfplan \
+            > "$RUNNER_TEMP/deployment-plan.txt"
+
+          terraform -chdir=terraform show -json deployment.tfplan \
+            > "$RUNNER_TEMP/deployment-plan.json"
+
+      - name: Check plan scope
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+
+          with open(os.environ["RUNNER_TEMP"] + "/deployment-plan.json") as stream:
+              plan = json.load(stream)
+
+          if plan.get("errored"):
+              raise SystemExit("Terraform reported an errored plan.")
+
+          if plan["variables"]["image_tag"]["value"] != os.environ["TF_VAR_image_tag"]:
+              raise SystemExit("Plan image input mismatch.")
+          if plan["variables"]["aws_region"]["value"] != "eu-west-2":
+              raise SystemExit("Plan region mismatch.")
+          if plan["variables"]["hosted_zone_id"]["value"] != "Z01014153ETFBQT2QXXK2":
+              raise SystemExit("Plan hosted zone mismatch.")
+
+          allowed_types = {
+              "aws_vpc", "aws_internet_gateway", "aws_subnet",
+              "aws_eip", "aws_nat_gateway", "aws_route_table",
+              "aws_route_table_association", "aws_security_group",
+              "aws_vpc_security_group_ingress_rule",
+              "aws_vpc_security_group_egress_rule",
+              "aws_lb", "aws_lb_target_group", "aws_lb_listener",
+              "aws_ecr_repository", "aws_ecs_cluster", "aws_ecs_service",
+              "aws_ecs_task_definition", "aws_cloudwatch_log_group",
+              "aws_iam_role", "aws_iam_role_policy_attachment",
+              "aws_acm_certificate", "aws_acm_certificate_validation",
+              "aws_route53_record",
+          }
+
+          operation = os.environ["OPERATION"]
+          for change in plan.get("resource_changes", []):
+              if change["mode"] != "managed":
+                  continue
+              address = change["address"]
+              actions = change["change"]["actions"]
+
+              if change["type"] not in allowed_types:
+                  raise SystemExit("Unexpected resource type: " + address)
+
+              if actions == ["no-op"]:
+                  continue
+
+              if change["change"].get("importing"):
+                  raise SystemExit("Imports require separate ownership review: " + address)
+
+              if operation == "ecr-bootstrap":
+                  if address != "module.ecr.aws_ecr_repository.this":
+                      raise SystemExit("Unexpected ECR bootstrap change: " + address)
+              elif operation == "certificate-bootstrap":
+                  if address != "aws_acm_certificate.this":
+                      raise SystemExit("Unexpected certificate bootstrap change: " + address)
+
+              if "delete" in actions:
+                  task_replacement = (
+                      operation == "deploy"
+                      and address == "module.ecs.aws_ecs_task_definition.this"
+                      and "create" in actions
+                  )
+                  if not task_replacement:
+                      raise SystemExit("Destructive deployment change requires review: " + address)
+
+              print(address, actions)
+
+          print("Plan scope checks passed; operator review is still required.")
+          PY
+
+      - name: Store versioned plan privately
+        id: store
+        run: |
+          set -euo pipefail
+          plan_key="ecs-v1/dev/plans/$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT/deployment.tfplan"
+          plan_sha256="$(sha256sum terraform/deployment.tfplan | cut -d ' ' -f 1)"
+
+          aws s3api put-object \
+            --bucket "$PLAN_BUCKET" \
+            --key "$plan_key" \
+            --body terraform/deployment.tfplan \
+            --server-side-encryption AES256 \
+            --output json > "$RUNNER_TEMP/plan-upload.json"
+
+          plan_version="$(jq -er '.VersionId | select(. != "null" and . != "")' \
+            "$RUNNER_TEMP/plan-upload.json")"
+
+          aws s3api put-object \
+            --bucket "$PLAN_BUCKET" \
+            --key "ecs-v1/dev/plans/$GITHUB_RUN_ID/$GITHUB_RUN_ATTEMPT/deployment-plan.txt" \
+            --body "$RUNNER_TEMP/deployment-plan.txt" \
+            --server-side-encryption AES256 > /dev/null
+
+          {
+            echo "plan_key=$plan_key"
+            echo "plan_version=$plan_version"
+            echo "plan_sha256=$plan_sha256"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## Terraform plan ready for review"
+            echo
+            echo "Operation: $OPERATION"
+            echo "Workflow commit: $GITHUB_SHA"
+            echo "Image tag: $TF_VAR_image_tag"
+            echo "Expected image digest: $EXPECTED_IMAGE_DIGEST"
+            echo "Plan SHA256: $plan_sha256"
+            echo "S3 key: $plan_key"
+            echo "S3 version: $plan_version"
+            echo
+            echo "Review the Create saved plan log before approving apply."
+            echo "Binary plan is stored in private S3. Human-readable plan output and infrastructure metadata appear in this public repository's Actions logs."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    needs: plan
+    if: inputs.apply && needs.plan.result == 'success'
+    runs-on: ubuntu-24.04
+    environment: dev-terraform-apply
+    timeout-minutes: 50
+
+    permissions:
+      contents: read
+      id-token: write
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      PLAN_KEY: ${{ needs.plan.outputs.plan_key }}
+      PLAN_VERSION: ${{ needs.plan.outputs.plan_version }}
+      PLAN_SHA256: ${{ needs.plan.outputs.plan_sha256 }}
+
+    steps:
+      - name: Check out same workflow commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Install same Terraform version
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
+        with:
+          terraform_version: 1.16.2
+          terraform_wrapper: false
+
+      - name: Authenticate approved apply role
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-terraform
+          aws-region: eu-west-2
+          audience: sts.amazonaws.com
+          role-session-name: terraform-apply-${{ github.run_id }}
+          role-duration-seconds: 3600
+          unset-current-credentials: true
+
+      - name: Verify apply identity
+        run: |
+          set -euo pipefail
+          aws sts get-caller-identity --output json > "$RUNNER_TEMP/identity.json"
+          jq -e --arg expected \
+            "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-terraform/terraform-apply-$GITHUB_RUN_ID" \
+            '.Account == "670941257756" and .Arn == $expected' \
+            "$RUNNER_TEMP/identity.json"
+          cat "$RUNNER_TEMP/identity.json"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+
+      - name: Retrieve exact approved plan version
+        run: |
+          set -euo pipefail
+          [[ "$PLAN_KEY" == "ecs-v1/dev/plans/$GITHUB_RUN_ID/"*"/deployment.tfplan" ]]
+          [[ "$PLAN_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          test -n "$PLAN_VERSION"
+          test "$PLAN_VERSION" != "null"
+
+          aws s3api get-object \
+            --bucket "$PLAN_BUCKET" \
+            --key "$PLAN_KEY" \
+            --version-id "$PLAN_VERSION" \
+            terraform/deployment.tfplan > /dev/null
+
+          printf '%s  %s\n' "$PLAN_SHA256" terraform/deployment.tfplan |
+            sha256sum --check
+
+      - name: Initialize backend
+        run: |
+          set -euo pipefail
+          terraform -chdir=terraform init -input=false -lockfile=readonly
+          test "$(terraform -chdir=terraform workspace show)" = "default"
+
+      - name: Recheck image identity before apply
+        if: inputs.operation == 'deploy'
+        run: |
+          set -euo pipefail
+          digest="$(aws ecr describe-images \
+            --repository-name ecs-it-tools \
+            --image-ids "imageTag=$TF_VAR_image_tag" \
+            --query 'imageDetails[0].imageDigest' --output text)"
+          test "$digest" = "$EXPECTED_IMAGE_DIGEST"
+
+      - name: Apply saved plan
+        run: |
+          set -euo pipefail
+          terraform -chdir=terraform apply \
+            -input=false -no-color -lock-timeout=5m \
+            deployment.tfplan
+
+      - name: Verify ECS image and ALB runtime
+        if: inputs.operation == 'deploy'
+        run: python3 scripts/verify_ecs_runtime.py
+
+
+      - name: Verify deployed HTTPS health
+        if: inputs.operation == 'deploy'
+        run: python3 scripts/check_https_health.py
+
+      - name: Verify no remaining infrastructure changes
+        if: inputs.operation == 'deploy'
+        run: |
+          set -euo pipefail
+          terraform -chdir=terraform plan \
+            -input=false -no-color -lock-timeout=5m \
+            -detailed-exitcode \
+            -var-file=environments/dev/terraform.tfvars
+
+      - name: Record successful stage
+        run: |
+          {
+            echo "## Terraform stage completed"
+            echo
+            echo "Operation: $OPERATION"
+            echo "Workflow commit: $GITHUB_SHA"
+            echo "Selected image: $TF_VAR_image_tag"
+            echo "Applied plan SHA256: $PLAN_SHA256"
+            if [[ "$OPERATION" == "deploy" ]]; then
+              echo "HTTPS health gate: PASS"
+              echo "Post-apply no-change plan: PASS"
+            else
+              echo "Bootstrap only; full deployment and runtime checks remain."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
