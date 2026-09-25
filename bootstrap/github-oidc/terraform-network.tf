@@ -1,16 +1,15 @@
 data "aws_iam_policy_document" "github_terraform_network" {
 
-  # EIP deletion may use a saved association ID after NAT deletion.
-  # This permits address disassociation across this account/region,
-  # not only for the application's resources.
+  # After NAT deletion, the saved EIP association may no longer resolve.
+  # Run 36129168122's decoded authorization request used this generic ARN.
+  # Allows only DisassociateAddress across this account/region.
   statement {
     sid     = "DisassociateRegionalElasticAddresses"
     effect  = "Allow"
     actions = ["ec2:DisassociateAddress"]
 
     resources = [
-      "arn:aws:ec2:eu-west-2:670941257756:elastic-ip/*",
-      "arn:aws:ec2:eu-west-2:670941257756:network-interface/*",
+      "arn:aws:ec2:eu-west-2:670941257756:*/*",
     ]
 
     condition {
