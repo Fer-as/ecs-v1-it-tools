@@ -1,0 +1,140 @@
+name: Verify original destroy cleanup
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+concurrency:
+  group: terraform-application-dev
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.repository == 'Fer-as/ecs-v1-it-tools' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment: dev
+    timeout-minutes: 35
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        shell: bash
+    env:
+      AWS_REGION: eu-west-2
+      AWS_PAGER: ''
+      TF_IN_AUTOMATION: 'true'
+      TF_INPUT: 'false'
+      TF_WORKSPACE: default
+      TF_VAR_image_tag: 119d285b15ba4ec4f4dfd5f8d12d90cf5c4d9ecc
+      PLAN_BUCKET: feras-ecs-it-tools-tfstate-670941257756
+      PLAN_KEY: ecs-v1/dev/plans/36269051826/1/destroy.tfplan
+      PLAN_VERSION: g_pQkIpHQNCb57dmc9olKfueIskuelLw
+      PLAN_SHA256: aa6b5497978de8d61442ba5b846feb5ebe78740fa9546c22c84449d30313c86c
+
+    steps:
+      - name: Check out verification code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Verify original run and download its logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          api="https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/36269051826"
+          curl --fail --silent --show-error \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'Accept: application/vnd.github+json' \
+            "$api/attempts/1" > "$RUNNER_TEMP/original-run.json"
+          jq -e '.id == 36269051826 and .run_attempt == 1 and .head_sha == "119d285b15ba4ec4f4dfd5f8d12d90cf5c4d9ecc" and .status == "completed" and .conclusion == "failure"' \
+            "$RUNNER_TEMP/original-run.json"
+          status="$(curl --silent --show-error --max-redirs 0 \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'Accept: application/vnd.github+json' \
+            --dump-header "$RUNNER_TEMP/log-headers.txt" \
+            --output /dev/null --write-out '%{http_code}' "$api/attempts/1/logs")"
+          test "$status" = 302
+          log_url="$(sed -n 's/^[Ll]ocation: //p' "$RUNNER_TEMP/log-headers.txt" | tr -d '\r' | tail -n 1)"
+          [[ "$log_url" == https://* ]]
+          curl --fail --silent --show-error "$log_url" > "$RUNNER_TEMP/original-logs.zip"
+          unzip -tq "$RUNNER_TEMP/original-logs.zip"
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
+        with:
+          terraform_version: 1.16.2
+          terraform_wrapper: false
+
+      - name: Authenticate read-only planning role
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::670941257756:role/ecs-it-tools-github-terraform-plan
+          aws-region: eu-west-2
+          audience: sts.amazonaws.com
+          role-session-name: destroy-recovery-${{ github.run_id }}
+          role-duration-seconds: 1800
+          unset-current-credentials: true
+
+      - name: Verify planning identity
+        run: |
+          set -euo pipefail
+          aws sts get-caller-identity --output json > "$RUNNER_TEMP/identity.json"
+          jq -e --arg expected \
+            "arn:aws:sts::670941257756:assumed-role/ecs-it-tools-github-terraform-plan/destroy-recovery-$GITHUB_RUN_ID" \
+            '.Account == "670941257756" and .Arn == $expected' \
+            "$RUNNER_TEMP/identity.json"
+
+      - name: Read original saved plan without applying it
+        run: |
+          set -euo pipefail
+          aws s3api get-object \
+            --bucket "$PLAN_BUCKET" --key "$PLAN_KEY" \
+            "$RUNNER_TEMP/original-destroy.tfplan" \
+            > "$RUNNER_TEMP/original-plan-object.json"
+          jq -e --arg version "$PLAN_VERSION" '.VersionId == $version' \
+            "$RUNNER_TEMP/original-plan-object.json"
+          printf '%s  %s\n' "$PLAN_SHA256" "$RUNNER_TEMP/original-destroy.tfplan" | sha256sum --check
+          terraform -chdir=terraform init -input=false -lockfile=readonly
+          test "$(terraform -chdir=terraform workspace show)" = default
+          terraform -chdir=terraform show -json "$RUNNER_TEMP/original-destroy.tfplan" \
+            > "$RUNNER_TEMP/original-destroy-plan.json"
+          python3 scripts/check_destroy_plan.py "$RUNNER_TEMP/original-destroy-plan.json" \
+            | tee "$RUNNER_TEMP/original-scope.txt"
+          grep -Fx 'Destroy scope PASS: 33 deletes; no creates or updates.' \
+            "$RUNNER_TEMP/original-scope.txt"
+
+      - name: Probe original 33 resources and retained application foundations
+        run: |
+          set -euo pipefail
+          python3 scripts/verify_destroy_recovery.py \
+            "$RUNNER_TEMP/original-destroy-plan.json" "$RUNNER_TEMP/original-logs.zip"
+
+      - name: Verify no remaining destroy actions
+        run: |
+          set -euo pipefail
+          terraform -chdir=terraform plan \
+            -destroy -input=false -no-color -lock-timeout=5m \
+            -detailed-exitcode -var-file=environments/dev/terraform.tfvars
+          echo 'PASS: fresh destroy plan has no remaining actions.'
+
+      - name: Record recovery verification boundaries
+        run: |
+          {
+            echo '## Original destroy: later read-only verification'
+            echo
+            echo 'Original run: https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36269051826'
+            echo 'Original apply: 33 destroyed; original cleanup job failed on NAT CLI option.'
+            echo "Original plan key: $PLAN_KEY"
+            echo "Original plan version: $PLAN_VERSION"
+            echo "Original plan SHA256: $PLAN_SHA256"
+            echo 'Original 33 approved resource probes: PASS'
+            echo 'Application state, DNS, retained hosted zone and state-object checks: PASS'
+            echo 'Unrelated DNS comparison baseline: original plan-job inspection, not lost pre-apply snapshot.'
+            echo 'Fresh no-change destroy plan: PASS'
+            echo 'Bucket versioning/history and separate OIDC/bootstrap live checks require independent read-only evidence.'
+          } >> "$GITHUB_STEP_SUMMARY"

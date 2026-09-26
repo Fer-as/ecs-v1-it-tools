@@ -8,10 +8,12 @@ import subprocess
 import sys
 import unittest
 from unittest.mock import patch
+from zipfile import ZipFile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import check_destroy_plan as guard
 import verify_destroy_cleanup as cleanup
+import verify_destroy_recovery as recovery
 
 SHA = "b2da1c81729398b7e792b97401f7fadde64471a9"
 
@@ -126,8 +128,58 @@ class CleanupTests(unittest.TestCase):
     def test_nat_deleted_tombstone_and_active(self):
         item = {"type": "aws_nat_gateway", "change": {"before": {"id": "nat-id"}}}
         for state, expected in [("available", False), ("deleting", False), ("deleted", True)]:
-            with patch.object(cleanup, "aws", return_value={"NatGateways": [{"State": state}]}):
+            with patch.object(cleanup, "aws", return_value={"NatGateways": [{"State": state}]}) as aws_call:
                 self.assertEqual(cleanup.removed(item), expected)
+                aws_call.assert_called_once_with(
+                    "ec2", "describe-nat-gateways", "--filter",
+                    "Name=nat-gateway-id,Values=nat-id")
+
+    def test_eip_keeps_plural_filters(self):
+        item = {"type": "aws_eip", "change": {"before": {"id": "eipalloc-id"}}}
+        with patch.object(cleanup, "aws", return_value={"Addresses": []}) as aws_call:
+            self.assertTrue(cleanup.removed(item))
+            aws_call.assert_called_once_with(
+                "ec2", "describe-addresses", "--filters",
+                "Name=allocation-id,Values=eipalloc-id")
+
+    def test_recovery_dns_baseline_comes_from_original_log(self):
+        records = [
+            {"Name": "feras-dev.co.uk.", "Type": "NS"},
+            {"Name": guard.APP_RECORD + ".", "Type": "A"},
+            {"Name": guard.VALIDATION_RECORD + ".", "Type": "CNAME"},
+        ]
+        def write_log(archive):
+            with ZipFile(archive, "w") as output:
+                log = "\n".join(
+                    "2026-09-26T12:00:00Z " + line
+                    for line in json.dumps({"ResourceRecordSets": records}, indent=2).splitlines()
+                )
+                output.writestr(recovery.DNS_LOG, log)
+        archive = io.BytesIO()
+        write_log(archive)
+        self.assertEqual(recovery.original_dns_records(archive), records)
+        records.pop()
+        archive = io.BytesIO()
+        write_log(archive)
+        with self.assertRaisesRegex(SystemExit, "lacks application records"):
+            recovery.original_dns_records(archive)
+
+    def test_recovery_preapply_metadata_requires_original_log(self):
+        capture = {"state_before": {"VersionId": recovery.ORIGINAL_STATE_VERSION,
+                                    "ServerSideEncryption": "AES256"},
+                   "ecr_images_before_apply": recovery.ORIGINAL_ECR_IMAGES}
+        archive = io.BytesIO()
+        with ZipFile(archive, "w") as output:
+            output.writestr(recovery.PREAPPLY_LOG,
+                            "2026-09-26T12:00:00Z " + json.dumps(capture))
+        self.assertEqual(recovery.original_preapply_baseline(archive), capture)
+        capture["ecr_images_before_apply"] = 0
+        archive = io.BytesIO()
+        with ZipFile(archive, "w") as output:
+            output.writestr(recovery.PREAPPLY_LOG,
+                            "2026-09-26T12:00:00Z " + json.dumps(capture))
+        with self.assertRaisesRegex(SystemExit, "ECR image count mismatch"):
+            recovery.original_preapply_baseline(archive)
 
     def test_state_metadata_fail_closed(self):
         for response in [{"VersionId": "null", "ServerSideEncryption": "AES256"},

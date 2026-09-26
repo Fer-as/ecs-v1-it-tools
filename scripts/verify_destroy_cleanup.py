@@ -81,7 +81,8 @@ def removed(item):
     }
     if kind in ec2:
         operation, field, key = ec2[kind]
-        rows = aws("ec2", operation, "--filters", f"Name={field},Values={v['id']}")[key]
+        filter_option = "--filter" if kind == "aws_nat_gateway" else "--filters"
+        rows = aws("ec2", operation, filter_option, f"Name={field},Values={v['id']}")[key]
         if kind == "aws_nat_gateway":
             return all(r["State"] == "deleted" for r in rows)
         return not rows
