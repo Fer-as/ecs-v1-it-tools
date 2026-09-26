@@ -1,0 +1,161 @@
+name: Verify HTTPS health gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Controlled 503 fixture or live healthy recovery
+        type: choice
+        required: true
+        options:
+          - healthy
+          - unhealthy
+        default: healthy
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: github.repository == 'Fer-as/ecs-v1-it-tools' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - name: Check out exact workflow commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Record verification scope
+        env:
+          MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          case "$MODE" in
+            healthy|unhealthy) ;;
+            *) echo 'Unsupported verification mode' >&2; exit 2 ;;
+          esac
+          {
+            echo '## Unchanged production HTTPS gate verification'
+            echo "Mode: $MODE"
+            echo "Workflow/source commit: $GITHUB_SHA"
+            echo 'Unhealthy mode is a runner-local 503 fixture, not an ECS outage or failed ECS deployment.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Reject controlled HTTPS 503 with production gate
+        if: inputs.mode == 'unhealthy'
+        shell: bash
+        run: |
+          set -euo pipefail
+          fixture_dir="$(mktemp -d "$RUNNER_TEMP/m4-health-fixture.XXXXXX")"
+          cleanup() {
+            result=$?
+            if [[ -f "$fixture_dir/server.pid" ]]; then
+              sudo -n kill "$(sudo -n cat "$fixture_dir/server.pid")" 2>/dev/null || true
+            fi
+            if [[ -f "$fixture_dir/server.log" ]]; then
+              cat "$fixture_dir/server.log" || true
+            fi
+            exit "$result"
+          }
+          trap cleanup EXIT
+          umask 077
+
+          openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 1 \
+            -subj '/CN=M4 runner-local test CA' \
+            -addext 'basicConstraints=critical,CA:TRUE' \
+            -addext 'keyUsage=critical,keyCertSign,cRLSign' \
+            -keyout "$fixture_dir/ca.key" -out "$fixture_dir/ca.crt" \
+            >/dev/null 2>&1
+          openssl req -newkey rsa:2048 -nodes -sha256 \
+            -subj '/CN=tm.feras-dev.co.uk' \
+            -keyout "$fixture_dir/server.key" -out "$fixture_dir/server.csr" \
+            >/dev/null 2>&1
+          cat > "$fixture_dir/server.ext" <<'EXT'
+          subjectAltName=DNS:tm.feras-dev.co.uk
+          basicConstraints=critical,CA:FALSE
+          keyUsage=critical,digitalSignature,keyEncipherment
+          extendedKeyUsage=serverAuth
+          EXT
+          openssl x509 -req -in "$fixture_dir/server.csr" \
+            -CA "$fixture_dir/ca.crt" -CAkey "$fixture_dir/ca.key" \
+            -CAcreateserial -days 1 -sha256 -extfile "$fixture_dir/server.ext" \
+            -out "$fixture_dir/server.crt" >/dev/null 2>&1
+
+          cat > "$fixture_dir/server.py" <<'PY'
+          import http.server
+          import ssl
+          import sys
+
+          class Handler(http.server.BaseHTTPRequestHandler):
+              def do_GET(self):
+                  if self.path != "/health":
+                      self.send_error(404)
+                      return
+                  body = b'{"status":"unavailable"}'
+                  self.send_response(503)
+                  self.send_header("Content-Type", "application/json")
+                  self.send_header("Content-Length", str(len(body)))
+                  self.end_headers()
+                  self.wfile.write(body)
+                  print("fixture served HTTPS /health: 503", flush=True)
+
+          server = http.server.ThreadingHTTPServer(("127.0.0.1", 443), Handler)
+          context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+          context.load_cert_chain(sys.argv[1], sys.argv[2])
+          server.socket = context.wrap_socket(server.socket, server_side=True)
+          server.serve_forever()
+          PY
+
+          sudo -n bash -c 'echo "$$" > "$1/server.pid"; exec python3 "$1/server.py" "$1/server.crt" "$1/server.key"' \
+            _ "$fixture_dir" > "$fixture_dir/server.log" 2>&1 &
+          ready=false
+          for attempt in {1..20}; do
+            if code="$(curl --silent --output /dev/null --write-out '%{http_code}' \
+              --connect-timeout 1 --max-time 2 --noproxy '*' \
+              --resolve tm.feras-dev.co.uk:443:127.0.0.1 \
+              --cacert "$fixture_dir/ca.crt" \
+              https://tm.feras-dev.co.uk/health 2>/dev/null)"; then
+              if [[ "$code" == 503 ]]; then
+                ready=true
+                break
+              fi
+            fi
+            sleep 1
+          done
+          test "$ready" = true
+
+          printf '127.0.0.1 tm.feras-dev.co.uk\n' | sudo -n tee -a /etc/hosts >/dev/null
+          python3 - <<'PY'
+          import socket
+
+          addresses = {
+              item[4][0]
+              for item in socket.getaddrinfo(
+                  "tm.feras-dev.co.uk", 443, type=socket.SOCK_STREAM
+              )
+          }
+          if addresses != {"127.0.0.1"}:
+              raise SystemExit(f"Fixture hostname did not resolve only to loopback: {addresses}")
+          print("Fixture hostname resolves only to 127.0.0.1.")
+          PY
+
+          export SSL_CERT_FILE="$fixture_dir/ca.crt"
+          export no_proxy=tm.feras-dev.co.uk NO_PROXY=tm.feras-dev.co.uk
+          unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy
+          python3 - <<'PY'
+          import os
+          import ssl
+
+          if ssl.get_default_verify_paths().cafile != os.environ["SSL_CERT_FILE"]:
+              raise SystemExit("Python did not select the runner-local CA file.")
+          print("Python default TLS verification trusts the runner-local CA file.")
+          PY
+          echo 'Fixture TLS and HTTP 503 verified; invoking the unchanged production gate.'
+          python3 scripts/check_https_health.py
+
+      - name: Accept live HTTPS health with production gate
+        if: inputs.mode == 'healthy'
+        run: python3 scripts/check_https_health.py
