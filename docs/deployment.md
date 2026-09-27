@@ -1,259 +1,37 @@
 # Terraform deployment and recreation
 
-Status: proposed procedure for review. Terraform application deployment
-has not yet been verified.
+This is the established GitHub Actions procedure for AWS account `670941257756`, region `eu-west-2`, hostname `tm.feras-dev.co.uk`. The final M3 recreation succeeded in [publication run 36272693835](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36272693835) and [deployment run 36273089001](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36273089001). The observations below are dated evidence, not a live availability promise.
 
-Run PowerShell commands from the repository root. Stop after any failed
-command. Review every saved plan before applying it.
+The application Terraform root is `terraform/`, default workspace, S3 backend bucket `feras-ecs-it-tools-tfstate-670941257756`, state key `ecs-v1/dev/terraform.tfstate`. `terraform/backend.tf` sets `encrypt = true` and `use_lockfile = true`. The existing hosted zone `Z01014153ETFBQT2QXXK2`, backend bucket/history, and separate `bootstrap/github-oidc` state are retained foundations. Do not create another hosted zone or migrate this state to complete application deployment.
 
-## 1. Prerequisites and retained resources
+## Reproduction order after an approved clean destroy
 
-- AWS account: 670941257756.
-- Region: eu-west-2.
-- Hostname: tm.feras-dev.co.uk.
-- Existing public hosted zone: Z01014153ETFBQT2QXXK2.
-- Existing backend bucket: feras-ecs-it-tools-tfstate-670941257756.
-- Terraform and AWS provider versions must satisfy versions.tf.
-- Docker must run Linux containers.
-- Resolve blocking Development and Claude review findings before deployment.
+1. Confirm the selected `main` source revision, AWS account/region, retained backend and hosted zone, and current application state. A historical image tag or plan is not proof of current ECR contents.
+2. In **Actions → Terraform deployment → Run workflow**, select branch `main`, `operation: ecr-bootstrap`, `image_tag: <selected full 40-character source SHA>`, `image_digest: blank`, `apply: true`. Review the generated ECR-only saved plan before personally approving `dev-terraform-apply`. This targeted stage creates the repository; it does not publish an image.
+3. In **Actions → Application build and publish → Run workflow**, select `main`. This workflow has no dispatch inputs. It tags the `linux/amd64` image with the exact dispatch commit (`github.sha`), runs container `/health` and HTML smoke checks, pushes to `ecs-it-tools`, and reports the ECR digest. Record the source SHA, immutable tag, digest, platform and run URL. If the source SHA differs from the ECR-bootstrap placeholder, use the actually published SHA and digest for full deployment.
+4. In **Actions → Terraform deployment**, select `main`, `operation: certificate-bootstrap`, the published full `image_tag`, blank `image_digest`, and `apply: true`. Review the certificate-only saved plan and approve its apply gate. This stage does not manually add a DNS record or start the service. Inspect the certificate and existing validation record before the full plan; do not blindly import or request a duplicate certificate.
+5. In **Actions → Terraform deployment**, select `main`, `operation: deploy`, the published full `image_tag`, its exact `sha256:` ECR digest, and `apply: true`. Review the complete plan and retained-resource boundary before approving `dev-terraform-apply`. Terraform creates the validation CNAME, completes ACM validation, then creates the HTTPS listener; `module.alb` consumes `aws_acm_certificate_validation.this.certificate_arn`. The private ECS service starts from the verified ECR image.
+6. Preserve each run URL, workflow/source SHA, plan SHA256, S3 key/version, approval and apply result. Check service steady state, running task image/digest and private networking, ALB target, CloudWatch logs, ACM status/use, HTTPS `/health`, HTTP redirect, browser page and post-apply no-change plan. A plan-only run is not an apply, and apply success alone is not runtime acceptance.
 
-The backend bucket and hosted zone are external prerequisites, not
-application resources managed by this configuration. Preserve both during
-application destroy.
+The deployment workflow checks out its exact dispatch commit, verifies the account and OIDC planning/apply role, runs Terraform 1.16.2 with the committed provider lockfile, stores a binary plan at a unique versioned S3 key, and rechecks its SHA256 and scope after download. The apply job uses `dev-terraform-apply`; `terraform-application-dev` concurrency has `cancel-in-progress: false`. The saved plan contains its input values. Review a changed or stale plan afresh; do not reuse an applied or obsolete plan.
 
-The backend bucket was bootstrapped separately in eu-west-2 with versioning,
-AES256 encryption and all four public-access blocks enabled. It must exist
-before terraform init. If absent, restore or separately bootstrap it and
-inspect any existing state before proceeding; do not silently switch to
-empty local state.
+### Validation-record ownership
 
-Verify credentials and retained resources:
+Before a full apply, compare the certificate's current DNS validation name,
+type and value with the actual hosted-zone record and Terraform state. If a
+matching record already exists outside state, stop and review a focused import
+of **that record only** into `aws_route53_record.certificate_validation`; do
+not import the hosted zone or enable blind overwrite. If the record is absent,
+the normal full plan creates it. If it differs, resolve the discrepancy before
+approving the plan. The M3 recreation followed the absent-record path.
 
-```powershell
-aws sts get-caller-identity --no-cli-pager
-aws s3api get-bucket-location --bucket feras-ecs-it-tools-tfstate-670941257756 --no-cli-pager
-aws s3api get-bucket-versioning --bucket feras-ecs-it-tools-tfstate-670941257756 --no-cli-pager
-aws s3api get-public-access-block --bucket feras-ecs-it-tools-tfstate-670941257756 --no-cli-pager
-aws s3api get-bucket-encryption --bucket feras-ecs-it-tools-tfstate-670941257756 --no-cli-pager
-aws route53 get-hosted-zone --id Z01014153ETFBQT2QXXK2 --no-cli-pager
-aws route53 list-resource-record-sets --hosted-zone-id Z01014153ETFBQT2QXXK2 --no-cli-pager
-```
+## Final M3 identity and observed result
 
-Use aws login if the session has expired. Confirm the expected account.
+- Source/image tag: `f91e4e9c942a94f0c37388acd6948366e80afefa`.
+- ECR/task digest: `sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be`.
+- Full deployment plan: `ecs-v1/dev/plans/36273089001/1/deployment.tfplan`; S3 version `icaDnV68cy4OukCBWRX4ink7orwHYi1P`; SHA256 `91a7dcadf2bb3eba5e02391c0672af0a0fd8fd7f62969370e4e0fd8578332785`.
+- [Final runtime capture](evidence/terraform/2026-09-26-m3-final-aws-runtime.txt): service 1 desired/1 running/0 pending; task on private subnet with public IP assignment disabled; ALB target Healthy; ACM Issued and in use; ECR tag/digest recorded. ECS task `healthStatus` was `UNKNOWN`, not `HEALTHY`.
+- [HTTP capture](evidence/terraform/2026-09-26-m3-final-http.txt): HTTPS `/health` returned 200, `application/json`, `{"status":"ok"}`; HTTP redirected 301; root page returned HTML.
+- [Workflow metadata](evidence/terraform/2026-09-26-m3-workflow-identities.json): the unmasked `Verify no remaining infrastructure changes` step concluded success. Its command is `terraform plan -detailed-exitcode`; full step output was not downloaded.
 
-## 2. Select the image once
-
-After committing the reviewed implementation, record its full commit SHA.
-Build from that revision with no tracked application modifications.
-Inspect untracked files under app/ because they can enter the Docker context.
-
-Create the ignored file terraform/environments/dev/image.tfvars:
-
-```hcl
-image_tag = "<full-reviewed-commit-SHA>"
-```
-
-Replace the placeholder. Retain this file through destroy and recreation.
-Do not update it automatically whenever HEAD changes.
-
-All plan commands below explicitly select the environment and image files.
-Saved plans capture those inputs; their apply commands use the saved plan.
-
-```powershell
-terraform -chdir=terraform init -input=false
-terraform -chdir=terraform fmt -recursive -check
-terraform -chdir=terraform validate
-terraform -chdir=terraform state list
-```
-
-If image.tfvars is lost, recover the selected image tag from recorded
-deployment evidence or the task definition in Terraform state, then
-recreate the file. Do not substitute the current HEAD automatically.
-Alternatively, omit the missing image-file argument and supply
--var="image_tag=<recovered-SHA>" alongside the environment input file.
-
-Inspect existing state before bootstrap. Do not assume it is empty.
-
-## 3. Bootstrap ECR
-
-The first exceptional targeted operation creates only the ECR module and
-any dependencies shown in its plan.
-
-```powershell
-terraform -chdir=terraform plan -input=false -var-file=environments/dev/terraform.tfvars -var-file=environments/dev/image.tfvars -target=module.ecr -out=ecr-bootstrap.tfplan
-terraform -chdir=terraform show ecr-bootstrap.tfplan
-```
-
-After reviewing that scope:
-
-```powershell
-terraform -chdir=terraform apply ecr-bootstrap.tfplan
-```
-
-Targeting is for bootstrap, not routine deployment. A full plan is required
-later.
-
-## 4. Build, push and verify the image
-
-Read the selected commit-SHA tag directly from image.tfvars.
-
-```powershell
-$imageTag = $null
-$imageInputPath = ".\terraform\environments\dev\image.tfvars"
-$imageInputText = Get-Content -LiteralPath $imageInputPath -Raw -ErrorAction Stop
-$imageTagMatches = [regex]::Matches(
-    $imageInputText,
-    '(?m)^\s*image_tag\s*=\s*"([0-9a-f]{40})"\s*(?:#.*)?$'
-)
-
-if ($imageTagMatches.Count -ne 1) {
-    throw "Expected exactly one image_tag assignment containing the full reviewed commit SHA."
-}
-
-$imageTag = $imageTagMatches[0].Groups[1].Value
-Write-Output "Selected image tag: $imageTag"
-$repositoryUri = terraform -chdir=terraform output -raw ecr_repository_url
-if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($repositoryUri)) {
-    throw "ECR output unavailable. Inspect: terraform -chdir=terraform state show module.ecr.aws_ecr_repository.this"
-}
-$repositoryUri = $repositoryUri.Trim()
-$imageUri = "${repositoryUri}:${imageTag}"
-
-docker build --platform linux/amd64 --tag $imageUri .\app
-docker image inspect $imageUri --format 'OS={{.Os}} Architecture={{.Architecture}} User={{.Config.User}}'
-
-aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 670941257756.dkr.ecr.eu-west-2.amazonaws.com
-docker push $imageUri
-
-docker buildx imagetools inspect $imageUri
-aws ecr describe-images --repository-name ecs-it-tools --image-ids "imageTag=$imageTag" --region eu-west-2 --no-cli-pager
-aws ecr describe-repositories --repository-names ecs-it-tools --region eu-west-2 --no-cli-pager
-```
-
-Confirm linux/amd64 support and repository IMMUTABLE status. Record the tag,
-registry digest and platform-manifest digest. An attestation manifest can
-appear as unknown/unknown; it is not the runnable platform.
-
-If the immutable tag already exists, inspect its identity before reuse.
-Do not delete or overwrite it to bypass an identity mismatch.
-
-The deleted ClickOps repository and its digest are historical evidence.
-
-## 5. Bootstrap the certificate and reconcile DNS ownership
-
-A second exceptional targeted operation creates the certificate request
-without starting the ALB or ECS service:
-
-```powershell
-terraform -chdir=terraform plan -input=false -var-file=environments/dev/terraform.tfvars -var-file=environments/dev/image.tfvars -target=aws_acm_certificate.this -out=certificate-bootstrap.tfplan
-terraform -chdir=terraform show certificate-bootstrap.tfplan
-```
-
-After scope review:
-
-```powershell
-terraform -chdir=terraform apply certificate-bootstrap.tfplan
-terraform -chdir=terraform state show aws_acm_certificate.this
-```
-
-Use the resulting ARN with aws acm describe-certificate in eu-west-2.
-Compare its DNS validation name, type and value against the actual zone.
-
-The retained ClickOps record is:
-
-- Name: _acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk.
-- Type: CNAME
-- Value: _c390bee1e39386102cad4f0e08909b99.wzccmgtwzk.acm-validations.aws.
-- TTL: 300
-
-If this record matches the new certificate and is not already in Terraform
-state, create a temporary terraform/validation-import.tf containing:
-
-```hcl
-import {
-  to = aws_route53_record.certificate_validation["tm.feras-dev.co.uk"]
-  id = "Z01014153ETFBQT2QXXK2__acc09de86e15890a1ed86e2e77a7c5dc.tm.feras-dev.co.uk_CNAME"
-}
-```
-
-This imports the record, not the hosted zone. Its subsequent lifecycle,
-including deletion during application destroy, becomes Terraform-managed.
-
-If the record is absent, omit the import and let Terraform create it.
-If the new certificate requires a different record, stop and reconcile the
-difference explicitly. Do not enable blind overwriting.
-
-## 6. Full deployment
-
-```powershell
-terraform -chdir=terraform plan -input=false -var-file=environments/dev/terraform.tfvars -var-file=environments/dev/image.tfvars -out=dev.tfplan
-terraform -chdir=terraform show dev.tfplan
-```
-
-Review resource changes, any CNAME import, account/region, private networking
-and image tag. The plan must not create or replace the retained hosted zone
-or backend bucket.
-
-The configured dependency order is:
-
-- Validation CNAME -> certificate validation -> HTTPS listener.
-- Completed VPC routing and ALB module -> ECS module.
-- Task definition and task security-group rules -> ECS service.
-
-After plan review:
-
-```powershell
-terraform -chdir=terraform apply dev.tfplan
-```
-
-After confirming the CNAME import succeeded, remove the temporary import
-file. It must not remain to re-import a deleted record after destroy.
-
-Run a fresh full plan with both input files to inspect remaining changes.
-
-## 7. Runtime acceptance
-
-Capture and associate evidence with the deployed commit and image:
-
-- Service desired/running counts and completed deployment.
-- Running task definition, image digest and private IP.
-- ALB target IP/port matching the task and Healthy status.
-- CloudWatch startup and request logs.
-- HTTPS /health returning HTTP 200 and {"status":"ok"}.
-- HTTP redirect to HTTPS and browser rendering.
-
-An image-index digest and its platform-manifest digest may differ; reconcile
-the running digest against the recorded manifest structure.
-
-Apply success alone does not prove these runtime criteria.
-
-Separately verify backend state writes, actual lock contention and
-Terraform ECR deletion with images. Do not infer them from configuration.
-
-## 8. Destroy and recreate
-
-Preserve runtime evidence and the image input file before destroy.
-force_delete=true permits Terraform to delete ECR images with the repository.
-
-```powershell
-terraform -chdir=terraform plan -destroy -input=false -var-file=environments/dev/terraform.tfvars -var-file=environments/dev/image.tfvars -out=destroy.tfplan
-terraform -chdir=terraform show destroy.tfplan
-```
-
-Review the deletion scope, then:
-
-```powershell
-terraform -chdir=terraform apply destroy.tfplan
-```
-
-Verify AWS cleanup and retained backend/hosted zone independently.
-Preserve the state bucket and state history.
-
-For recreation, repeat ECR bootstrap, build/push and image verification,
-then certificate bootstrap and the full deployment. Recheck DNS: normally
-the Terraform-managed validation CNAME will have been removed by destroy,
-so no import is needed.
-
-Rebuilding the same source SHA can produce a different digest when base
-image tags or build inputs change. Record the newly verified digest each
-time; a source-SHA tag alone does not establish identical image bytes.
+For deletion scope and the original M2 verifier failure, use the [destroy runbook](terraform-destroy-workflow.md) and [recovery record](m2-destroy-verification-recovery.md). The [evidence index](evidence/README.md) distinguishes all lifecycle revisions and local artifacts.

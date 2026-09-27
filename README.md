@@ -1,154 +1,108 @@
-# ECS V1 - IT Tools Deployment
+# ECS v1 — IT Tools
 
-This project packages [IT Tools](https://github.com/CorentinTh/it-tools)
-for deployment to AWS using Docker, ECS Fargate and Terraform.
+## Project overview
 
-## Current status
+This project deploys the existing [IT Tools](https://github.com/CorentinTh/it-tools) Vue/Vite application to AWS ECS Fargate in `eu-west-2` (account `670941257756`). The public endpoint is [https://tm.feras-dev.co.uk](https://tm.feras-dev.co.uk). Nginx serves the built static application as a non-root user on port 8080; `/health` returns JSON `{"status":"ok"}`.
 
-As of 21 September 2026:
+## Architecture diagram
 
-- Local Docker deployment was verified on port 8080, including `/health`.
-- Manual ClickOps deployment demonstrated a running Fargate task,
-  a healthy ALB target, CloudWatch logs, HTTPS health and HTTP redirection.
-- The manual application infrastructure was subsequently removed.
-  Its task definition became unavailable after deletion was requested.
-- Terraform ECS service, ACM/DNS and ALB integration is being prepared
-  and locally validated. Terraform application deployment is not yet verified.
-- Project GitHub Actions pipelines and OIDC authentication remain outstanding.
-  Workflows inside `app/.github/` are upstream application files.
-- The application is currently offline.
+See the [architecture diagram](docs/diagrams/architecture.md). Modular Terraform in `terraform/` creates a custom VPC with two public and two private subnets, an internet gateway, one NAT gateway/EIP, a public Application Load Balancer (ALB), and an ECS Fargate service with private tasks and no public IPs. The ALB security group is the only ingress source for the task security group. Route 53 points `tm.feras-dev.co.uk` to the ALB; Terraform creates and DNS-validates the ACM certificate before creating the HTTPS listener. HTTP redirects to HTTPS. ECR stores immutable source-SHA-tagged images, and CloudWatch receives container logs.
 
-## Intended architecture
+The separately bootstrapped S3 backend stores application state at `ecs-v1/dev/terraform.tfstate` with native S3 locking (`use_lockfile = true`). Its bucket and version history, the existing Route 53 hosted zone, and the separate GitHub OIDC bootstrap state survive application destroy. GitHub Actions assumes scoped AWS roles through OIDC; the workflows use no static AWS access keys. One task and one NAT gateway are configured, so this is not a fully redundant deployment.
 
-The application runs in private subnets across two configured Availability
-Zones in eu-west-2. The current service configuration requests one task.
+```mermaid
+flowchart LR
+    User[Browser] --> DNS[Route 53 A alias<br/>tm.feras-dev.co.uk]
+    DNS --> ALB
+    GitHub[GitHub Actions<br/>publish / deploy / destroy] -. OIDC token .-> OIDC[GitHub OIDC provider<br/>separate bootstrap]
+    OIDC -. trust .-> Roles[Scoped GitHub IAM roles<br/>separate bootstrap]
+    GitHub -. assumes .-> Roles
+    Roles -. publishes image .-> ECR[ECR<br/>immutable SHA tag]
+    Roles -. Terraform saved plan / native lock .-> S3[S3 backend<br/>versioned state + lockfile]
+    Roles -. provisions application .-> ALB
+    ACM[ACM certificate<br/>DNS validated] -. certificate .-> ALB
+    DNS -. validation CNAME .-> ACM
 
-- Public Application Load Balancer with HTTP-to-HTTPS redirection.
-- ACM certificate for `tm.feras-dev.co.uk`.
-- Route 53 A alias pointing to the ALB.
-- Fargate task using Linux/X86_64, port 8080 and a non-root container user.
-- Task security group permits port 8080 from the ALB security group.
-- NAT gateway provides outbound connectivity for private tasks.
-- ECR repository uses immutable image tags.
-- CloudWatch container logs have seven-day retention.
+    subgraph VPC[Application-managed VPC]
+      IGW[Internet gateway]
+      subgraph Public[Two public subnets]
+        ALB[Public ALB<br/>HTTP 301 → HTTPS listener<br/>target group /health]
+        NAT[NAT gateway + EIP<br/>in one public subnet]
+      end
+      subgraph Private[Two private subnets]
+        ECS[ECS Fargate service<br/>private task, no public IP<br/>nginx :8080]
+      end
+      IGW --- ALB
+      IGW --- NAT
+      ALB -->|ALB SG → task SG, port 8080| ECS
+      ECS -. outbound .-> NAT
+    end
 
-The single task and single NAT gateway are not a fully redundant deployment.
+    ECR -. pulled image .-> ECS
+    ECS -. application logs .-> CW[CloudWatch Logs]
+```
 
-## Local Docker execution
+## Local setup
 
-Run from the repository root:
+The upstream application source is in `app/`. From PowerShell, with Node 20 and Corepack available:
+
+```powershell
+cd app
+corepack enable
+corepack pnpm install --frozen-lockfile
+corepack pnpm dev
+```
+
+The `dev` script starts Vite. These are reproduction instructions; no dated, contemporaneous pre-Docker local execution capture was found in this repository. The source manifest specifies pnpm 9.11.0. Return to the repository root for the container commands:
 
 ```powershell
 docker build --platform linux/amd64 -t ecs-it-tools ./app
 docker run --rm -p 8080:8080 ecs-it-tools
-```
-
-In another terminal:
-
-```powershell
 curl.exe -i http://localhost:8080/health
 ```
 
-Expected health response: HTTP 200 with `{"status":"ok"}`.
+The multi-stage Dockerfile builds with Node/pnpm and runs nginx as `appuser` on port 8080. Repository history introduced the custom deployment Dockerfile in commit `29090f5` and later changed its nginx port in `7ad10e6`; the IT Tools application source is upstream. [Local container evidence](docs/screenshots/local-container-health.png) is historical Docker evidence, not proof of a pre-Docker run.
 
-Open `http://localhost:8080` to view the application.
-
-## Terraform
-
-Configuration is located in `terraform/`.
-
-- Terraform constraint: `~> 1.16.0`.
-- AWS provider constraint: `~> 6.36.0`.
-- Development account: `670941257756`.
-- Region: `eu-west-2`.
-- Hostname: `tm.feras-dev.co.uk`.
-
-The S3 backend uses the separately bootstrapped bucket
-`feras-ecs-it-tools-tfstate-670941257756`, with native S3 locking configured.
-
-Bucket versioning, encryption and public-access protections were previously
-verified. Remote-state writes and actual lock contention remain unverified.
-
-The existing public hosted zone `Z01014153ETFBQT2QXXK2` is referenced by
-Terraform as a data source. The backend bucket and hosted zone are retained
-outside the application resource lifecycle.
-
-A certificate-validation CNAME remains from ClickOps. Its ownership must
-be explicitly reconciled before the first Terraform deployment.
-
-## Deployment inputs and sequence
-
-Run Terraform commands from the repository root using
-`terraform -chdir=terraform`.
-
-Plan and destroy operations must explicitly select both input files:
+## Project structure
 
 ```text
--var-file=environments/dev/terraform.tfvars
--var-file=environments/dev/image.tfvars
+app/                 Application source, Dockerfile and nginx configuration
+terraform/           Application Terraform root and environment inputs
+terraform/modules/   VPC, ECR, ALB and ECS modules
+.github/workflows/   Publication, deployment, destroy and verification workflows
+docs/diagrams/       Architecture source
+docs/evidence/        Dated run and runtime records
+docs/screenshots/     Browser, pipeline and AWS console captures
+README.md            Project overview and reproduction entry point
 ```
 
-The same inputs must be selected when applying without a saved plan.
-When applying a saved plan, use the reviewed plan file; its inputs are
-already captured.
+## Deployment and pipelines
 
-The local, Git-ignored `image.tfvars` supplies an explicit image tag:
+The three required root workflows are [application publication](.github/workflows/application.yml), [Terraform deployment](.github/workflows/terraform-deploy.yml), and [Terraform destroy](.github/workflows/terraform-destroy.yml). Publication builds/tests `linux/amd64` from the dispatch commit, pushes to ECR, and records the immutable tag and digest. Deployment supports `ecr-bootstrap`, `certificate-bootstrap`, and full `deploy`; it verifies explicit image identity, stores a versioned saved plan in private S3, checks its SHA256 and scope, then requires the `dev-terraform-apply` approval gate for apply. The full apply checks ECS/ALB runtime, HTTPS `/health`, and a subsequent no-change plan. Destroy uses a separate reviewed delete-only saved plan and the same human approval gate.
 
-```hcl
-image_tag = "<reviewed-implementation-commit-SHA>"
-```
+To reproduce after an approved clean destroy: verify account/region and retained foundations; bootstrap ECR; publish an image from an explicitly selected full source SHA and record its new digest; bootstrap ACM; review and apply the full deployment plan with that tag and digest; then verify service/target, logs, HTTPS health, HTTP redirect, browser rendering, and no-change plan. Each saved plan needs its own review and approval. See the [deployment runbook](docs/deployment.md) and [destroy runbook](docs/terraform-destroy-workflow.md).
 
-Replace the placeholder with the selected commit SHA. Retain this file
-through destroy; do not automatically change the tag to a later HEAD.
+The final M3 deployment uses source/image tag `f91e4e9c942a94f0c37388acd6948366e80afefa` and ECR/task digest `sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be`. Captured service state was 1 desired, 1 running, 0 pending. The ALB target was Healthy. HTTPS `/health` independently returned HTTP 200 with the expected JSON. ECS task `healthStatus` was **UNKNOWN**, so this is not a claim of container health `HEALTHY`. The M3 deployment run's unmasked post-apply no-change step passed. These are dated observations, not a guarantee of present availability.
 
-Required deployment order:
+The [M4 gate evidence](docs/evidence/m4-health-gate.md) shows the unchanged production script rejecting a runner-local HTTPS 503 fixture in a failed Actions run, followed by a successful live healthy run. It was not an ECS outage or failed deployment.
 
-1. Verify AWS identity, retained backend and hosted zone.
-2. Review and provision the ECR bootstrap scope through Terraform.
-3. Build and push the selected tagged image to that repository.
-4. Verify the remote image supports linux/amd64 and record its digest.
-5. Reconcile the retained DNS-validation record with Terraform ownership.
-6. Review the full plan. Certificate validation must precede HTTPS
-   listener creation, and the service must start using the verified image.
-7. Verify running task image identity, service stability, target health,
-   container logs, HTTPS `/health`, HTTP redirection and browser rendering.
+## Demo and pipeline evidence
 
-The earlier ClickOps digest is historical evidence. It does not establish
-the identity or availability of a future Terraform deployment image.
+The browser capture visibly shows the final HTTPS URL; the linked records give the run and image identities. The green destroy screenshot is a **plan-only** run, not the destructive apply.
 
-After destroy, recreate ECR and push/verify the selected image before
-recreating the service. Destroying the application is intended to remove
-Terraform-managed application DNS records and the certificate while
-preserving the externally managed hosted zone and backend bucket.
+![IT Tools application with https://tm.feras-dev.co.uk visible in the browser](docs/screenshots/2026-09-26-m3-final-it-tools-browser.png)
 
-The [deployment runbook](docs/deployment.md) covers bootstrap, validation-record
-import and recreation. Review it before deployment. Do not perform a full apply solely because validation
-passes.
+| Pipeline evidence | Final screenshot | What it shows |
+| --- | --- | --- |
+| Application publication | [M3 application pipeline](docs/screenshots/2026-09-26-m3-application-pipeline-success.png) | Image build and publication run |
+| Terraform deployment | [M3 deployment pipeline](docs/screenshots/2026-09-26-m3-terraform-deploy-success.png) | Final deployment run |
+| Terraform destroy, plan only | [M2 green plan-only run 36268361308](docs/screenshots/2026-09-26-m2-destroy-plan-only-success.png) | Plan job succeeded; apply was skipped |
+| M2 cleanup recovery | [Verification-only recovery](docs/screenshots/2026-09-26-m2-destroy-recovery-success.png) | Later read-only cleanup verification |
 
-## Evidence
+The later [destructive M2 run 36269051826](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36269051826) applied its approved plan and destroyed 33 resources, including NAT/EIP. Its post-destroy verifier then failed on the NAT CLI option; that original workflow run remained failed. The separate [recovery run 36271972985](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985) passed. [Other final AWS screenshots](docs/evidence/README.md#final-m2m3-screenshots-present-locally) and the post-M4 independent curl capture are in the evidence index.
 
-Manual deployment evidence is stored in:
+## Evidence and limitations
 
-- `docs/evidence/clickops/`
-- `docs/screenshots/`
+The [final evidence index](docs/evidence/README.md) links M1 restoration, the original M2 destroy and later recovery, M3 recreation/runtime, M4 rejection/recovery, all ten final screenshots, and the independent post-M4 HTTP capture. The original M2 destroy apply deleted 33 resources, including NAT/EIP, but its post-destroy verifier failed on an AWS CLI option; a later read-only workflow recovered cleanup evidence. The original run remains failed.
 
-The committed container-log export has a client IP redacted.
-
-Manual deployment evidence does not prove Terraform deployment,
-recreation, state locking or Terraform ECR deletion with images.
-
-## Repository layout
-
-- `app/`: application source and Docker configuration.
-- `terraform/`: infrastructure configuration and modules.
-- `docs/evidence/`: recorded command and log evidence.
-- `docs/screenshots/`: visual evidence.
-- `docs/diagrams/`: architecture diagram location.
-
-## Outstanding work
-
-- Complete review and deployment of the Terraform integration.
-- Verify Terraform destroy/recreation and backend runtime behaviour.
-- Implement required root project pipelines and OIDC.
-- Resolve separate pre-Docker local-execution evidence.
-- Complete submission documentation and evidence review.
+ECR scan status was reported as Complete with **17 Critical, 58 High, 41 Medium, and 3 Low** findings. The image is not vulnerability-free and no security pass is claimed. Vulnerability remediation was not established as a mandatory assignment requirement; the findings remain disclosed for follow-up. Independent final submission acceptance and genuine pre-Docker execution proof are not established by the evidence in this repository.

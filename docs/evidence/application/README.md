@@ -1,5 +1,9 @@
 # Application pipeline evidence — 23 September 2026
 
+Historical snapshot: the pending items below describe this 23 September run.
+For final M1–M4 status and the final M3 publication, see the
+[lifecycle evidence index](../README.md).
+
 Baseline: CT-2026-09-22-02.
 Verification level: Development runtime verification.
 Independent runtime acceptance remains pending.

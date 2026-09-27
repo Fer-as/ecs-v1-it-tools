@@ -1,0 +1,394 @@
+M3 final AWS runtime capture
+Captured UTC: 2026-09-26T22:05:15.5808787Z
+Source/image tag: f91e4e9c942a94f0c37388acd6948366e80afefa
+Expected image digest: sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be
+Deployment run: https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36273089001
+Region: eu-west-2
+
+CHECK: AWS identity
+UTC: 2026-09-26T22:05:16.2542554Z
+COMMAND: aws sts get-caller-identity --region eu-west-2 --output json --no-cli-pager
+{
+    "UserId": "AIDAZYNZXEAOEM7W4NG5O",
+    "Account": "670941257756",
+    "Arn": "arn:aws:iam::670941257756:user/feras-dev"
+}
+EXIT CODE: 0
+
+CHECK: ECS service counts, deployment, network and target
+UTC: 2026-09-26T22:05:17.0390482Z
+COMMAND: aws ecs describe-services --cluster ecs-it-tools-cluster --services ecs-it-tools-service --query services[0].{clusterArn:clusterArn,serviceArn:serviceArn,status:status,desiredCount:desiredCount,runningCount:runningCount,pendingCount:pendingCount,taskDefinition:taskDefinition,deployments:deployments[*].{id:id,status:status,rolloutState:rolloutState,desiredCount:desiredCount,runningCount:runningCount,pendingCount:pendingCount},networkConfiguration:networkConfiguration,loadBalancers:loadBalancers} --region eu-west-2 --output json --no-cli-pager
+{
+    "clusterArn": "arn:aws:ecs:eu-west-2:670941257756:cluster/ecs-it-tools-cluster",
+    "serviceArn": "arn:aws:ecs:eu-west-2:670941257756:service/ecs-it-tools-cluster/ecs-it-tools-service",
+    "status": "ACTIVE",
+    "desiredCount": 1,
+    "runningCount": 1,
+    "pendingCount": 0,
+    "taskDefinition": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:7",
+    "deployments": [
+        {
+            "id": "ecs-svc/4021217090970800911",
+            "status": "PRIMARY",
+            "rolloutState": "COMPLETED",
+            "desiredCount": 1,
+            "runningCount": 1,
+            "pendingCount": 0
+        }
+    ],
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                "subnet-0fbeb417921d91480",
+                "subnet-0d71ed597cc875ddf"
+            ],
+            "securityGroups": [
+                "sg-0127d067b0922e13e"
+            ],
+            "assignPublicIp": "DISABLED"
+        }
+    },
+    "loadBalancers": [
+        {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/9857d4b710bc6cc2",
+            "containerName": "ecs-it-tools",
+            "containerPort": 8080
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Running task ARN
+UTC: 2026-09-26T22:05:17.7535736Z
+COMMAND: aws ecs list-tasks --cluster ecs-it-tools-cluster --service-name ecs-it-tools-service --desired-status RUNNING --region eu-west-2 --output json --no-cli-pager
+{
+    "taskArns": [
+        "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/c8141411dc734df7909c697aca022b67"
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Running task image, digest and ENI
+UTC: 2026-09-26T22:05:18.4624227Z
+COMMAND: aws ecs describe-tasks --cluster ecs-it-tools-cluster --tasks arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/c8141411dc734df7909c697aca022b67 --query tasks[0].{taskArn:taskArn,lastStatus:lastStatus,desiredStatus:desiredStatus,healthStatus:healthStatus,taskDefinitionArn:taskDefinitionArn,availabilityZone:availabilityZone,attachments:attachments,containers:containers[*].{name:name,lastStatus:lastStatus,image:image,imageDigest:imageDigest,networkInterfaces:networkInterfaces}} --region eu-west-2 --output json --no-cli-pager
+{
+    "taskArn": "arn:aws:ecs:eu-west-2:670941257756:task/ecs-it-tools-cluster/c8141411dc734df7909c697aca022b67",
+    "lastStatus": "RUNNING",
+    "desiredStatus": "RUNNING",
+    "healthStatus": "UNKNOWN",
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:7",
+    "availabilityZone": "eu-west-2b",
+    "attachments": [
+        {
+            "id": "4155583d-46fe-4b65-8537-ca4d3781d949",
+            "type": "ElasticNetworkInterface",
+            "status": "ATTACHED",
+            "details": [
+                {
+                    "name": "subnetId",
+                    "value": "subnet-0d71ed597cc875ddf"
+                },
+                {
+                    "name": "networkInterfaceId",
+                    "value": "eni-0e0390d9f56386a67"
+                },
+                {
+                    "name": "macAddress",
+                    "value": "0a:ff:dd:4f:3f:69"
+                },
+                {
+                    "name": "privateDnsName",
+                    "value": "ip-10-0-12-161.eu-west-2.compute.internal"
+                },
+                {
+                    "name": "privateIPv4Address",
+                    "value": "10.0.12.161"
+                }
+            ]
+        }
+    ],
+    "containers": [
+        {
+            "name": "ecs-it-tools",
+            "lastStatus": "RUNNING",
+            "image": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:f91e4e9c942a94f0c37388acd6948366e80afefa",
+            "imageDigest": "sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be",
+            "networkInterfaces": [
+                {
+                    "attachmentId": "4155583d-46fe-4b65-8537-ca4d3781d949",
+                    "privateIpv4Address": "10.0.12.161"
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Running task definition platform and log configuration
+UTC: 2026-09-26T22:05:19.1631995Z
+COMMAND: aws ecs describe-task-definition --task-definition ecs-it-tools:7 --query taskDefinition.{taskDefinitionArn:taskDefinitionArn,status:status,networkMode:networkMode,runtimePlatform:runtimePlatform,containerDefinitions:containerDefinitions[*].{name:name,image:image,logConfiguration:logConfiguration,portMappings:portMappings}} --region eu-west-2 --output json --no-cli-pager
+{
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:670941257756:task-definition/ecs-it-tools:7",
+    "status": "ACTIVE",
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "containerDefinitions": [
+        {
+            "name": "ecs-it-tools",
+            "image": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools:f91e4e9c942a94f0c37388acd6948366e80afefa",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/ecs-it-tools",
+                    "awslogs-region": "eu-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Healthy target IP and port
+UTC: 2026-09-26T22:05:19.8887144Z
+COMMAND: aws elbv2 describe-target-health --target-group-arn arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/9857d4b710bc6cc2 --query TargetHealthDescriptions[*].{Target:Target,TargetHealth:TargetHealth} --region eu-west-2 --output json --no-cli-pager
+[
+    {
+        "Target": {
+            "Id": "10.0.12.161",
+            "Port": 8080,
+            "AvailabilityZone": "eu-west-2b"
+        },
+        "TargetHealth": {
+            "State": "healthy"
+        }
+    }
+]
+EXIT CODE: 0
+
+CHECK: Target group health path and ALB identity
+UTC: 2026-09-26T22:05:20.5776942Z
+COMMAND: aws elbv2 describe-target-groups --target-group-arns arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/9857d4b710bc6cc2 --query TargetGroups[0].{TargetGroupArn:TargetGroupArn,HealthCheckPath:HealthCheckPath,HealthCheckPort:HealthCheckPort,TargetType:TargetType,LoadBalancerArns:LoadBalancerArns} --region eu-west-2 --output json --no-cli-pager
+{
+    "TargetGroupArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:targetgroup/ecs-it-tools-tg/9857d4b710bc6cc2",
+    "HealthCheckPath": "/health",
+    "HealthCheckPort": "traffic-port",
+    "TargetType": "ip",
+    "LoadBalancerArns": [
+        "arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/957fa29c25a14691"
+    ]
+}
+EXIT CODE: 0
+
+CHECK: ALB scheme and security group
+UTC: 2026-09-26T22:05:21.2579500Z
+COMMAND: aws elbv2 describe-load-balancers --load-balancer-arns arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/957fa29c25a14691 --query LoadBalancers[0].{LoadBalancerArn:LoadBalancerArn,DNSName:DNSName,Scheme:Scheme,State:State,SecurityGroups:SecurityGroups,VpcId:VpcId} --region eu-west-2 --output json --no-cli-pager
+{
+    "LoadBalancerArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/957fa29c25a14691",
+    "DNSName": "ecs-it-tools-alb-1933231877.eu-west-2.elb.amazonaws.com",
+    "Scheme": "internet-facing",
+    "State": {
+        "Code": "active"
+    },
+    "SecurityGroups": [
+        "sg-0482815a614bbdb78"
+    ],
+    "VpcId": "vpc-077e538366455b806"
+}
+EXIT CODE: 0
+
+CHECK: HTTP redirect and HTTPS certificate listener
+UTC: 2026-09-26T22:05:21.9897695Z
+COMMAND: aws elbv2 describe-listeners --load-balancer-arn arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/957fa29c25a14691 --query Listeners[*].{ListenerArn:ListenerArn,Port:Port,Protocol:Protocol,Certificates:Certificates,DefaultActions:DefaultActions[*].Type} --region eu-west-2 --output json --no-cli-pager
+[
+    {
+        "ListenerArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/957fa29c25a14691/92404cd593770670",
+        "Port": 80,
+        "Protocol": "HTTP",
+        "Certificates": null,
+        "DefaultActions": [
+            "redirect"
+        ]
+    },
+    {
+        "ListenerArn": "arn:aws:elasticloadbalancing:eu-west-2:670941257756:listener/app/ecs-it-tools-alb/957fa29c25a14691/b57ebcaf7b23a7e1",
+        "Port": 443,
+        "Protocol": "HTTPS",
+        "Certificates": [
+            {
+                "CertificateArn": "arn:aws:acm:eu-west-2:670941257756:certificate/5c43bf72-cc65-4b92-80eb-f8c6ae0a42e4"
+            }
+        ],
+        "DefaultActions": [
+            "forward"
+        ]
+    }
+]
+EXIT CODE: 0
+
+CHECK: Issued and attached ACM certificate
+UTC: 2026-09-26T22:05:22.7127306Z
+COMMAND: aws acm describe-certificate --certificate-arn arn:aws:acm:eu-west-2:670941257756:certificate/5c43bf72-cc65-4b92-80eb-f8c6ae0a42e4 --query Certificate.{CertificateArn:CertificateArn,DomainName:DomainName,Status:Status,InUseBy:InUseBy,DomainValidationOptions:DomainValidationOptions[*].{DomainName:DomainName,ValidationStatus:ValidationStatus}} --region eu-west-2 --output json --no-cli-pager
+{
+    "CertificateArn": "arn:aws:acm:eu-west-2:670941257756:certificate/5c43bf72-cc65-4b92-80eb-f8c6ae0a42e4",
+    "DomainName": "tm.feras-dev.co.uk",
+    "Status": "ISSUED",
+    "InUseBy": [
+        "arn:aws:elasticloadbalancing:eu-west-2:670941257756:loadbalancer/app/ecs-it-tools-alb/957fa29c25a14691"
+    ],
+    "DomainValidationOptions": [
+        {
+            "DomainName": "tm.feras-dev.co.uk",
+            "ValidationStatus": "SUCCESS"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: ECR selected tag and digest
+UTC: 2026-09-26T22:05:23.4313775Z
+COMMAND: aws ecr describe-images --repository-name ecs-it-tools --image-ids imageTag=f91e4e9c942a94f0c37388acd6948366e80afefa --query imageDetails[0].{imageTags:imageTags,imageDigest:imageDigest,imagePushedAt:imagePushedAt,imageManifestMediaType:imageManifestMediaType,artifactMediaType:artifactMediaType} --region eu-west-2 --output json --no-cli-pager
+{
+    "imageTags": [
+        "f91e4e9c942a94f0c37388acd6948366e80afefa"
+    ],
+    "imageDigest": "sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be",
+    "imagePushedAt": "2026-09-26T22:24:12.855000+01:00",
+    "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+    "artifactMediaType": "application/vnd.docker.container.image.v1+json"
+}
+EXIT CODE: 0
+
+CHECK: Immutable ECR repository
+UTC: 2026-09-26T22:05:24.0973089Z
+COMMAND: aws ecr describe-repositories --repository-names ecs-it-tools --query repositories[0].{repositoryUri:repositoryUri,imageTagMutability:imageTagMutability,imageScanningConfiguration:imageScanningConfiguration,encryptionConfiguration:encryptionConfiguration} --region eu-west-2 --output json --no-cli-pager
+{
+    "repositoryUri": "670941257756.dkr.ecr.eu-west-2.amazonaws.com/ecs-it-tools",
+    "imageTagMutability": "IMMUTABLE",
+    "imageScanningConfiguration": {
+        "scanOnPush": true
+    },
+    "encryptionConfiguration": {
+        "encryptionType": "AES256"
+    }
+}
+EXIT CODE: 0
+
+CHECK: Task ENI no public association
+UTC: 2026-09-26T22:05:24.9037897Z
+COMMAND: aws ec2 describe-network-interfaces --network-interface-ids eni-0e0390d9f56386a67 --query NetworkInterfaces[0].{NetworkInterfaceId:NetworkInterfaceId,Status:Status,PrivateIpAddress:PrivateIpAddress,Association:Association,SubnetId:SubnetId,VpcId:VpcId,Groups:Groups[*].GroupId} --region eu-west-2 --output json --no-cli-pager
+{
+    "NetworkInterfaceId": "eni-0e0390d9f56386a67",
+    "Status": "in-use",
+    "PrivateIpAddress": "10.0.12.161",
+    "Association": null,
+    "SubnetId": "subnet-0d71ed597cc875ddf",
+    "VpcId": "vpc-077e538366455b806",
+    "Groups": [
+        "sg-0127d067b0922e13e"
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Task private subnet
+UTC: 2026-09-26T22:05:25.7045207Z
+COMMAND: aws ec2 describe-subnets --subnet-ids subnet-0d71ed597cc875ddf --query Subnets[0].{SubnetId:SubnetId,VpcId:VpcId,AvailabilityZone:AvailabilityZone,MapPublicIpOnLaunch:MapPublicIpOnLaunch,Tags:Tags[?Key==`Name`]} --region eu-west-2 --output json --no-cli-pager
+{
+    "SubnetId": "subnet-0d71ed597cc875ddf",
+    "VpcId": "vpc-077e538366455b806",
+    "AvailabilityZone": "eu-west-2b",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+        {
+            "Key": "Name",
+            "Value": "ecs-it-tools-private-2"
+        }
+    ]
+}
+EXIT CODE: 0
+
+CHECK: Private subnet NAT route
+UTC: 2026-09-26T22:05:26.5056154Z
+COMMAND: aws ec2 describe-route-tables --filters Name=association.subnet-id,Values=subnet-0d71ed597cc875ddf --query RouteTables[*].{RouteTableId:RouteTableId,Associations:Associations[*].SubnetId,Routes:Routes[*].{DestinationCidrBlock:DestinationCidrBlock,NatGatewayId:NatGatewayId,GatewayId:GatewayId,State:State}} --region eu-west-2 --output json --no-cli-pager
+[
+    {
+        "RouteTableId": "rtb-032acef1ea60ec03f",
+        "Associations": [
+            "subnet-0d71ed597cc875ddf",
+            "subnet-0fbeb417921d91480"
+        ],
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "NatGatewayId": null,
+                "GatewayId": "local",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "NatGatewayId": "nat-03cfe298326a9694d",
+                "GatewayId": null,
+                "State": "active"
+            }
+        ]
+    }
+]
+EXIT CODE: 0
+
+CHECK: ALB SG to task SG ingress
+UTC: 2026-09-26T22:05:27.2821821Z
+COMMAND: aws ec2 describe-security-groups --group-ids sg-0127d067b0922e13e sg-0482815a614bbdb78 --query SecurityGroups[*].{GroupId:GroupId,GroupName:GroupName,IpPermissions:IpPermissions[*].{FromPort:FromPort,ToPort:ToPort,IpProtocol:IpProtocol,UserIdGroupPairs:UserIdGroupPairs[*].GroupId,IpRanges:IpRanges[*].CidrIp}} --region eu-west-2 --output json --no-cli-pager
+[
+    {
+        "GroupId": "sg-0127d067b0922e13e",
+        "GroupName": "ecs-it-tools-ecs-task-sg",
+        "IpPermissions": [
+            {
+                "FromPort": 8080,
+                "ToPort": 8080,
+                "IpProtocol": "tcp",
+                "UserIdGroupPairs": [
+                    "sg-0482815a614bbdb78"
+                ],
+                "IpRanges": []
+            }
+        ]
+    },
+    {
+        "GroupId": "sg-0482815a614bbdb78",
+        "GroupName": "ecs-it-tools-alb-sg",
+        "IpPermissions": [
+            {
+                "FromPort": 80,
+                "ToPort": 80,
+                "IpProtocol": "tcp",
+                "UserIdGroupPairs": [],
+                "IpRanges": [
+                    "0.0.0.0/0"
+                ]
+            },
+            {
+                "FromPort": 443,
+                "ToPort": 443,
+                "IpProtocol": "tcp",
+                "UserIdGroupPairs": [],
+                "IpRanges": [
+                    "0.0.0.0/0"
+                ]
+            }
+        ]
+    }
+]
+EXIT CODE: 0
+
+Interpretation: ECS task healthStatus UNKNOWN is distinct from the verified single completed deployment and healthy ALB target.

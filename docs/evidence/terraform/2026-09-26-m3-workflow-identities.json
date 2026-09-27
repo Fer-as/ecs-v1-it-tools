@@ -1,0 +1,323 @@
+{
+    "captured_utc":  "2026-09-26T22:07:28.7583783Z",
+    "github_api":  "GET run and jobs metadata; unauthenticated read-only requests",
+    "aws_account":  "670941257756",
+    "aws_region":  "eu-west-2",
+    "source_image_tag":  "f91e4e9c942a94f0c37388acd6948366e80afefa",
+    "expected_image_digest":  "sha256:ccf22a730439f38a4c56912f6b61425ce07cb2a2e49dbd6010e8d3b097b9e1be",
+    "runs":  [
+                 {
+                     "id":  36271972985,
+                     "name":  "Verify original destroy cleanup",
+                     "head_sha":  "f91e4e9c942a94f0c37388acd6948366e80afefa",
+                     "run_attempt":  1,
+                     "event":  "workflow_dispatch",
+                     "status":  "completed",
+                     "conclusion":  "success",
+                     "created_at":  "2026-09-26T21:09:43Z",
+                     "updated_at":  "2026-09-26T21:10:54Z",
+                     "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985",
+                     "jobs":  [
+                                  {
+                                      "name":  "verify",
+                                      "conclusion":  "success",
+                                      "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985/job/108487533601",
+                                      "steps":  [
+                                                    {
+                                                        "name":  "Set up job",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Check out verification code",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify original run and download its logs",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Install Terraform",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Authenticate read-only planning role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify planning identity",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Read original saved plan without applying it",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Probe original 33 resources and retained application foundations",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify no remaining destroy actions",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Record recovery verification boundaries",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Authenticate read-only planning role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Check out verification code",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Complete job",
+                                                        "conclusion":  "success"
+                                                    }
+                                                ]
+                                  }
+                              ]
+                 },
+                 {
+                     "id":  36272693835,
+                     "name":  "Application build and publish",
+                     "head_sha":  "f91e4e9c942a94f0c37388acd6948366e80afefa",
+                     "run_attempt":  1,
+                     "event":  "workflow_dispatch",
+                     "status":  "completed",
+                     "conclusion":  "success",
+                     "created_at":  "2026-09-26T21:22:15Z",
+                     "updated_at":  "2026-09-26T21:24:19Z",
+                     "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36272693835",
+                     "jobs":  [
+                                  {
+                                      "name":  "publish",
+                                      "conclusion":  "success",
+                                      "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36272693835/job/108489526595",
+                                      "steps":  [
+                                                    {
+                                                        "name":  "Set up job",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Check out exact source commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify source identity",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Build linux amd64 image",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Test container health and application page",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Authenticate with GitHub OIDC",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify AWS identity and immutable repository",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Push image",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify published digest and image identity",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Container logs and cleanup",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Authenticate with GitHub OIDC",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Check out exact source commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Complete job",
+                                                        "conclusion":  "success"
+                                                    }
+                                                ]
+                                  }
+                              ]
+                 },
+                 {
+                     "id":  36273089001,
+                     "name":  "Terraform deployment",
+                     "head_sha":  "f91e4e9c942a94f0c37388acd6948366e80afefa",
+                     "run_attempt":  1,
+                     "event":  "workflow_dispatch",
+                     "status":  "completed",
+                     "conclusion":  "success",
+                     "created_at":  "2026-09-26T21:29:08Z",
+                     "updated_at":  "2026-09-26T21:38:38Z",
+                     "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36273089001",
+                     "jobs":  [
+                                  {
+                                      "name":  "plan",
+                                      "conclusion":  "success",
+                                      "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36273089001/job/108490621935",
+                                      "steps":  [
+                                                    {
+                                                        "name":  "Set up job",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Check out workflow commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Validate explicit inputs",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Install Terraform",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Authenticate planning role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify planning identity",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Initialize and validate",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Inspect DNS before planning",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify selected image",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Create saved plan",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Check plan scope",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Store versioned plan privately",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Authenticate planning role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Check out workflow commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Complete job",
+                                                        "conclusion":  "success"
+                                                    }
+                                                ]
+                                  },
+                                  {
+                                      "name":  "apply",
+                                      "conclusion":  "success",
+                                      "html_url":  "https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36273089001/job/108490720819",
+                                      "steps":  [
+                                                    {
+                                                        "name":  "Set up job",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Check out same workflow commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Install same Terraform version",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Authenticate approved apply role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify apply identity",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Retrieve exact approved plan version",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Initialize backend",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Recheck image identity before apply",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Apply saved plan",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify ECS image and ALB runtime",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify deployed HTTPS health",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Verify no remaining infrastructure changes",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Record successful stage",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Authenticate approved apply role",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Post Check out same workflow commit",
+                                                        "conclusion":  "success"
+                                                    },
+                                                    {
+                                                        "name":  "Complete job",
+                                                        "conclusion":  "success"
+                                                    }
+                                                ]
+                                  }
+                              ]
+                 }
+             ],
+    "m3_deploy_saved_plan":  {
+                                 "bucket":  "feras-ecs-it-tools-tfstate-670941257756",
+                                 "key":  "ecs-v1/dev/plans/36273089001/1/deployment.tfplan",
+                                 "s3_version":  "icaDnV68cy4OukCBWRX4ink7orwHYi1P",
+                                 "sha256":  "91a7dcadf2bb3eba5e02391c0672af0a0fd8fd7f62969370e4e0fd8578332785",
+                                 "bytes":  22766,
+                                 "method":  "read exact S3 version to newly created temporary file, compute SHA256, remove temporary file"
+                             },
+    "post_apply_no_change":  {
+                                 "step":  "Verify no remaining infrastructure changes",
+                                 "step_conclusion":  "success",
+                                 "workflow_command":  "terraform plan -detailed-exitcode",
+                                 "interpretation":  "success of this unmasked step implies Terraform exit code 0; no full step log was downloaded"
+                             },
+    "limitation":  "GitHub step conclusions and supplied plan identity are captured; run summaries/full logs were not downloaded."
+}

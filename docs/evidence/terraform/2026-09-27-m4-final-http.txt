@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Sun, 27 Sep 2026 00:15:13 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: keep-alive
+Server: nginx/1.28.3
+
+{"status":"ok"}
