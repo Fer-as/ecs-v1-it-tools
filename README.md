@@ -103,6 +103,6 @@ The later [destructive M2 run 36269051826](https://github.com/Fer-as/ecs-v1-it-t
 
 ## Evidence and limitations
 
-The [final evidence index](docs/evidence/README.md) links M1 restoration, the original M2 destroy and later recovery, M3 recreation/runtime, M4 rejection/recovery, all ten final screenshots, and the independent post-M4 HTTP capture. The original M2 destroy apply deleted 33 resources, including NAT/EIP, but its post-destroy verifier failed on an AWS CLI option; a later read-only workflow recovered cleanup evidence. The original run remains failed.
+The [final evidence index](docs/evidence/README.md) links M1 restoration, the original M2 destroy and later recovery, M3 recreation/runtime, M4 rejection/recovery, the final screenshots, and the independent post-M4 HTTP capture. The original M2 destroy apply deleted 33 resources, including NAT/EIP, but its post-destroy verifier failed on an AWS CLI option; a later read-only workflow recovered cleanup evidence. The original run remains failed.
 
 ECR scan status was reported as Complete with **17 Critical, 58 High, 41 Medium, and 3 Low** findings. The image is not vulnerability-free and no security pass is claimed. Vulnerability remediation was not established as a mandatory assignment requirement; the findings remain disclosed for follow-up. Independent final submission acceptance and genuine pre-Docker execution proof are not established by the evidence in this repository.
