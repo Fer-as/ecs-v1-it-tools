@@ -19,10 +19,10 @@ conclusion.
 
 ## Verification workflow
 
-After the verifier change and workflow are reviewed and published, dispatch
-**Verify original destroy cleanup** from `main`. It has no inputs and no
-Terraform apply. It runs under the existing `dev` OIDC planning role and shares
-the application Terraform concurrency group.
+The corrected verifier and **Verify original destroy cleanup** workflow were
+published after the original failed run. The workflow has no dispatch inputs
+and no Terraform apply. It uses the existing `dev` OIDC planning role and
+shares the application Terraform concurrency group.
 
 The job downloads the original run's logs and the current object at the unique
 original plan key. It requires the original workflow SHA, S3 object version and
@@ -69,7 +69,19 @@ pre-apply version remains in history; the bootstrap state object, OIDC provider
 and roles remain. Record the command time, account, region and exit status.
 These checks establish retained foundations, not an account-wide orphan audit.
 
-Keep the evidence chain distinct: original apply succeeded, original verifier
-failed, later resource verification passed or failed, and independent retained
-foundation checks passed or failed. Begin final recreation only after reviewing
-all of those results.
+## Observed recovery and remaining limit
+
+[Verification-only run 36271972985](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985)
+completed successfully. It validated the original saved-plan identity and
+33-delete scope, probed the approved resources, found no managed application
+instances or remaining application DNS, confirmed the retained hosted zone and
+encrypted state object, and required a fresh no-action destroy plan. Separate
+read-only evidence confirmed S3 versioning, the preserved pre-destroy state
+version, bootstrap state, OIDC provider and four GitHub roles. The original
+destroy run's conclusion remains failure because its post-apply verifier
+failed; the destructive apply itself succeeded.
+
+The unrelated-DNS baseline is the original plan-job DNS inspection, not the
+lost exact pre-apply snapshot. Neither the recovery probes nor empty Terraform
+state prove an account-wide absence of unrelated or orphan resources. Final M3
+recreation followed the reviewed M2 recovery.

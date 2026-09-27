@@ -1,5 +1,9 @@
 # Terraform deployment and lifecycle evidence - 21-22 September 2026
 
+Historical snapshot: remaining-work statements below describe 21–22 September.
+For final M1–M4 status and M3 recreation, see the
+[lifecycle evidence index](../README.md).
+
 Initial deployment baseline: CT-2026-09-21-02
 
 Deployed configuration and image tag:

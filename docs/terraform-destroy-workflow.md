@@ -1,12 +1,10 @@
 # Terraform destroy workflow
 
-Implementation based on source snapshot
-`2df61c159a1732bee53183dbe00ee0e3fc95bbb0`.
-
-Status: implemented and checked offline. The first full destroy failed during
-EIP deletion. A fresh recovery dispatch successfully deleted the remaining EIP.
-The stale-association IAM correction requires focused review and a bootstrap
-policy apply. Clean full-destroy runtime acceptance remains pending.
+The current workflow is `.github/workflows/terraform-destroy.yml`. Its earlier
+failed full destroy and partial recovery remain historical evidence. The later
+M2 full destroy applied its reviewed 33-delete plan, including NAT/EIP deletion;
+its post-destroy verifier failed on a CLI option. A separate read-only recovery
+run passed. See [M2 verification recovery](m2-destroy-verification-recovery.md).
 
 ## EIP deletion permission
 
@@ -36,9 +34,9 @@ this application's resources.
 The derived planning policy excludes this write action. Other networking
 permissions remain unchanged.
 
-The decoded failure supports the correction's rationale; it does not prove
-that a clean full destroy will succeed. That requires runtime verification
-after the reviewed bootstrap policy update is applied.
+The correction was subsequently applied. In M2, the corrected path deleted
+NAT gateway `nat-00d4f978d139944b2` and EIP
+`eipalloc-04b6bdd1421211d2b` during the original approved apply.
 
 ## Operation
 
@@ -101,9 +99,8 @@ The backend bucket and hosted zone are outside the application resource
 inventory. Bootstrap OIDC provider, roles and policies are in separate state,
 which the application workflow roles cannot access.
 
-The reviewed bootstrap update correcting `ec2:DisassociateAddress` resource
-matching must be applied before the next full-destroy validation. Successful
-deployment does not prove every deletion permission.
+The reviewed `ec2:DisassociateAddress` correction was in place for the M2
+destroy. Its NAT/EIP deletion result is runtime evidence for that path.
 
 Before apply, the verifier captures unrelated hosted-zone records, the current
 state object's encryption and version metadata, and the ECR image count.
@@ -159,9 +156,30 @@ no changes.
 The recovery cleanup checked the one resource in its approved plan. It did
 not retrospectively probe all 32 resources deleted by the failed run.
 
-The successful recovery therefore demonstrates partial-destroy recovery,
-but does not close the first-run stale-association authorization defect or
-establish clean full-destroy acceptance.
+The successful recovery demonstrates partial-destroy recovery. It does not
+retroactively make that earlier failed full run successful. The later M2 run
+below tested the corrected stale-association path.
+
+## M2 full destroy and verifier recovery — 26 September 2026
+
+The approved [original M2 run 36269051826](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36269051826) at workflow commit
+`119d285b15ba4ec4f4dfd5f8d12d90cf5c4d9ecc` applied the reviewed saved
+plan: **0 added, 0 changed, 33 destroyed**. Its plan SHA256 was
+`aa6b5497978de8d61442ba5b846feb5ebe78740fa9546c22c84449d30313c86c`,
+S3 key `ecs-v1/dev/plans/36269051826/1/destroy.tfplan`, version
+`g_pQkIpHQNCb57dmc9olKfueIskuelLw`. NAT and EIP deletion succeeded.
+
+The original run then **failed** in `scripts/verify_destroy_cleanup.py verify`:
+`ec2 describe-nat-gateways` was called with `--filters` instead of its singular
+`--filter`. The corrected verifier was published separately. The later
+[verification-only run 36271972985](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985)
+passed original-plan identity and 33-resource cleanup probes, application
+state/DNS cleanup, retained hosted-zone/state checks, and a fresh destroy plan
+with no remaining actions. Independent checks confirmed backend versioning,
+encryption, state history, and separate bootstrap/OIDC foundations. The
+original failed run remains failed; recovery did not rerun its destructive
+plan. The unrelated-DNS comparison uses the original planning log rather
+than the lost exact pre-apply verifier snapshot.
 
 ## Failure and recovery procedure
 
@@ -210,15 +228,16 @@ The earlier configuration review accepted the resource-specific
 DisassociateAddress permission. The subsequent live failure demonstrated that
 it was insufficient for the stale-association request.
 
-The current IAM correction requires one focused independent review and a
-bootstrap policy apply. Runtime acceptance then requires recreation followed
-by a clean full destroy, including cleanup verification and a no-change
-destroy plan. Final recreation and deployment verification follow that run.
+The corrected M2 deletion path and later cleanup recovery are evidenced above.
+M3 subsequently recreated and verified the final application. Independent
+submission acceptance remains separate from Development verification.
 
 ## References
 
 - [Failed full destroy: run 36129168122](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36129168122)
 - [Successful recovery: run 36130931621](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36130931621)
+- [M2 original 33-delete apply, later failed verifier: run 36269051826](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36269051826)
+- [M2 read-only cleanup recovery: run 36271972985](https://github.com/Fer-as/ecs-v1-it-tools/actions/runs/36271972985)
 - [Terraform planning modes and saved plans](https://developer.hashicorp.com/terraform/cli/commands/plan)
 - [Terraform saved-plan apply](https://developer.hashicorp.com/terraform/cli/commands/apply)
 - [ECS cluster states](https://docs.aws.amazon.com/cli/latest/reference/ecs/describe-clusters.html)
